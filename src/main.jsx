@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail } from 'lucide-react';
 import ArchiveShowcase from './ArchiveShowcase.jsx';
+import { legacyProjects, originalFor, originalEvidence, originalDocuments } from './legacyProjects.js';
 import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 gsap.registerPlugin(ScrollTrigger);
@@ -128,18 +129,26 @@ const projects = [
 ];
 
 
-const importedBMS = ancienPortfolio.find(page => page.source === 'BMS.html');
-const originalBMSPhotos = (importedBMS?.images || []).filter(image => !image.partagee);
-if(originalBMSPhotos.length){
-  projects[0].cover = originalBMSPhotos[0].src;
-  projects[0].evidence = originalBMSPhotos.map((item,index)=>({
-    image:item.src,
-    title:'BMS — document original '+(index+1),
-    desc:'Photographie authentique extraite de l’ancien portfolio Google Sites.',
-    source:'Archive Google Takeout'
-  }));
-  projects[0].note = 'Photographies originales récupérées depuis Google Takeout. Les tests de la carte ne sont pas considérés comme validés : les mesures et le diagnostic technique priment sur les affirmations du texte historique.';
+
+/* Tous les projets sont intégrés à la même galerie : 5 études commentées
+   + 10 dossiers historiques complets, avec des preuves et sources originales. */
+const originalBMS = originalFor('BMS');
+const originalBETEM = originalFor('Stage chez BETEM');
+for(const [project,archive] of [[projects[0],originalBMS],[projects[1],originalBETEM]]){
+  if(!archive)continue;
+  project.originalSections=archive.sections||[];
+  const seen=new Set((project.evidence||[]).map(x=>x.image));
+  project.evidence=[...(project.evidence||[]),...originalEvidence(archive).filter(x=>!seen.has(x.image))];
+  project.docs=[...(project.docs||[]),...originalDocuments(archive)];
+  if(project.id==='bms'){
+    project.cover=project.evidence[0]?.image||null;
+    project.note="Photographies et rapport authentiques issus de l'ancien portfolio. La conception et les essais ont été réalisés mais la sortie à 0 V ne permet pas de valider le fonctionnement du BMS. Les conclusions actualisées priment sur le texte historique.";
+  } else {
+    project.note="Documents originaux du stage et sources de l'étude. La publication des plans et pièces professionnelles a été autorisée par BETEM selon la confirmation de l'étudiant.";
+  }
 }
+projects.push(...legacyProjects);
+projects.forEach((project,index)=>{ project.no=String(index+1).padStart(2,'0') });
 
 const competencies = [
   {
@@ -168,6 +177,12 @@ const competencies = [
   }
 ];
 
+/* Les études historiques constituent des preuves complémentaires dans le parcours. */
+for(const skill of competencies){
+  const linked=legacyProjects.filter(p=>p.skills.includes(skill.name)).map(p=>p.id);
+  skill.projects=[...new Set([...skill.projects,...linked])];
+}
+
 const documents = [
   {title:'Référentiel officiel BUT GEII — parcours EME',type:'DOCUMENT OFFICIEL',desc:'Compétences, apprentissages critiques et progression du BUT.',url:REFERENTIEL,external:true,icon:GraduationCap},
   {title:'Compte rendu de CEM et harmoniques',type:'PREUVE · PDF 34 PAGES',desc:'Schémas, oscillogrammes, spectres et comparaison de solutions.',url:'/documents/TP-CEM-Hicham-El-Hajjaji.pdf',icon:FileText},
@@ -195,6 +210,7 @@ function ProjectVisual({kind,image}){
   if(kind==='cem')return <div className="project-visual real-art"><img src="/assets/cem-schema-reel.webp" alt="Schéma original de redresseur issu du compte rendu CEM" loading="lazy"/></div>;
   if(kind==='dialux')return <div className="project-visual real-art"><img src="/assets/dialux-reel-1.webp" alt="Capture réelle DIALux, répartition des luminaires" loading="lazy"/></div>;
   if(kind==='building')return <div className="project-visual real-art"><img src="/assets/betem-plan-extrait-reel.webp" alt="Extrait de plan électrique réel, projet école à Sète" loading="lazy"/></div>;
+  if(kind==='legacy')return <div className="project-visual original-fallback"><div className="visual-grid"/><FileText size={92} strokeWidth={.75}/><span>PROJET GEII // DOSSIER DOCUMENTÉ</span></div>;
   if(kind==='solar')return <div className="project-visual solar-art"><div className="visual-grid"/><div className="sun"/><div className="panel-grid">{Array.from({length:18},(_,i)=><span key={i}/>)}</div><span className="solar-label">PV // ÉTUDE ÉNERGÉTIQUE</span></div>;
   return <div className="project-visual bms-art"><div className="visual-grid"/><div className="board"><div className="board-title">BMS // 4S</div>{[1,2,3,4].map(i=><div className="cell" key={i}>CELL 0{i}<span>3,7 V</span></div>)}<div className="chip">ML5243</div></div><span className="visual-disclaimer">ILLUSTRATION — NON CONTRACTUELLE</span></div>;
 }
@@ -203,24 +219,47 @@ function Chips({items}){return <div className="chips">{items.map(x=><span key={x
 function DocumentLink({url,label,external=false}){return <a className="document-link" href={url} target="_blank" rel="noopener noreferrer">{label}{external?<ExternalLink size={15}/>:<Download size={15}/>}</a>}
 function EvidenceGrid({items,onZoom}){return <div className="evidence-grid">{items.map((ev,i)=><button key={i} className="evidence-item" type="button" onClick={()=>onZoom(ev)} title="Agrandir la preuve"><div className="evidence-image"><img src={ev.image} alt={ev.title} loading="lazy"/></div><div className="evidence-info"><span>{String(i+1).padStart(2,'0')} / PREUVE AUTHENTIQUE</span><b>{ev.title}</b><small>{ev.desc}</small></div><ArrowUpRight size={16}/></button>)}</div>}
 
+function getDocumentPreviewUrl(url){
+  const fileMatch=url.match(/^https:\/\/drive\.google\.com\/file\/d\/([^/]+)/);
+  if(fileMatch)return 'https://drive.google.com/file/d/'+fileMatch[1]+'/preview';
+  if(url.endsWith('.pdf'))return url+'#toolbar=0';
+  return url;
+}
 function ProjectDetail({project:p,onClose,onZoom}){
   const dialogRef=useRef(null);
-  useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape')onClose()};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose]);
+  const [previewDoc,setPreviewDoc]=useState(null);
+  useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape'){if(previewDoc)setPreviewDoc(null);else onClose()}};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose,previewDoc]);
   return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
     <div className="detail-header"><span className="index">DÉCRYPTAGE / PROJET {p.no}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
     <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line"><CheckCircle2 size={15}/>{p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
-    <div className="detail-chapters">
+    {!p.legacyOnly&&<div className="detail-chapters">
       <section><span className="chapter-index">01 / CONTEXTE</span><h3>Pourquoi ce projet ?</h3><p>{p.context}</p></section>
       <section><span className="chapter-index">02 / MON RÔLE</span><h3>Ce que j'ai réalisé</h3><p>{p.role}</p></section>
-      <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((s,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{s}</span></li>)}</ol></section>
+      <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((step,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{step}</span></li>)}</ol></section>
       <section><span className="chapter-index">04 / RÉSULTATS</span><h3>Ce que montrent les résultats</h3><p>{p.results}</p></section>
       <section className="critical-section"><span className="chapter-index">05 / PRISE DE RECUL</span><h3>Mon autoévaluation</h3><p>{p.critique}</p></section>
-    </div>
+    </div>}
+    {!!p.originalSections?.length&&<div className="historical-dossier">
+      <div className="small-heading"><span className="index">DOSSIER INTÉGRAL / PORTFOLIO D'ORIGINE</span><span className="rule"/></div>
+      <p className="historical-context">Transcription intégrale des sections rédigées lors du projet. Les résultats du dossier d'origine sont conservés pour leur valeur pédagogique et historique ; ils sont à lire avec les éventuelles conclusions actualisées ci-dessus.</p>
+      <div className="historical-grid">{p.originalSections.map((chapter,i)=><section className="historical-chapter" key={i}>
+        <span className="chapter-index">{String(i+1).padStart(2,'0')} / {String(p.originalSections.length).padStart(2,'0')}</span>
+        <h3>{chapter.titre}</h3>
+        {(chapter.blocs||[]).map((block,j)=><p key={j} className={block.type==='puce'?'historical-bullet':''}>{block.type==='puce'?'— ':''}{block.texte}</p>)}
+      </section>)}</div>
+    </div>}
     <div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
       {p.note&&<p className="source-note"><ShieldCheck size={17}/>{p.note}</p>}
-      {p.docs?.length>0&&<div className="download-list">{p.docs.map(d=><div key={d.url}><span>{d.type}</span><DocumentLink url={d.url} label={d.label}/></div>)}</div>}
+      {p.docs?.length>0&&<div className="download-list">{p.docs.map(d=><div key={d.url}><span>{d.type}</span><div className="document-actions"><DocumentLink url={d.url} label={d.label}/><button className="preview-doc-button" type="button" onClick={()=>setPreviewDoc(d)}>APERÇU DU DOCUMENT <ExternalLink size={15}/></button></div></div>)}</div>}
     </div>
+    {previewDoc&&<div className="document-lightbox" onClick={()=>setPreviewDoc(null)}>
+      <div className="document-frame" role="dialog" aria-modal="true" aria-label={'Aperçu de '+previewDoc.label} onClick={e=>e.stopPropagation()}>
+        <div className="document-frame-header"><strong>{previewDoc.label}</strong><div><DocumentLink url={previewDoc.url} label="OUVRIR L'ORIGINAL" external/><button type="button" onClick={()=>setPreviewDoc(null)}><X size={18}/> FERMER</button></div></div>
+        <iframe loading="lazy" title={previewDoc.label} src={getDocumentPreviewUrl(previewDoc.url)} referrerPolicy="no-referrer" allow="fullscreen"/>
+        <p>Document d'origine depuis Google Drive. L'affichage intégré dépend des autorisations de partage et de votre connexion Google. Le lien « Ouvrir l'original » reste disponible.</p>
+      </div>
+    </div>}
     <div className="detail-footer"><div><span>COMPÉTENCES ASSOCIÉES</span><Chips items={p.skills}/></div><button type="button" onClick={onClose} className="secondary-button"><ArrowLeft size={16}/> RETOUR AU PORTFOLIO</button></div>
   </article></div>;
 }
@@ -237,7 +276,7 @@ function App(){
   useEffect(()=>{document.body.style.overflow=(project||zoom)?'hidden':'';return()=>{document.body.style.overflow=''}},[project,zoom]);
   const openProject=(p)=>{setProject(p);setZoom(null)};
   return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><div className="grain" aria-hidden="true"/>
-    <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#archives">ARCHIVES</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
+    <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#archives">PARCOURS D'ORIGINE</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
     <main>
       <section className="hero" id="accueil"><Scene/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
 
@@ -254,7 +293,7 @@ function App(){
 
       <section id="competences" className="section competence-section"><SectionHeader number="03" title="RÉFÉRENTIEL GEII" aside="4 COMPÉTENCES · PARCOURS EME"/><div className="competence-intro reveal"><h2>CE QUE JE <span>DÉVELOPPE.</span></h2><p>Les quatre compétences du parcours sont reliées à des situations de projet, à des preuves et à un retour critique. Les apprentissages critiques listés ci-dessous sont ceux du niveau BUT3.</p></div><div className="competency-grid">{competencies.map((c,i)=><article className="competency-card reveal" key={c.id}><div className="competency-index"><span>{c.no} / 04</span><span className="competency-mark">{String(i+1).padStart(2,'0')}</span></div><h3>{c.name}</h3><p className="competency-title">{c.title}</p><p>{c.description}</p><div className="competency-line">APPRENTISSAGES CRITIQUES BUT3</div><ul>{c.critical.map(x=><li key={x}>{x}</li>)}</ul><div className="competency-line">PREUVES & APPLICATIONS</div><p className="competency-evidence">{c.evidence}</p><div className="competency-projects">{c.projects.map(id=>{let p=projects.find(x=>x.id===id);return <button key={id} type="button" onClick={()=>openProject(p)}>{p.name}<ArrowUpRight size={13}/></button>})}</div><div className="self-review"><span>MON REGARD CRITIQUE</span><p>{c.review}</p></div></article>)}</div><p className="competence-source">Référence : Programme national du BUT GEII, parcours EME, niveaux et apprentissages critiques. <a href={REFERENTIEL} target="_blank" rel="noopener noreferrer">Consulter le document officiel <ExternalLink size={13}/></a></p></section>
 
-      <section id="projets" className="section projects"><SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside="5 ÉTUDES COMMENTÉES"/><div className="projects-intro reveal"><h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2><p>Ouvrir chaque projet pour voir la méthode, les résultats, les preuves originales et l'autoévaluation.</p></div><div className="projects-list">{projects.map(p=><article className="project reveal" key={p.id}><div className="project-meta"><span>{p.no} / 05</span><span>{p.field}</span></div><ProjectVisual kind={p.icon} image={p.cover}/><div className="project-info"><div><p className="project-subtitle">{p.period}</p><h3>{p.name}</h3><p className="project-strap">{p.short}</p></div><p className="project-summary">{p.description}</p><Chips items={p.chips}/><div className="project-action"><span>{p.status}</span><button type="button" onClick={()=>openProject(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button></div></div></article>)}</div></section>
+      <section id="projets" className="section projects"><SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside={`${projects.length} ÉTUDES COMPLÈTES`}/><div className="projects-intro reveal"><h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2><p>Ouvrir chaque projet pour voir la méthode, les résultats, les preuves originales et l'autoévaluation.</p></div><div className="projects-list">{projects.map(p=><article className="project reveal" key={p.id}><div className="project-meta"><span>{p.no} / {String(projects.length).padStart(2,'0')}</span><span>{p.field}</span></div><ProjectVisual kind={p.icon} image={p.cover}/><div className="project-info"><div><p className="project-subtitle">{p.period}</p><h3>{p.name}</h3><p className="project-strap">{p.short}</p></div><p className="project-summary">{p.description}</p><Chips items={p.chips}/><div className="project-action"><span>{p.status}</span><button type="button" onClick={()=>openProject(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button></div></div></article>)}</div></section>
 
       <ArchiveShowcase/>
 
