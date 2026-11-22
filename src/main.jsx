@@ -20,7 +20,7 @@ const REFERENTIEL = 'https://www.enseignementsup-recherche.gouv.fr/sites/default
 
 const projects = [
   {
-    id:'bms', no:'01', name:'Battery Management System', short:'Conception et diagnostic d’un BMS Li-ion 4S', field:'ÉLECTRONIQUE & STOCKAGE', period:'Projet universitaire · BUT2',
+    id:'bms', no:'01', name:'Battery Management System', short:'Conception et diagnostic d’un BMS Li-ion 4S', field:'ÉLECTRONIQUE & STOCKAGE', period:'Projet tutoré · BUT2',
     description:'Conception d’une carte électronique dédiée à la gestion d’une batterie Li-ion à quatre cellules en série, puis recherche des causes d’un fonctionnement non conforme.',
     status:'Essais non validés — diagnostic documenté', color:'cyan', icon:'bms', chips:['KiCad','Li-ion 4S','ML5243','MOSFET','Diagnostic'],
     metrics:[['4S','cellules en série'],['≈ 15 V','tension du pack mesurée'],['0 V','sortie observée sous charge']],
@@ -150,22 +150,22 @@ for(const [project,archive] of [[projects[0],originalBMS],[projects[1],originalB
   }
 }
 projects.push(...legacyProjects);
-// Distinction explicite entre projet tutoré, SAE documentée et autres travaux.
-// La fiche BETEM reste disponible depuis « Expérience professionnelle »,
-// mais ne figure plus dans les réalisations universitaires.
-projects.find(p=>p.id==='bms').category='tutored';
-projects.find(p=>p.id==='bms').nature='PROJET TUTORÉ';
-projects.find(p=>p.id==='pv').category='tutored';
-projects.find(p=>p.id==='pv').nature='PROJET TUTORÉ';
-for(const id of ['cem','dialux']){
-  const practical=projects.find(p=>p.id===id);
-  if(practical){practical.category='applied';practical.nature='TRAVAUX PRATIQUES'}
+// Classement pédagogique : projets tutorés d'abord, puis SAE/TP,
+// avec les années affichées de BUT3 vers BUT1 dans chaque catégorie.
+for(const [id,year,category,nature] of [
+  ['pv',3,'tutored','PROJET TUTORÉ'],
+  ['bms',2,'tutored','PROJET TUTORÉ'],
+  ['cem',3,'applied','TRAVAUX PRATIQUES'],
+  ['dialux',3,'applied','TRAVAUX PRATIQUES']
+]){
+  const p=projects.find(item=>item.id===id);
+  if(p){p.year=year;p.category=category;p.nature=nature}
 }
 const academicProjects=projects.filter(p=>p.id!=='betem');
-const tutoredProjects=academicProjects.filter(p=>p.category==='tutored')
-  .sort((a,b)=>['bms','pv','geii-capteur-de-temperature'].indexOf(a.id)-['bms','pv','geii-capteur-de-temperature'].indexOf(b.id));
-const appliedProjects=academicProjects.filter(p=>p.category!=='tutored');
-academicProjects.forEach((p,i)=>{p.no=String(i+1).padStart(2,'0')});
+const sortByYear=(a,b)=>b.year-a.year||a.name.localeCompare(b.name,'fr');
+const tutoredProjects=academicProjects.filter(p=>p.category==='tutored').sort(sortByYear);
+const appliedProjects=academicProjects.filter(p=>p.category!=='tutored').sort(sortByYear);
+[...tutoredProjects,...appliedProjects].forEach((p,i)=>{p.no=String(i+1).padStart(2,'0')});
 const betemExperience=projects.find(p=>p.id==='betem');
 betemExperience.no='ST';
 
@@ -272,16 +272,24 @@ function ProjectCard({project:p,onOpen,featured=false}){
   </article>;
 }
 
-function getDocumentPreviewUrl(url){
-  const fileMatch=url.match(/^https:\/\/drive\.google\.com\/file\/d\/([^/]+)/);
-  if(fileMatch)return 'https://drive.google.com/file/d/'+fileMatch[1]+'/preview';
-  if(url.endsWith('.pdf'))return url+'#toolbar=0';
-  return url;
+function ProjectYearGroup({items,onOpen,featureTutored=false}){
+  return <div className="project-year-list">
+    {[3,2,1].map(year=>{
+      const entries=items.filter(p=>p.year===year);
+      if(!entries.length)return null;
+      return <div key={year} className={'project-year-block project-year-block--'+year}>
+        <div className="project-year-heading reveal"><span>BUT{year}</span><span>{entries.length} {entries.length===1?'RÉALISATION':'RÉALISATIONS'}</span></div>
+        <div className="projects-list">
+          {entries.map(p=><ProjectCard key={p.id} project={p} featured={featureTutored&&['pv','bms'].includes(p.id)} onOpen={onOpen}/>)}
+        </div>
+      </div>;
+    })}
+  </div>;
 }
+
 function ProjectDetail({project:p,onClose,onZoom}){
   const dialogRef=useRef(null);
-  const [previewDoc,setPreviewDoc]=useState(null);
-  useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape'){if(previewDoc)setPreviewDoc(null);else onClose()}};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose,previewDoc]);
+  useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape')onClose()};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose]);
   return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
     <div className="detail-header"><span className="index">{p.id==='betem'?'DOSSIER DE STAGE / BETEM':`DÉCRYPTAGE / PROJET ${p.no}`}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
     <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{['bms','pv'].includes(p.id)?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
@@ -297,17 +305,6 @@ function ProjectDetail({project:p,onClose,onZoom}){
       <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((step,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{step}</span></li>)}</ol></section>
       <section><span className="chapter-index">04 / RÉSULTATS</span><h3>Ce que montrent les résultats</h3><p>{p.results}</p></section>
       <section className="critical-section"><span className="chapter-index">05 / PRISE DE RECUL</span><h3>Mon autoévaluation</h3><p>{p.critique}</p></section>
-    </div>}
-    {!p.legacyOnly&&!['cem','dialux','betem'].includes(p.id)&&<div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.id==='bms'?<div className="bms-embedded-evidence"><CheckCircle2 size={18}/><p>Les photographies du PCB et les mesures sont placées directement dans les chapitres techniques ci-dessus. Les pièces sources figurent ci-dessous.</p></div>:p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
-      {p.note&&<p className="source-note"><ShieldCheck size={17}/>{p.note}</p>}
-      {p.docs?.length>0&&<div className="download-list">{p.docs.map(d=><div key={d.url}><span>{d.type}</span><div className="document-actions"><DocumentLink url={d.url} label={d.label}/><button className="preview-doc-button" type="button" onClick={()=>setPreviewDoc(d)}>APERÇU DU DOCUMENT <ExternalLink size={15}/></button></div></div>)}</div>}
-    </div>}
-    {previewDoc&&<div className="document-lightbox" onClick={()=>setPreviewDoc(null)}>
-      <div className="document-frame" role="dialog" aria-modal="true" aria-label={'Aperçu de '+previewDoc.label} onClick={e=>e.stopPropagation()}>
-        <div className="document-frame-header"><strong>{previewDoc.label}</strong><div><DocumentLink url={previewDoc.url} label="OUVRIR L'ORIGINAL" external/><button type="button" onClick={()=>setPreviewDoc(null)}><X size={18}/> FERMER</button></div></div>
-        <iframe loading="lazy" title={previewDoc.label} src={getDocumentPreviewUrl(previewDoc.url)} referrerPolicy="no-referrer" allow="fullscreen"/>
-        <p>Document d'origine depuis Google Drive. L'affichage intégré dépend des autorisations de partage et de votre connexion Google. Le lien « Ouvrir l'original » reste disponible.</p>
-      </div>
     </div>}
     <div className="detail-footer"><div><span>COMPÉTENCES ASSOCIÉES</span><Chips items={p.skills}/></div><button type="button" onClick={onClose} className="secondary-button"><ArrowLeft size={16}/> RETOUR AU PORTFOLIO</button></div>
   </article></div>;
@@ -347,7 +344,7 @@ function App(){
         <SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside={`${academicProjects.length} ÉTUDES UNIVERSITAIRES`}/>
         <div className="projects-intro reveal">
           <h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2>
-          <p>Deux parcours de réalisation : les projets tutorés au premier plan, puis les SAE et travaux pratiques. Chaque dossier présente la démarche, les résultats et les preuves originales.</p>
+          <p>Deux parcours de réalisation : les projets tutorés au premier plan, puis les SAE et travaux pratiques. Chaque projet présente la démarche, les choix techniques, les résultats et le recul acquis, de la troisième à la première année.</p>
         </div>
 
         <div className="projects-group projects-group--tutored">
@@ -359,9 +356,7 @@ function App(){
             </div>
             <span className="projects-group-count">{String(tutoredProjects.length).padStart(2,'0')} DOSSIERS</span>
           </div>
-          <div className="projects-list">
-            {tutoredProjects.map((p,i)=><ProjectCard key={p.id} project={p} featured={i<2} onOpen={openProject}/>)}
-          </div>
+          <ProjectYearGroup items={tutoredProjects} featureTutored onOpen={openProject}/>
         </div>
 
         <div className="projects-group projects-group--applied">
@@ -373,9 +368,7 @@ function App(){
             </div>
             <span className="projects-group-count">{String(appliedProjects.length).padStart(2,'0')} DOSSIERS</span>
           </div>
-          <div className="projects-list">
-            {appliedProjects.map(p=><ProjectCard key={p.id} project={p} onOpen={openProject}/>)}
-          </div>
+          <ProjectYearGroup items={appliedProjects} onOpen={openProject}/>
         </div>
       </section>
 
