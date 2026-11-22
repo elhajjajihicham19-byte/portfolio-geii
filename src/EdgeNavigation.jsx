@@ -49,7 +49,7 @@ export default function EdgeNavigation(){
       onClick={()=>setOpen(value=>!value)}>
       <Menu size={18}/><span>NAVIGATION</span><ChevronRight size={13}/>
     </button>
-    <div className="edge-nav__body">
+    <div className="edge-nav__body" inert={!open}>
       <div className="edge-nav__identity"><Zap size={19}/><span>EXPLORER LE PORTFOLIO</span></div>
       <p>ACCÈS RAPIDE AUX SECTIONS</p>
       <nav id="edge-nav-links" aria-label="Accès rapide aux sections">
