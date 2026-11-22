@@ -14,10 +14,10 @@
 .legacy-chapter-figure>figcaption>span{font-size:12px;line-height:1.7;color:#a9c0d2}
 .legacy-inline-sources{margin-top:30px;border-top:1px solid #395c77;padding-top:20px}
 .legacy-inline-sources>span{display:block;color:#79c2f3;font-size:10px;letter-spacing:.13em;font-weight:700;margin:0 0 19px}
-.legacy-inline-sources>a{display:flex;align-items:center;gap:12px;margin:10px 0;padding:15px 17px;background:#122c42;border:1px solid #436d8c;color:#b4def6}
-.legacy-inline-sources>a:hover{background:#23516f}
-.legacy-inline-sources>a svg{flex-shrink:0}
-.legacy-inline-sources>a span{flex:1;overflow-wrap:anywhere;font-size:13px;line-height:1.6;font-weight:600}
+.legacy-source-item>a{display:flex;align-items:center;gap:12px;margin:10px 0;padding:15px 17px;background:#122c42;border:1px solid #436d8c;color:#b4def6}
+.legacy-source-item>a:hover{background:#23516f}
+.legacy-source-item>a svg{flex-shrink:0}
+.legacy-source-item>a span{flex:1;overflow-wrap:anywhere;font-size:13px;line-height:1.6;font-weight:600}
 .legacy-inline-sources>p{font-size:11px;color:#86aabe;line-height:1.7;margin:15px 0}
 .legacy-precision{display:flex;align-items:start;gap:11px;border-left:2px solid #5f9dc4;padding:15px;margin-top:23px;background:#122d43;color:#b0c6d7;font-size:13px;line-height:1.8}
 .legacy-precision svg{flex-shrink:0;margin-top:2px;color:#84cbfa}
@@ -33,3 +33,11 @@
 .legacy-full-source>p{font-size:13px;line-height:1.9;color:#a4bfd0;margin:10px 0 25px}
 .legacy-full-source .historical-chapter{padding:22px}
 @media(max-width:1100px){.legacy-chapter-with-photo{grid-template-columns:1fr}.legacy-chapter-figure>button{height:330px}}
+
+.legacy-source-item{display:flex;align-items:stretch;gap:10px;margin:10px 0}
+.legacy-source-item>a{flex:1;min-width:0;margin:0}
+.legacy-source-item>button{padding:12px 14px;background:#204766;color:#c5e9ff;border:1px solid #557c9b;font-size:10px;font-weight:700;letter-spacing:.08em;cursor:pointer}
+.legacy-source-item>button:hover,.legacy-source-item>button[aria-expanded="true"]{background:#7fcbf5;color:#082030}
+.legacy-inline-preview{margin:13px 0 25px;padding:13px;background:#10283b;border:1px solid #436c87}
+.legacy-inline-preview iframe{display:block;background:white;border:0;width:100%;height:520px}
+.legacy-inline-preview>p{font-size:11px;line-height:1.7;color:#93b7cf;padding:10px 3px 0;margin:0}
