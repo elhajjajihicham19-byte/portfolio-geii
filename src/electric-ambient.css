@@ -60,3 +60,11 @@
   .electric-ambient__pulse,.electric-ambient__node,.electric-ambient__glow{animation:none!important}
   .electric-ambient__pulse{opacity:.22;stroke-dashoffset:0;transition:none}
 }
+
+/* Les couches décoratives n'occupent plus le GPU derrière un dossier ouvert. */
+.electric-ambient--paused .electric-ambient__pulse,
+.electric-ambient--paused .electric-ambient__node,
+.electric-ambient--paused .electric-ambient__glow{
+ animation-play-state:paused!important
+}
+.electric-ambient--paused .electric-ambient__cursor{display:none}
