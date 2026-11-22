@@ -14,6 +14,8 @@ jobs:
           node-version: "22"
       - name: Installer les dépendances
         run: npm install
+      - name: Vérifier les alertes de sécurité des dépendances de production
+        run: npm audit --omit=dev --audit-level=high
       - name: Contrôler les 20 pages, 12 projets et les images
         run: node scripts/verify_portfolio.mjs
       - name: Compiler le portfolio React
