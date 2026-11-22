@@ -7,7 +7,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "import:takeout": "node scripts/import_takeout.mjs"
+    "import:takeout": "node scripts/import_takeout.mjs",
+    "audit": "node scripts/verify_portfolio.mjs && node scripts/audit_site.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.0.0",
