@@ -23,6 +23,7 @@ import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 import './documents-compact.css';
 import './project-selector.css';
+import './portfolio-polish.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const REFERENTIEL = 'https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2023-12/g-nie-lectrique-et-informatique-industrielle-30834.pdf';
