@@ -8,6 +8,7 @@ import Lenis from 'lenis';
 import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail } from 'lucide-react';
 import ArchiveShowcase from './ArchiveShowcase.jsx';
 import { legacyProjects, originalFor, originalEvidence, originalDocuments } from './legacyProjects.js';
+import BmsCaseStudy from './BmsCaseStudy.jsx';
 import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 gsap.registerPlugin(ScrollTrigger);
@@ -282,16 +283,17 @@ function ProjectDetail({project:p,onClose,onZoom}){
   useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape'){if(previewDoc)setPreviewDoc(null);else onClose()}};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose,previewDoc]);
   return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
     <div className="detail-header"><span className="index">{p.id==='betem'?'DOSSIER DE STAGE / BETEM':`DÉCRYPTAGE / PROJET ${p.no}`}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
-    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line"><CheckCircle2 size={15}/>{p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
+    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{p.id==='bms'?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
-    {!p.legacyOnly&&<div className="detail-chapters">
+    {p.id==='bms'&&<BmsCaseStudy onZoom={onZoom}/>}
+    {!p.legacyOnly&&p.id!=='bms'&&<div className="detail-chapters">
       <section><span className="chapter-index">01 / CONTEXTE</span><h3>Pourquoi ce projet ?</h3><p>{p.context}</p></section>
       <section><span className="chapter-index">02 / MON RÔLE</span><h3>Ce que j'ai réalisé</h3><p>{p.role}</p></section>
       <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((step,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{step}</span></li>)}</ol></section>
       <section><span className="chapter-index">04 / RÉSULTATS</span><h3>Ce que montrent les résultats</h3><p>{p.results}</p></section>
       <section className="critical-section"><span className="chapter-index">05 / PRISE DE RECUL</span><h3>Mon autoévaluation</h3><p>{p.critique}</p></section>
     </div>}
-    {!!p.originalSections?.length&&<div className="historical-dossier">
+    {!!p.originalSections?.length&&p.id!=='bms'&&<div className="historical-dossier">
       <div className="small-heading"><span className="index">DOSSIER INTÉGRAL / PORTFOLIO D'ORIGINE</span><span className="rule"/></div>
       <p className="historical-context">Transcription intégrale des sections rédigées lors du projet. Les résultats du dossier d'origine sont conservés pour leur valeur pédagogique et historique ; ils sont à lire avec les éventuelles conclusions actualisées ci-dessus.</p>
       <div className="historical-grid">{p.originalSections.map((chapter,i)=><section className="historical-chapter" key={i}>
@@ -300,7 +302,15 @@ function ProjectDetail({project:p,onClose,onZoom}){
         {(chapter.blocs||[]).map((block,j)=><p key={j} className={block.type==='puce'?'historical-bullet':''}>{block.type==='puce'?'— ':''}{block.texte}</p>)}
       </section>)}</div>
     </div>}
-    <div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
+    {p.id==='bms'&&!!p.originalSections?.length&&<details className="bms-old-transcript">
+      <summary>VOIR LA TRANSCRIPTION COMPLÈTE DE L'ANCIEN PORTFOLIO <ChevronRight size={17}/></summary>
+      <p>Les affirmations de validation de l'ancien texte sont conservées pour traçabilité historique. Les mesures et conclusions de la fiche actuelle et du rapport de tests doivent prévaloir.</p>
+      <div className="historical-grid">{p.originalSections.map((chapter,i)=><section className="historical-chapter" key={i}>
+        <span className="chapter-index">{String(i+1).padStart(2,'0')} / {String(p.originalSections.length).padStart(2,'0')}</span>
+        <h3>{chapter.titre}</h3>{(chapter.blocs||[]).map((block,j)=><p key={j} className={block.type==='puce'?'historical-bullet':''}>{block.type==='puce'?'— ':''}{block.texte}</p>)}
+      </section>)}</div>
+    </details>}
+    <div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.id==='bms'?<div className="bms-embedded-evidence"><CheckCircle2 size={18}/><p>Les photographies du PCB et les mesures sont placées directement dans les chapitres techniques ci-dessus. Les pièces sources figurent ci-dessous.</p></div>:p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
       {p.note&&<p className="source-note"><ShieldCheck size={17}/>{p.note}</p>}
       {p.docs?.length>0&&<div className="download-list">{p.docs.map(d=><div key={d.url}><span>{d.type}</span><div className="document-actions"><DocumentLink url={d.url} label={d.label}/><button className="preview-doc-button" type="button" onClick={()=>setPreviewDoc(d)}>APERÇU DU DOCUMENT <ExternalLink size={15}/></button></div></div>)}</div>}
     </div>
