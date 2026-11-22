@@ -13,13 +13,22 @@ function Figure({evidence,onZoom}){
 }
 function SourceLink({doc}){
  if(!doc)return null;
- return <a className="technical-doc-link" href={doc.url} target="_blank" rel="noopener noreferrer"><FileText size={20}/><span>{doc.label}<small>SOURCE AUTHENTIQUE DU COMPTE RENDU</small></span><ArrowUpRight size={18}/></a>;
+ return <a className="technical-doc-link" href={doc.url} target="_blank" rel="noopener noreferrer"><FileText size={20}/><span>{doc.label}<small>SIMULATIONS, MESURES ET CALCULS DÉTAILLÉS</small></span><ArrowUpRight size={18}/></a>;
 }
 function Chapter({number,title,icon,children}){
  return <section className="bms-chapter">
   <div className="bms-chapter-index"><span>{String(number).padStart(2,'0')} / {title}</span>{icon}</div>{children}
  </section>;
 }
+const cemSimulations={
+  lcSchematic:{image:'/assets/cem/filtre-accorde-schema.webp',title:'Schéma PSIM — filtre passif accordé',desc:'LF = 10 mH conservée, L1 = 15 mH et branche L2–C1 accordée sur 150 Hz (TP, p. 20).'},
+  lcWaves:{image:'/assets/cem/filtre-accorde-chronogrammes.webp',title:'Chronogrammes — source, filtre et pont',desc:'Courants i(t), iC1(t) et iP(t) : la branche accordée absorbe l’harmonique 3 (TP, p. 21).'},
+  lcSpectra:{image:'/assets/cem/filtre-accorde-spectres.webp',title:'Spectres de courants — filtre LC accordé',desc:'Analyse de Fourier des trois courants : H3 disparaît côté réseau (TP, p. 22).'},
+  pfcSchematic:{image:'/assets/cem/pfc-schema-boost.webp',title:'Schéma PSIM — redresseur avec PFC Boost',desc:'Pont de diodes, inductance, IGBT, diode de Boost et condensateur de sortie (TP, p. 24).'},
+  pfcControl:{image:'/assets/cem/pfc-commande-hysteresis.webp',title:'Commande du PFC par hystérésis',desc:'Comparateurs, bande de courant et bascule RS commandant l’IGBT (TP, p. 26).'},
+  pfcHysteresis:{image:'/assets/cem/pfc-bande-hysteresis.webp',title:'Simulation du suivi de courant du PFC',desc:'Le courant de l’inductance reste entre les consignes de la bande d’hystérésis (TP, p. 28).'},
+  pfcWaves:{image:'/assets/cem/pfc-chronogrammes.webp',title:'Oscillogrammes PSIM — fonctionnement du PFC',desc:'Tension redressée, courant inductance et courant réseau quasi sinusoïdal (TP, p. 29).'}
+};
 function CemStudy({project:p,onZoom}){
  const [circuit,waves,spectrum,filter]=p.evidence||[];
  return <div className="bms-study technical-study">
@@ -48,21 +57,71 @@ function CemStudy({project:p,onZoom}){
     <div className="bms-spec-grid"><div className="bms-spec"><strong>139 %</strong><span>THD courant initial</span></div><div className="bms-spec"><strong>0,58</strong><span>facteur de puissance</span></div></div>
    </div><Figure evidence={spectrum} onZoom={onZoom}/></div>
   </Chapter>
-  <Chapter number={4} title="SOLUTIONS DE FILTRAGE" icon={<Microscope size={22}/>}>
-   <h4>Comparer l'inductance série, les filtres accordés et le PFC.</h4>
-   <p className="technical-intro">J’ai commencé par ajouter une inductance de 10 mH à l’entrée. Elle s’oppose aux variations rapides du courant, réduit la hauteur des impulsions et en augmente la durée. Le compte rendu présente également un filtre passif accordé sur l’harmonique 3 (150 Hz), un correcteur actif de facteur de puissance et un compensateur actif.</p>
-   <div className="technical-result-table"><table><thead><tr><th>GRANDEUR</th><th>SANS INDUCTANCE</th><th>AVEC 10 mH</th></tr></thead><tbody>
+  <Chapter number={4} title="FILTRAGE PASSIF : LF ET FILTRE ACCORDÉ" icon={<Microscope size={22}/>}>
+   <h4>Atténuer les impulsions, puis éliminer l’harmonique 3.</h4>
+   <p className="technical-intro">J’ai d’abord ajouté une inductance série <strong>LF = 10 mH</strong> pour limiter les variations rapides du courant. Les impulsions sont moins hautes et plus étalées : le THD passe de <strong>139 % à 81 %</strong> et le facteur de puissance s’améliore de <strong>0,58 à 0,74</strong>. Ce premier filtrage reste toutefois insuffisant pour obtenir un courant proche d’une sinusoïde.</p>
+   <div className="technical-result-table"><table><thead><tr><th>GRANDEUR SIMULÉE</th><th>REDRESSEUR SEUL</th><th>AVEC LF = 10 mH</th></tr></thead><tbody>
     <tr><td>Courant crête</td><td>≈ 14,6 A</td><td>≈ 7,5 A</td></tr>
     <tr><td>Durée des impulsions</td><td>≈ 2,2 ms</td><td>≈ 4,5 ms</td></tr>
-    <tr><td>THD courant</td><td>≈ 139 %</td><td>≈ 81 %</td></tr>
-    <tr><td>Facteur de puissance</td><td>≈ 0,58</td><td>≈ 0,74</td></tr>
+    <tr><td>Courant efficace réseau</td><td>4,76 A</td><td>3,33 A</td></tr>
+    <tr><td>THD en courant</td><td>139 %</td><td>81 %</td></tr>
+    <tr><td>Facteur de puissance</td><td>0,58</td><td>0,74</td></tr>
    </tbody></table></div>
    <div className="technical-image-wide"><Figure evidence={filter} onZoom={onZoom}/></div>
+
+   <div className="cem-case-divider"><span>SIMULATION PSIM / FILTRE PASSIF ACCORDÉ</span><span>RÉSONANCE À 150 Hz</span></div>
+   <h4>Piéger le rang 3 avec une branche LC.</h4>
+   <p className="technical-intro">J’ai conservé l’inductance LF précédente et simulé un filtre avec <strong>L1 = 15 mH</strong> pour le découplage et une branche <strong>L2–C1</strong> accordée sur la fréquence du troisième harmonique : <strong>f₃ = 3 × 50 = 150 Hz</strong>. Pour <strong>C1 = 24,8 µF</strong>, j’ai obtenu <strong>L2 ≈ 45,4 mH</strong> avec la relation <strong>L2 = 1 / [(2πf₃)² C1]</strong>.</p>
+   <div className="bms-spec-grid cem-spec-grid"><div className="bms-spec"><strong>150 Hz</strong><span>harmonique ciblé</span></div><div className="bms-spec"><strong>45,4 mH</strong><span>inductance L2 calculée</span></div><div className="bms-spec"><strong>24,8 µF</strong><span>capacité C1</span></div><div className="bms-spec"><strong>15 mH</strong><span>découplage L1</span></div></div>
+   <div className="cem-figure-grid">
+    <Figure evidence={cemSimulations.lcSchematic} onZoom={onZoom}/>
+    <Figure evidence={cemSimulations.lcWaves} onZoom={onZoom}/>
+   </div>
+   <p className="technical-intro">Les chronogrammes distinguent le courant réseau <strong>i(t)</strong>, celui de la branche accordée <strong>iC1(t)</strong> et le courant du pont <strong>iP(t)</strong>. Le redresseur continue d’absorber un courant déformé, mais sa composante de rang 3 est dérivée vers la branche L2–C1 : <strong>I₃ ≈ 0 A côté réseau</strong>, alors que <strong>I₃ = 1,74 A</strong> circule dans le filtre. J’ai également relevé <strong>2,15 A à 50 Hz</strong> dans cette branche.</p>
+   <div className="cem-figure-grid cem-figure-grid--single">
+    <Figure evidence={cemSimulations.lcSpectra} onZoom={onZoom}/>
+   </div>
+   <div className="technical-result-table"><table><thead><tr><th>RÉSULTAT</th><th>LF SEULE</th><th>LF + FILTRE ACCORDÉ</th></tr></thead><tbody>
+    <tr><td>Harmonique H3 (150 Hz)</td><td>1,86 A</td><td>≈ 0 A</td></tr>
+    <tr><td>Harmonique H5 (250 Hz)</td><td>0,89 A</td><td>0,44 A</td></tr>
+    <tr><td>THD courant</td><td>81 %</td><td><strong>17 %</strong></td></tr>
+    <tr><td>Courant réseau efficace</td><td>3,33 A</td><td>2,88 A</td></tr>
+    <tr><td>Facteur de puissance PF</td><td>0,74</td><td><strong>0,89</strong></td></tr>
+    <tr><td>Facteur de déplacement DPF</td><td>0,95</td><td>0,90</td></tr>
+    <tr><td>Puissance active</td><td>591 W</td><td>616 W</td></tr>
+   </tbody></table></div>
+   <div className="technical-analysis"><AlertCircle size={22}/><p>Le filtre accordé est efficace sur le rang visé, mais il ne supprime pas toutes les harmoniques. À 50 Hz, la branche L2–C1 reste capacitive : le courant réseau est en avance d’environ <strong>26°</strong> et le DPF baisse à <strong>0,90</strong>. Ce type de filtre est aussi encombrant et peut entrer en résonance avec l’impédance du réseau. Dans les conditions simulées, les harmoniques vérifiées respectent les limites retenues dans le TP.</p></div>
   </Chapter>
-  <Chapter number={5} title="RÉSULTATS ET ANALYSE CRITIQUE" icon={<Gauge size={22}/>}>
-   <h4>Un meilleur courant réseau, avec des compromis.</h4>
-   <p className="technical-intro">L’ajout de l’inductance a diminué le THD et amélioré le facteur de puissance. En contrepartie, la tension continue et la puissance transmise à la charge baissent, et l’inductance de filtrage reste encombrante. Le filtre accordé agit plus spécifiquement sur une fréquence donnée ; les solutions actives nécessitent une électronique de commande plus complexe.</p>
-   <div className="technical-analysis"><AlertCircle size={22}/><p>Cette comparaison repose sur des simulations PSIM : une vérification réelle nécessiterait des mesures de THD, de facteur de puissance, de rendement et d’échauffement sur un montage physique. Les limites normatives dépendent aussi de la classe d'équipement et des conditions d'essai.</p></div>
+
+  <Chapter number={5} title="PFC BOOST ET COMPARAISON DES RÉSULTATS" icon={<Gauge size={22}/>}>
+   <h4>Imposer un courant sinusoïdal avec un correcteur actif.</h4>
+   <p className="technical-intro">J’ai ensuite étudié un <strong>correcteur de facteur de puissance (PFC)</strong> constitué d’un pont de diodes et d’un <strong>hacheur élévateur Boost</strong>. Le montage associe une inductance, un interrupteur IGBT, une diode et un condensateur. Contrairement au filtre accordé, il agit directement sur la forme du courant absorbé.</p>
+   <div className="cem-figure-grid">
+    <Figure evidence={cemSimulations.pfcSchematic} onZoom={onZoom}/>
+    <Figure evidence={cemSimulations.pfcControl} onZoom={onZoom}/>
+   </div>
+   <p className="technical-intro">J’ai étudié une commande par <strong>hystérésis</strong> : le courant dans l’inductance est maintenu entre deux consignes, dont la borne basse représente 90 % de la borne haute. L’IGBT est commuté pour suivre une sinusoïde redressée proportionnelle à la tension d’entrée. Le courant demandé au réseau devient ainsi pratiquement <strong>sinusoïdal et en phase</strong> avec la tension.</p>
+   <div className="bms-spec-grid cem-spec-grid"><div className="bms-spec"><strong>390 V</strong><span>tension continue régulée Uc</span></div><div className="bms-spec"><strong>5 mH</strong><span>inductance du Boost</span></div><div className="bms-spec"><strong>≈ 241 Ω</strong><span>résistance de charge</span></div><div className="bms-spec"><strong>20–100 kHz</strong><span>ordre de grandeur du découpage</span></div></div>
+   <div className="cem-figure-grid">
+    <Figure evidence={cemSimulations.pfcHysteresis} onZoom={onZoom}/>
+    <Figure evidence={cemSimulations.pfcWaves} onZoom={onZoom}/>
+   </div>
+   <p className="technical-intro">Pour le point de fonctionnement simulé (<strong>Uc ≈ 390 V, L = 5 mH, Vicons ≈ 0,77 V</strong>), le courant réseau est proche d’une sinusoïde de 50 Hz. Le signal de commande commute à fréquence variable : environ <strong>24 kHz</strong> au sommet de la sinusoïde redressée, et davantage au voisinage des passages par zéro. Une faible ondulation liée au découpage subsiste.</p>
+   <div className="technical-result-table"><table><thead><tr><th>SIMULATION PSIM</th><th>REDRESSEUR</th><th>LF 10 mH</th><th>LC ACCORDÉ</th><th>PFC BOOST</th></tr></thead><tbody>
+    <tr><td>THD courant</td><td>139 %</td><td>81 %</td><td>17 %</td><td><strong>≈ 3 %</strong></td></tr>
+    <tr><td>Facteur de puissance PF</td><td>0,58</td><td>0,74</td><td>0,89</td><td><strong>≈ 1,00</strong></td></tr>
+    <tr><td>Cos φ₁ (DPF)</td><td>0,99</td><td>0,95</td><td>0,90</td><td>1,00</td></tr>
+    <tr><td>Courant efficace</td><td>4,76 A</td><td>3,33 A</td><td>2,88 A</td><td>2,65 A</td></tr>
+    <tr><td>Harmonique H3</td><td>2,54 A</td><td>1,86 A</td><td>≈ 0 A</td><td>≈ 0 A</td></tr>
+    <tr><td>Puissance active</td><td>659 W</td><td>591 W</td><td>616 W</td><td>635 W</td></tr>
+    <tr><td>Puissance apparente</td><td>≈ 1,14 kVA</td><td>≈ 0,80 kVA</td><td>≈ 0,69 kVA</td><td>≈ 0,64 kVA</td></tr>
+   </tbody></table></div>
+   <div className="cem-conclusion-grid">
+    <div className="technical-measure-highlight"><span>FILTRE ACCORDÉ / THD</span><b>17 %</b><p>Le rang 3 est dérivé vers la branche LC ; un courant réactif capacitif subsiste.</p></div>
+    <div className="technical-measure-highlight"><span>PFC BOOST / THD</span><b>≈ 3 %</b><p>Courant réseau presque sinusoïdal, PF ≈ 1 et tension continue régulée à 390 V.</p></div>
+   </div>
+   <p className="technical-intro">Le PFC donne les meilleurs résultats de cette comparaison pour une alimentation d’environ <strong>600 W</strong> : <strong>Ieff = 2,65 A</strong>, <strong>PF ≈ 0,999</strong> et <strong>DPF ≈ 1</strong>, avec des harmoniques de basse fréquence quasi nulles. En contrepartie, la commande électronique est plus complexe, le découpage crée des pertes et des perturbations conduites à haute fréquence qui nécessitent un filtrage adapté.</p>
+   <div className="technical-analysis"><AlertCircle size={22}/><p>Tous ces résultats sont issus des simulations PSIM du TP. Le THD de 3 % n’implique pas l’absence totale de perturbations : une ondulation résiduelle demeure aux fréquences de découpage. Une validation matérielle demanderait aussi des mesures de rendement, d’échauffement et de compatibilité électromagnétique.</p></div>
   </Chapter>
   <Chapter number={6} title="COMPÉTENCES & DOCUMENTS" icon={<ShieldCheck size={22}/>}>
    <h4>Interpréter des signaux, pas seulement relever des valeurs.</h4>
