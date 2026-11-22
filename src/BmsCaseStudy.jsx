@@ -11,7 +11,7 @@ const images={
   cell:'/legacy/legacy-3ffc3107d220a3.webp',
   board:'/legacy/legacy-5eff485b4859ec.webp'
 };
-function Figure({src,title,caption,onZoom,wide=false,source='Photographie originale — Google Sites'}){
+function Figure({src,title,caption,onZoom,wide=false,source='Photographie du montage BMS'}){
   return <figure className={'bms-figure'+(wide?' bms-figure--wide':'')}>
     <button type="button" className="bms-figure-image" onClick={()=>onZoom({image:src,title,desc:caption,source})} aria-label={'Agrandir : '+title}>
       <img src={src} alt={title} loading="lazy"/>
@@ -23,11 +23,11 @@ function Figure({src,title,caption,onZoom,wide=false,source='Photographie origin
 function ReportFigure({page,title,caption,onZoom,wide=false}) {
   const id=String(page).padStart(2,'0');
   return <Figure src={'/assets/bms/rapport-page-'+id+'.webp'} title={title} caption={caption}
-    onZoom={onZoom} wide={wide} source={'Capture authentique du rapport tutoré BMS — page '+page+'/27'}/>;
+    onZoom={onZoom} wide={wide} source={'Schéma ou mesure du rapport BMS — page '+page+'/27'}/>;
 }
 function Source({page,label}){
   return <a className="bms-source" href={REPORT} target="_blank" rel="noopener noreferrer">
-    <FileText size={16}/><span>{label||'Consulter le document original'} <small>RAPPORT TUTORÉ · PAGE {page} / 27</small></span><ArrowUpRight size={16}/>
+    <FileText size={16}/><span>{label||'Consulter le rapport technique'} <small>RAPPORT TUTORÉ · PAGE {page} / 27</small></span><ArrowUpRight size={16}/>
   </a>;
 }
 function Spec({value,label}){return <div className="bms-spec"><strong>{value}</strong><span>{label}</span></div>}
@@ -50,7 +50,7 @@ export default function BmsCaseStudy({onZoom}){
           <div className="bms-spec-grid"><Spec value="4S" label="cellules en série"/><Spec value="14,8 V" label="tension nominale"/><Spec value="16,8 V" label="tension maximale"/><Spec value="1 A" label="courant ciblé"/></div>
           <Source page="5" label="Cahier des charges et seuils de protection"/>
         </div>
-        <Figure src={images.assembly} title="Carte et pack Li-ion 4S" caption="Photographie originale du circuit assemblé et raccordé au pack. Elle documente la réalisation physique, sans prouver le fonctionnement des protections." onZoom={onZoom}/>
+        <Figure src={images.assembly} title="Carte et pack Li-ion 4S" caption="Carte assemblée et raccordée au pack. Cette vue montre la réalisation du montage, sans constituer une validation fonctionnelle des protections." onZoom={onZoom}/>
       </div>
     </section>
 
@@ -71,7 +71,7 @@ export default function BmsCaseStudy({onZoom}){
         <Figure src={images.board} title="Assemblage réel de la carte" caption="Gros plan sur le PCB, les connexions de puissance, le porte-fusible et les composants soudés." onZoom={onZoom}/>
       </div>
       <div className="bms-report-figure-single">
-        <ReportFigure page={6} title="Schéma d’architecture original — ML5243" caption="Schéma issu de notre dossier : ML5243, MOSFET de charge/décharge et détection thermique. Une mention « 5S » figure sur cette planche alors que notre cahier des charges retient un pack 4S ; cette incohérence reste à clarifier." onZoom={onZoom} wide/>
+        <ReportFigure page={6} title="Schéma d’architecture — ML5243" caption="Schéma issu de notre dossier : ML5243, MOSFET de charge/décharge et détection thermique. Une mention « 5S » figure sur cette planche alors que notre cahier des charges retient un pack 4S ; cette incohérence reste à clarifier." onZoom={onZoom} wide/>
       </div>
     </section>
 
@@ -88,19 +88,19 @@ export default function BmsCaseStudy({onZoom}){
             <li><span>04</span>Fabriquer, souder et contrôler plusieurs versions du PCB</li>
           </ul>
           <p>Nous avons réalisé <strong>trois versions du PCB</strong>. Les premières itérations nous ont confrontés à des difficultés de soudure, d’implantation et de fiabilité, que nous avons analysées pour améliorer la carte.</p>
-          <Source page="10" label="Routage KiCad original et shunt de 1 mΩ"/>
+          <Source page="10" label="Routage KiCad et shunt de 1 mΩ"/>
           <Source page="11" label="Versions 1, 2 et 3 du PCB"/>
         </div>
         <Figure src={images.assembly} title="PCB équipé, vue d'ensemble" caption="Notre carte assemblée et raccordée au pack. Les vues KiCad et les versions du PCB sont présentées ci-dessous." onZoom={onZoom}/>
       </div>
       <div className="bms-report-figures">
-        <ReportFigure page={9} title="Conception matérielle et brochage du ML5243" caption="Schéma et contraintes électriques du circuit — rapport original, page 9." onZoom={onZoom}/>
-        <ReportFigure page={10} title="Routage KiCad — pistes et shunt" caption="Vue réelle du PCB routé : chemin de puissance 2 mm et shunt cible 1 mΩ — rapport original, page 10." onZoom={onZoom}/>
-        <ReportFigure page={11} title="Évolution des trois versions du PCB" caption="Comparaison des versions fabriquées, difficultés d’assemblage et corrections — rapport original, page 11." onZoom={onZoom} wide/>
+        <ReportFigure page={9} title="Conception matérielle et brochage du ML5243" caption="Schéma et contraintes électriques du circuit — rapport de projet, page 9." onZoom={onZoom}/>
+        <ReportFigure page={10} title="Routage KiCad — pistes et shunt" caption="Vue réelle du PCB routé : chemin de puissance 2 mm et shunt cible 1 mΩ — rapport de projet, page 10." onZoom={onZoom}/>
+        <ReportFigure page={11} title="Évolution des trois versions du PCB" caption="Comparaison des versions fabriquées, difficultés d’assemblage et corrections — rapport de projet, page 11." onZoom={onZoom} wide/>
       </div>
       <div className="bms-original-document">
         <div>
-          <span>SOURCE TECHNIQUE COMPLÈTE</span>
+          <span>SCHÉMAS ET NOMENCLATURE</span>
           <h5>Schéma, routage et nomenclature authentiques</h5>
           <p>Nous avons conservé les vues de conception, le routage et la nomenclature dans notre dossier technique. Les figures présentées sont issues de nos documents de projet, sans schéma fictif.</p>
         </div>
@@ -133,7 +133,7 @@ export default function BmsCaseStudy({onZoom}){
         <ReportFigure page={15} title="Test 2 — décharge sous charge" caption="Vgs ≈ 0,58 V ; Vout ≈ 11,8 mV. La conduction des MOSFET n’est pas validée — page 15." onZoom={onZoom}/>
         <ReportFigure page={16} title="Tests 3 et 4 — charge et tensions des cellules" caption="Courant de charge quasi nul, cellule 3 à 2,295 V et interrupteurs bloqués — page 16." onZoom={onZoom} wide/>
       </div>
-      <div className="bms-results-source"><Source page="13–16" label="Protocole et tableaux d'essais originaux"/></div>
+      <div className="bms-results-source"><Source page="13–16" label="Protocole et tableaux d’essais"/></div>
     </section>
 
     <section className="bms-chapter" aria-labelledby="bms-diagnostic">
@@ -160,7 +160,7 @@ export default function BmsCaseStudy({onZoom}){
         </div>
       </div>
       <div className="bms-report-figure-single">
-        <ReportFigure page={17} title="Démarche de diagnostic d'origine" caption="Causes possibles, mesures de contrôle et actions correctives envisagées dans le rapport de projet — page 17." onZoom={onZoom} wide/>
+        <ReportFigure page={17} title="Démarche de diagnostic et recherche de défaut" caption="Causes possibles, mesures de contrôle et actions correctives envisagées dans le rapport de projet — page 17." onZoom={onZoom} wide/>
       </div>
     </section>
 
