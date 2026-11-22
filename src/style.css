@@ -229,3 +229,14 @@ button:focus-visible,a:focus-visible {outline:2px solid #7dccff;outline-offset:4
 .project--featured .project-action button{color:#b1e3ff}
 .projects-group--applied .projects-list{gap:52px}
 @media(max-width:1200px){.projects-group-heading{align-items:start;flex-direction:column;gap:12px}.projects-group+.projects-group{margin-top:90px}}
+
+/* Stage BETEM : livrables uniquement dans l'expérience professionnelle */
+.experience-proof-band{display:grid;grid-template-columns:1fr 1.05fr;gap:6vw;margin-top:76px;padding-top:40px;border-top:1px solid #2f465a;align-items:center}
+.experience-proof-preview{min-height:310px;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(circle at 50% 40%,#203e59,#101b2c 70%);border:1px solid #325774;padding:18px}
+.experience-proof-preview img{width:100%;height:310px;object-fit:contain;background:#e5ecf3}
+.experience-proof-preview span{position:absolute;bottom:26px;left:28px;padding:9px 13px;background:#0a1521e6;border:1px solid #507693;color:#b6dafa;font-size:10px;letter-spacing:.11em;font-weight:700}
+.experience-proof-content h3{font-size:clamp(27px,3vw,49px);letter-spacing:-.065em;margin:20px 0;line-height:1.07}
+.experience-proof-content p{max-width:560px;font-size:15px;color:#a7bacb;line-height:1.95}
+.experience-proof-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.experience-proof-links .document-link{font-size:10px;white-space:normal}
+@media(max-width:1100px){.experience-proof-band{grid-template-columns:1fr}}
