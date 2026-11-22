@@ -41,14 +41,14 @@ export const legacyNarratives = {
   ]
  },
  'geii-dimensionnement-lectrique': {
-  subtitle:'Tableau résidentiel · protections différentielles · sections',
+  subtitle:'Projet tutoré BUT1 · distribution électrique d’une habitation',
   chapters:[
-   ['Préparer le schéma d’une habitation','Nous avons étudié les besoins d’une habitation pour proposer une installation basse tension cohérente avec les exigences de protection et de distribution.'],
-   ['Organiser un tableau sur trois rangées','Nous avons réparti les circuits de prises, d’éclairage et d’équipements spécialisés autour d’un disjoncteur de branchement, d’interrupteurs différentiels 30 mA et de disjoncteurs divisionnaires.'],
-   ['Dimensionner les circuits et choisir les protections','Nous avons identifié les usages, distingué les circuits dédiés, retenu les protections et vérifié les sections de conducteurs dans le cadre du dossier de conception.'],
-   ['Contrôler la cohérence du schéma','Nous avons effectué une vérification documentaire des protections, de la séparation des circuits et des dispositions de sécurité. Une réserve a été identifiée concernant la section du conducteur de terre du parafoudre.'],
-   ['Maintenir une réserve explicite sur la conformité','Le schéma a été jugé globalement cohérent dans l’étude initiale, mais des vérifications restent nécessaires, notamment sur le parafoudre et les contrôles sur installation réelle.'],
-   ['Retour sur les compétences développées','Ce travail m’a appris à passer de besoins d’usage à une architecture de distribution, sans confondre étude de conception et certification d’une installation en service.']
+   ['Définir les besoins électriques d’une habitation','Dans le cadre de mon projet tutoré de BUT1, j’ai étudié les besoins électriques d’une habitation afin de proposer une distribution basse tension adaptée aux circuits de prises, d’éclairage et aux équipements spécialisés.'],
+   ['Organiser un tableau électrique sur trois rangées','J’ai organisé les départs sur un tableau à trois rangées, avec un disjoncteur de branchement, des interrupteurs différentiels 30 mA et des disjoncteurs divisionnaires. J’ai cherché à répartir les circuits de manière lisible et cohérente.'],
+   ['Choisir les circuits et leurs protections','J’ai identifié les différents usages, distingué les circuits dédiés et vérifié les sections de conducteurs ainsi que les calibres des protections dans mon dossier de conception, en m’appuyant sur la NF C 15-100.'],
+   ['Contrôler la cohérence du schéma','J’ai vérifié la répartition des circuits, la présence des protections différentielles et le principe du raccordement à la terre. J’ai également relevé un point à confirmer concernant la section du conducteur de terre associé au parafoudre.'],
+   ['Analyser les limites de mon dimensionnement','Mon étude m’a permis de proposer un tableau de distribution cohérent avec les besoins identifiés. Elle reste toutefois une étude de conception : la section liée au parafoudre et les contrôles de conformité sur une installation réelle doivent encore être vérifiés.'],
+   ['Compétences acquises en première année','Ce projet tutoré de BUT1 m’a appris à passer d’un besoin domestique à un schéma de distribution, à justifier les protections retenues et à distinguer un dimensionnement théorique d’une installation effectivement vérifiée.']
   ]
  },
  'geii-malaxeur': {
