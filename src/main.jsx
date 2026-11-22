@@ -239,58 +239,99 @@ const highlightedDocuments=[
 ].filter(Boolean);
 const remainingDocuments=documents.filter(doc=>!highlightedDocuments.includes(doc));
 
-function EnergyCore(){
-  const group=useRef(null);
-  const torus=useRef(null);
+// Représentation artistique d'un électron : langage visuel bleu électrique,
+// trajectoires orbitales et noyau lumineux (non une représentation quantique).
+function ElectronOrbit({radius=1.5,speed=1,phase=0,tilt=[0,0,0],color='#65ceff',reducedMotion=false}){
+  const electron=useRef(null);
   const halo=useRef(null);
+  useFrame(({clock})=>{
+    const t=reducedMotion?phase:clock.elapsedTime*speed+phase;
+    if(electron.current){
+      electron.current.position.set(Math.cos(t)*radius,Math.sin(t)*radius*.52,0);
+    }
+    if(halo.current){
+      halo.current.opacity=.16+(reducedMotion?0:Math.sin(clock.elapsedTime*.72+phase)*.025);
+    }
+  });
+  return <group rotation={tilt}>
+    <mesh scale={[1,.52,1]}>
+      <torusGeometry args={[radius,.009,8,220]}/>
+      <meshBasicMaterial color={color} transparent opacity={.36}/>
+    </mesh>
+    <mesh scale={[1,.52,1]}>
+      <torusGeometry args={[radius,.028,8,220]}/>
+      <meshBasicMaterial color={color} transparent opacity={.085}
+        blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+    </mesh>
+    <group ref={electron}>
+      <mesh>
+        <sphereGeometry args={[.061,20,20]}/>
+        <meshBasicMaterial color="#effaff" toneMapped={false}/>
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[.145,20,20]}/>
+        <meshBasicMaterial ref={halo} color={color} transparent opacity={.16}
+          blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+      </mesh>
+    </group>
+  </group>;
+}
+
+function ElectronHero(){
+  const group=useRef(null);
+  const nucleusGlow=useRef(null);
+  const [reducedMotion,setReducedMotion]=useState(false);
+  useEffect(()=>{
+    const query=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update=()=>setReducedMotion(query.matches);
+    update();
+    query.addEventListener?.('change',update);
+    return()=>query.removeEventListener?.('change',update);
+  },[]);
   useFrame(({clock,pointer})=>{
-    if(!group.current||!torus.current)return;
+    if(!group.current)return;
     const t=clock.elapsedTime;
-    group.current.rotation.y=t*.12+pointer.x*.18;
-    group.current.rotation.x=pointer.y*.12;
-    torus.current.rotation.z=t*.15;
-    // Respiration lumineuse lente et discrète : aucun clignotement.
-    if(halo.current)halo.current.opacity=.10+Math.sin(t*.68)*.022;
+    group.current.rotation.y=(reducedMotion?0:t*.12)+pointer.x*.16;
+    group.current.rotation.x=pointer.y*.1;
+    if(nucleusGlow.current){
+      nucleusGlow.current.opacity=.13+(reducedMotion?0:Math.sin(t*.65)*.025);
+    }
   });
   return <group ref={group} position={[1.7,0,0]}>
-    <Float speed={1.3} floatIntensity={.45} rotationIntensity={.25}>
-      <group ref={torus}>
-        {/* Lueur proche de la courbe : transparence additive, sans bloom coûteux. */}
-        <mesh>
-          <torusKnotGeometry args={[1.38,.049,240,12,2,5]}/>
-          <meshBasicMaterial ref={halo} color="#4cbcff" transparent opacity={.10}
-            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-        </mesh>
-        <mesh>
-          <torusKnotGeometry args={[1.38,.025,240,12,2,5]}/>
-          <meshBasicMaterial color="#65ceff" transparent opacity={.19}
-            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-        </mesh>
-        <mesh>
-          <torusKnotGeometry args={[1.38,.012,240,14,2,5]}/>
-          <meshBasicMaterial color="#74d8ff" transparent opacity={.88}/>
-        </mesh>
-      </group>
-      {[0,1,2,3].map(i=><group key={i} rotation={[i*.55,i*.8,i*.35]}>
-        <mesh>
-          <torusGeometry args={[1.45+i*.18,.019,5,170]}/>
-          <meshBasicMaterial color={i%2?'#417fff':'#65ceff'} transparent opacity={.085}
-            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-        </mesh>
-        <mesh>
-          <torusGeometry args={[1.45+i*.18,.006,5,170]}/>
-          <meshBasicMaterial color={i%2?'#3c6dff':'#62d6ff'} transparent opacity={.35}/>
-        </mesh>
-      </group>)}
+    <Float speed={reducedMotion?0:1.2} floatIntensity={reducedMotion?0:.32}
+      rotationIntensity={reducedMotion?0:.12}>
       <mesh>
-        <icosahedronGeometry args={[.52,1]}/>
-        <meshBasicMaterial color="#2359af" wireframe transparent opacity={.48}/>
+        <sphereGeometry args={[.19,28,28]}/>
+        <meshBasicMaterial color="#e7faff" transparent opacity={.92}/>
       </mesh>
-      <pointLight color="#2e96ff" intensity={8} distance={8}/>
+      <mesh>
+        <sphereGeometry args={[.38,28,28]}/>
+        <meshBasicMaterial ref={nucleusGlow} color="#47baff" transparent opacity={.13}
+          blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+      </mesh>
+      <mesh rotation={[.2,.5,.3]}>
+        <icosahedronGeometry args={[.54,1]}/>
+        <meshBasicMaterial color="#2c69c2" wireframe transparent opacity={.38}/>
+      </mesh>
+      <ElectronOrbit radius={1.33} speed={1.18} phase={0}
+        tilt={[.27,.16,.5]} color="#6dd7ff" reducedMotion={reducedMotion}/>
+      <ElectronOrbit radius={1.56} speed={.9} phase={2.1}
+        tilt={[1.14,.58,.1]} color="#458fff" reducedMotion={reducedMotion}/>
+      <ElectronOrbit radius={1.79} speed={.73} phase={4.2}
+        tilt={[.68,1.08,.4]} color="#8ce3ff" reducedMotion={reducedMotion}/>
+      <pointLight color="#2e96ff" intensity={7.5} distance={8}/>
     </Float>
   </group>;
 }
-function Scene(){return <div className="scene" aria-hidden="true"><Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={.3}/><Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/><EnergyCore/></Canvas></div>}
+function Scene(){
+  return <div className="scene" aria-hidden="true">
+    <Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}>
+      <ambientLight intensity={.34}/>
+      <Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/>
+      <ElectronHero/>
+    </Canvas>
+  </div>;
+}
 
 function ProjectVisual({kind,image,alt='Illustration technique du projet',rotation=0,priority=false}){
   const [imageFailed,setImageFailed]=useState(false);
