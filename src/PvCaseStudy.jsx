@@ -164,7 +164,7 @@ export default function PvCaseStudy(){
     <div><span>ESPRIT CRITIQUE</span><p>Je cherche à distinguer une amélioration du taux d’autonomie d’un véritable gain économique, sans conclure avant les simulations.</p></div>
    </div>
    <p className="bms-final-note">La prochaine étape consiste à valider la consommation de référence, les caractéristiques des toitures et les paramètres des équipements, puis à exécuter les scénarios sous SAM et PVGIS. Les performances annoncées dans cette étude seront actualisées uniquement lorsque les résultats seront disponibles et justifiés.</p>
-   <div className="pv-source-document"><div><FileText size={26}/><div><strong>Document de cadrage du projet photovoltaïque</strong><p>Source originale : problématique, scénarios A/B, méthode, indicateurs et livrables.</p></div></div><a href={DOCUMENT} target="_blank" rel="noopener noreferrer">CONSULTER LE DOCUMENT ORIGINAL <ArrowUpRight size={17}/></a></div>
+   <div className="pv-source-document"><div><FileText size={26}/><div><strong>Document de cadrage du projet photovoltaïque</strong><p>Problématique, scénarios A/B, méthode de comparaison et indicateurs de suivi.</p></div></div><a href={DOCUMENT} target="_blank" rel="noopener noreferrer">CONSULTER LE CAHIER DES CHARGES <ArrowUpRight size={17}/></a></div>
   </section>
  </div>;
 }
