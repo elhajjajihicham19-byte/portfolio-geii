@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {ArrowUpRight, Building2, CircuitBoard, ClipboardCheck, FileText, Gauge, GraduationCap, Layers3, ZoomIn} from 'lucide-react';
+import projectTechnicalEvidence from './projectTechnicalEvidence.json';
 import './betem-case-study.css';
 
 /**
@@ -16,7 +17,7 @@ const stages=[
   {
     title:'PROJET PRINCIPAL / ÉCOLE JEAN MACÉ',
     heading:'Participer à la restructuration des installations électriques.',
-    text:'Mon travail a principalement porté sur l’étude de l’école Jean Macé à Sète : implantations électriques CFO/CFA, éclairage, répartition des puissances et élaboration des documents de conception. Le dossier comprenait notamment un bilan de puissance de 199 kVA pour le TGBT, sur une distribution triphasée 230/400 V.'
+    text:'Mon travail a principalement porté sur l’étude de l’école Jean Macé à Sète : implantations électriques CFO/CFA, éclairage, répartition des puissances et élaboration des documents de conception. J’ai étudié les tableaux de distribution d’un bâtiment alimenté en 230/400 V triphasé. Le bilan présente 199 kVA avant foisonnement au TGBT, soit environ 179 kVA après application des coefficients de simultanéité.'
   },
   {
     title:'CONCEPTION ET IMPLANTATIONS',
@@ -26,7 +27,7 @@ const stages=[
   {
     title:'ÉTUDES ET DIMENSIONNEMENT',
     heading:'Justifier les choix techniques et les puissances.',
-    text:'J’ai réalisé des études d’éclairement sous DIALux evo, contribué aux bilans de puissance et abordé le dimensionnement des installations avec Caneco BT. Les implantations de brasseurs d’air et les corrections de pièces écrites faisaient également partie du travail de conception. Ces livrables doivent rester cohérents entre les plans, tableaux et prescriptions.'
+    text:'J’ai mené des calculs d’éclairement sous DIALux evo, puis constitué les bilans de puissance à partir des équipements identifiés sur les plans. J’ai également travaillé sur les schémas de distribution et étudié avec Caneco BT le choix des protections, les sections, les courants de court-circuit et les chutes de tension. Ces données ont été vérifiées en lien avec les CCTP et les plans.'
   },
   {
     title:'VÉRIFICATION ET LIVRABLES',
@@ -66,16 +67,43 @@ function StageDocuments({docs}){
 }
 export default function BetemCaseStudy({project,onZoom}){
   const media=(project.evidence||[]).filter(item=>item.image!=='/assets/betem-plan-extrait-reel.webp');
+  const reportMedia=projectTechnicalEvidence.betem||[];
   return <div className="bms-study betem-study">
     <div className="bms-study-heading"><span>STAGE PROFESSIONNEL / AVRIL — JUIN 2026</span><h3>DES ÉTUDES <em>AUX LIVRABLES.</em></h3><p>Chez BETEM Montpellier, j’ai participé à la conception d’installations électriques pour des bâtiments, avec un projet principal consacré à l’école Jean Macé. Les plans, schémas et photographies sont directement associés aux missions réalisées.</p></div>
     {stages.map((step,i)=>{
       const Icon=icons[i];
-      const group=i===2?media.slice(0,4):i===4?media.slice(4):[];
+      const group=[...(i===2?media.slice(0,4):i===4?media.slice(4):[]),...reportMedia.filter(item=>item.chapter===i)];
       return <section className="bms-chapter" key={i}>
         <div className="bms-chapter-index"><span>{String(i+1).padStart(2,'0')} / {step.title}</span><Icon size={22}/></div>
         <div className="betem-stage-layout">
           <div className="betem-stage-content"><h4>{step.heading}</h4><p>{step.text}</p>
-          {i===1&&<div className="betem-stage-facts"><div><b>199 kVA</b><span>Bilan TGBT du projet</span></div><div><b>230/400 V</b><span>Distribution triphasée BT</span></div><div><b>10 semaines</b><span>Immersion en bureau d’études</span></div></div>}
+          {i===1&&<div className="betem-stage-facts"><div><b>199 / 179 kVA</b><span>TGBT avant / après foisonnement</span></div><div><b>230/400 V</b><span>Distribution triphasée BT</span></div><div><b>10 semaines</b><span>Immersion en bureau d’études</span></div></div>}
+          {i===3&&<div className="betem-comparison">
+            <h5>ÉTUDES D’ÉCLAIRAGE — DIALUX EVO</h5>
+            <p>J’ai comparé les implantations avec les objectifs du CCTP : éclairement moyen, uniformité et éblouissement. L’étude du CDI atteint les valeurs demandées. Dans le restaurant, l’uniformité a progressé sans atteindre l’objectif initial, ce qui a nécessité des échanges sur le choix des luminaires.</p>
+            <div className="betem-comparison-table"><table><thead><tr><th>LOCAL</th><th>ÉCLAIREMENT</th><th>UNIFORMITÉ</th><th>CONCLUSION</th></tr></thead><tbody>
+              <tr><td>CDI</td><td>633 lx</td><td>0,69</td><td>Objectifs de 500 lx et 0,60 atteints</td></tr>
+              <tr><td>Restaurant (initial)</td><td>221 lx</td><td>0,42</td><td>Insuffisant</td></tr>
+              <tr><td>Restaurant (révisé)</td><td>—</td><td>0,58</td><td>Amélioration, objectif 0,70 non atteint</td></tr>
+              <tr><td>Salle ULIS / plan utile</td><td>568 lx</td><td>0,60</td><td>Éclairage général</td></tr>
+              <tr><td>Salle ULIS / tableau</td><td>608 lx</td><td>0,65</td><td>Éclairage asymétrique complémentaire</td></tr>
+            </tbody></table></div>
+            <h5>BILAN DE PUISSANCE — TABLEAUX DIVISIONNAIRES</h5>
+            <p>J’ai distingué la puissance installée de la puissance simultanément appelée grâce aux coefficients de foisonnement. Le tableau présente les valeurs retenues dans le rapport de stage pour la distribution 400 V triphasée.</p>
+            <div className="betem-comparison-table"><table><thead><tr><th>TABLEAU</th><th>PUISSANCE FOISONNÉE</th><th>COURANT ESTIMÉ</th></tr></thead><tbody>
+              <tr><td>TGBT</td><td>179 kVA</td><td>≈ 258 A</td></tr>
+              <tr><td>TD Restauration / Cuisine</td><td>56 kVA</td><td>≈ 81 A</td></tr>
+              <tr><td>TD R+1</td><td>45 kVA</td><td>≈ 65 A</td></tr>
+              <tr><td>TD R+2</td><td>8 kVA</td><td>≈ 12 A</td></tr>
+              <tr><td>TD R+2 PSE</td><td>8 kVA</td><td>≈ 12 A</td></tr>
+            </tbody></table></div>
+            <p className="betem-comparison-note">Les courants sont évalués avec I = S/(√3 × 400 V). Les valeurs du TGBT (199 kVA avant foisonnement ; 179 kVA après) correspondent à deux étapes différentes du bilan.</p>
+          </div>}
+          {i===4&&<div className="betem-comparison">
+            <h5>DIMENSIONNEMENT — CANECO BT</h5>
+            <p>J’ai illustré la chaîne arrivée ENEDIS → disjoncteur de branchement → TGBT → tableaux divisionnaires. Le schéma de mon rapport est volontairement simplifié : il ne remplace pas le dossier d’exécution complet. Les études de Caneco BT portent sur les sections, les protections, les courants de court-circuit et les chutes de tension.</p>
+            <div className="betem-stage-facts"><div><b>300 A</b><span>liaison de branchement étudiée</span></div><div><b>TT</b><span>régime de neutre retenu</span></div><div><b>Caneco BT</b><span>contrôle du dimensionnement</span></div></div>
+          </div>}
           {i===5&&<StageDocuments docs={project.docs}/>}
           </div>
           {i===1&&<figure className="betem-evidence betem-featured-plan"><button type="button" onClick={()=>onZoom({image:'/assets/betem-plan-extrait-reel.webp',title:'Plan CFO/CFA du stage BETEM',desc:'Extrait authentique du dossier de conception.'})}><img src="/assets/betem-plan-extrait-reel.webp" alt="Extrait de plan CFO/CFA du dossier BETEM" loading="lazy"/><span><ZoomIn size={16}/> AGRANDIR</span></button><figcaption><strong>PLAN D’IMPLANTATION CFO/CFA</strong><span>Extrait réel du dossier étudié pendant le stage.</span></figcaption></figure>}
