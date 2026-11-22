@@ -1,5 +1,6 @@
 import ancienPortfolio from './ancienPortfolio.json';
 import { documentDisplayName } from './documentLabels.js';
+import projectTechnicalEvidence from './projectTechnicalEvidence.json';
 
 /**
  * Les descriptifs, preuves et documents viennent de l'export de Google Sites.
@@ -76,6 +77,14 @@ const firstParagraph=page=>{
   return (page.sections||[]).flatMap(s=>s.blocs||[]).map(b=>b.texte).find(Boolean)||
     'Étude technique réalisée dans le cadre de la formation BUT GEII.';
 };
+// Si une page de portfolio ne contient pas de photographie, on privilégie
+// une illustration technique réellement extraite de son rapport.
+const coverPreferences={
+  'moteur-dc-pilot-par-bus-can':'/assets/studies/geii-moteur-dc-pilot-par-bus-can/01-page-013.webp',
+};
+const previewOrientation={
+  '/legacy/legacy-c8f9a1ea00fc0f.webp':180,
+};
 const extractImages=page=>{
   const list=page.images||[];
   const selected=list.filter(image=>!image.partagee);
@@ -83,6 +92,7 @@ const extractImages=page=>{
   // la source importée mais pas présentés comme preuves du montage.
   return selected.map((img,i)=>({
     image:img.src,
+    rotation:previewOrientation[img.src]||0,
     title:'Illustration du projet '+String(i+1).padStart(2,'0'),
     desc:'Photographie ou schéma du projet « '+page.titre+' ».',
     source:'Dossier de projet GEII'
@@ -103,6 +113,9 @@ export const legacyProjects=ancienPortfolio
   .map((page,index)=>{
     const meta=projectSettings[page.id]||{field:'GÉNIE ÉLECTRIQUE & INFORMATIQUE INDUSTRIELLE',chips:['BUT GEII'],skills:['Concevoir','Vérifier']};
     const evidence=extractImages(page);
+    const reportFigures=projectTechnicalEvidence['geii-'+page.id]||[];
+    const fallbackFigure=reportFigures.find(item=>item.chapter===2)||reportFigures[0];
+    const cover=coverPreferences[page.id]||evidence[0]?.image||fallbackFigure?.image||null;
     const classification=projectClassification[page.id]||{year:1,category:'applied',nature:'PROJET GEII',metrics:[]};
     return {
       id:'geii-'+page.id,
@@ -118,7 +131,8 @@ export const legacyProjects=ancienPortfolio
       status:classification.status||'Travaux réalisés — démarche et résultats présentés',
       color:'cyan',
       icon:'legacy',
-      cover:evidence[0]?.image||null,
+      cover,
+      coverRotation:previewOrientation[cover]||0,
       chips:meta.chips,
       skills:meta.skills,
       metrics:classification.metrics,
