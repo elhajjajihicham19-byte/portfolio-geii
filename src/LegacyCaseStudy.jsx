@@ -22,16 +22,15 @@ function IndentedSources({docs}){
  const selected=active===null?null:docs[active];
  const fileId=selected?.url?.includes('drive.google.com/file/d/') ? selected.url.split('/file/d/')[1]?.split('/')[0] : null;
  return <div className="legacy-inline-sources">
-  <span>PIÈCES JUSTIFICATIVES ET DOCUMENTS DE TRAVAIL</span>
+  <span>SCHÉMAS ET RAPPORTS</span>
   {docs.map((d,i)=><div key={d.url+i} className="legacy-source-item">
     <a href={d.url} target="_blank" rel="noopener noreferrer"><FileText size={16}/><span>{d.label}</span><ArrowUpRight size={15}/></a>
     {d.url?.includes('drive.google.com/file/d/')&&<button type="button" aria-expanded={active===i} onClick={()=>setActive(active===i?null:i)}>{active===i?'MASQUER':'APERÇU'}</button>}
   </div>)}
   {selected&&fileId&&<div className="legacy-inline-preview">
-    <iframe title={'Aperçu original : '+selected.label} loading="lazy" src={'https://drive.google.com/file/d/'+fileId+'/preview'}/>
-    <p>Document Google Drive d’origine ; son affichage dépend des autorisations accordées aux visiteurs.</p>
+    <iframe title={'Aperçu : '+selected.label} loading="lazy" src={'https://drive.google.com/file/d/'+fileId+'/preview'}/>
+    <p>L’aperçu est disponible selon les autorisations de partage du document.</p>
   </div>}
-  <p>Ces pièces sont les documents techniques associés au projet.</p>
  </div>;
 }
 function LegacyPhoto({ev,onZoom,i}){
@@ -40,7 +39,7 @@ function LegacyPhoto({ev,onZoom,i}){
    <img src={ev.image} alt={ev.title} loading="lazy"/>
    <span><ZoomIn size={17}/> AGRANDIR</span>
   </button>
-  <figcaption><strong>Illustration du projet {String(i+1).padStart(2,'0')}</strong>
+  <figcaption><strong>FIGURE {String(i+1).padStart(2,'0')}</strong>
    <span>{ev.desc||'Photographie ou schéma authentique du projet.'}</span>
   </figcaption>
  </figure>
@@ -59,9 +58,9 @@ export default function LegacyCaseStudy({project,onZoom}){
  const pictureChapters=picturePositions(figures.length);
  return <div className="bms-study legacy-study">
   <div className="bms-study-heading">
-   <span>RÉALISATION UNIVERSITAIRE / PROJET GEII</span>
+   <span>{project.nature} / BUT{project.year}</span>
    <h3>DU BESOIN <em>À LA VÉRIFICATION.</em></h3>
-   <p>{data.subtitle}. Cette fiche présente la démarche suivie, les étapes de conception et les contrôles réalisés. Les étapes de conception et les résultats sont illustrés par les photographies, schémas et documents du projet.</p>
+   <p>{data.subtitle}. De l'analyse du besoin aux essais, je présente la démarche, les choix techniques, les résultats obtenus et les points à améliorer.</p>
   </div>
   {data.chapters.map(([title,body],i)=>{
    const figureIndexes=pictureChapters.reduce((acc,pos,index)=>{if(pos===i)acc.push(index);return acc},[]);
@@ -72,13 +71,11 @@ export default function LegacyCaseStudy({project,onZoom}){
       <h4 id={'geii-section-'+project.id+'-'+i}>{title}</h4>
       <p>{body}</p>
       {i===3&&<IndentedSources docs={project.docs}/>}
-      {i===4&&<p className="legacy-precision"><Info size={17}/> Les résultats présentés proviennent des essais du projet ; ils doivent être interprétés selon les conditions et limites décrites dans les documents techniques.</p>}
       {i===5&&<div className="legacy-skills-list">{(project.skills||[]).map(skill=><span key={skill}>{skill}</span>)}</div>}
      </div>
      {!!figureIndexes.length&&<div className="legacy-chapter-photo-stack">{figureIndexes.map(index=><LegacyPhoto key={index} ev={figures[index]} onZoom={onZoom} i={index}/>)}</div>}
     </div>
    </section>
   })}
-  {figures.length===0&&<div className="legacy-no-photo"><Camera size={22}/><p>Aucune photographie spécifique n’est disponible pour cette réalisation. Les pièces techniques sont accessibles dans la partie vérification.</p></div>}
  </div>;
 }
