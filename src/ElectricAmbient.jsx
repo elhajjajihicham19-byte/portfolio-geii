@@ -16,8 +16,8 @@ const points=[
   [1305,162],[1185,162],[1443,430],[1183,545],[1356,734],[406,839]
 ];
 
-export default function ElectricAmbient(){
-  return <div className="electric-ambient" aria-hidden="true">
+export default function ElectricAmbient({paused=false}){
+  return <div className={"electric-ambient"+(paused?" electric-ambient--paused":"")} aria-hidden="true">
     <div className="electric-ambient__glow electric-ambient__glow--left"/>
     <div className="electric-ambient__glow electric-ambient__glow--right"/>
     <div className="electric-ambient__mesh"/>
