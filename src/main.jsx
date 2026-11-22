@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail, Maximize2, Minimize2, PanelRightOpen, Mouse } from 'lucide-react';
 import { legacyProjects, originalFor, originalEvidence, originalDocuments } from './legacyProjects.js';
+import { documentDisplayName } from './documentLabels.js';
 import BmsCaseStudy from './BmsCaseStudy.jsx';
 import PvCaseStudy from './PvCaseStudy.jsx';
 import LegacyCaseStudy from './LegacyCaseStudy.jsx';
@@ -204,17 +205,17 @@ for(const skill of competencies){
 }
 
 const documents = [
-  {title:'Référentiel officiel BUT GEII — parcours EME',type:'DOCUMENT OFFICIEL',desc:'Compétences, apprentissages critiques et progression du BUT.',url:REFERENTIEL,external:true,icon:GraduationCap},
-  {title:'Compte rendu de CEM et harmoniques',type:'PREUVE · PDF 34 PAGES',desc:'Schémas, oscillogrammes, spectres et comparaison de solutions.',url:'/documents/TP-CEM-Hicham-El-Hajjaji.pdf',icon:FileText},
-  {title:'Étude photovoltaïque — cadrage',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Hypothèses, méthode de comparaison et étapes du projet.',url:'/documents/Etude-photovoltaique-cadrage.docx',icon:Sun},
-  {title:'Compte rendu DIALux',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Calculs d’éclairement et analyse de variantes.',url:'/documents/Compte-rendu-DIALux.docx',icon:FileText},
+  {title:'Référentiel de formation',type:'DOCUMENT OFFICIEL',desc:'Compétences, apprentissages critiques et progression du BUT.',url:REFERENTIEL,external:true,icon:GraduationCap},
+  {title:'Rapport de travaux pratiques',type:'PREUVE · PDF 34 PAGES',desc:'Schémas, oscillogrammes, spectres et comparaison de solutions.',url:'/documents/TP-CEM-Hicham-El-Hajjaji.pdf',icon:FileText},
+  {title:'Cahier des charges',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Hypothèses, méthode de comparaison et étapes du projet.',url:'/documents/Etude-photovoltaique-cadrage.docx',icon:Sun},
+  {title:'Étude d’éclairage',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Calculs d’éclairement et analyse de variantes.',url:'/documents/Compte-rendu-DIALux.docx',icon:FileText},
 ];
 
 
 /* Bibliothèque documentaire complète des pièces jointes de l'ancien portfolio.
    Les URL sont celles du Drive d'origine ; leur accessibilité publique dépend du partage. */
 documents.push(...ancienPortfolio.flatMap(page=>(page.documents||[]).map(doc=>({
-  title:doc.titre||'Document technique',
+  title:documentDisplayName(doc.titre,page.titre),
   type:page.titre.toUpperCase(),
   desc:'Pièce de projet : rapport, schéma, mesure ou document technique.',
   url:doc.url,
@@ -432,7 +433,7 @@ function App(){
         </div>
       </section>
 
-      <section id="documents" className="section documents"><SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="SOURCES AUTHENTIQUES"/><div className="documents-heading reveal"><h2>DES TRACES <span>CONCRÈTES.</span></h2><p>Les rapports, schémas, cahiers de recette et procédures de test sont associés aux études correspondantes. Cette bibliothèque rassemble également leurs documents complémentaires.</p></div><div className="documents-grid reveal">{documents.map((d,i)=><a key={d.url+'-'+i} href={d.url} target="_blank" rel="noopener noreferrer" className="doc-card"><div className="doc-num">{String(i+1).padStart(2,'0')} / DOCUMENT</div><d.icon size={30}/><div><span className="doc-type">{d.type}</span><h3>{d.title}</h3><p>{d.desc}</p></div><span className="doc-open">{d.external?'OUVRIR LA SOURCE':'TÉLÉCHARGER'} <ArrowUpRight size={15}/></span></a>)}</div><div className="proof-caveat reveal"><AlertCircle size={20}/><p><strong>Documents encore à intégrer :</strong> schémas complémentaires, extraits de mesures, illustrations techniques et autres preuves à sélectionner au fil des prochaines améliorations. La diffusion des documents techniques présentés pour mon stage a été autorisée par BETEM.</p></div></section>
+      <section id="documents" className="section documents"><SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="SOURCES AUTHENTIQUES"/><div className="documents-heading reveal"><h2>DES TRACES <span>CONCRÈTES.</span></h2><p>Les rapports, schémas, cahiers de recette et procédures de test sont associés aux études correspondantes. Cette bibliothèque rassemble également leurs documents complémentaires.</p></div><div className="documents-grid reveal">{documents.map((d,i)=><a key={d.url+'-'+i} href={d.url} target="_blank" rel="noopener noreferrer" className="doc-card"><div className="doc-num">{String(i+1).padStart(2,'0')} / DOCUMENT</div><d.icon size={30}/><div><span className="doc-type">{d.type}</span><h3>{d.title}</h3><p>{d.desc}</p></div><span className="doc-open">{d.external?'OUVRIR LA SOURCE':'TÉLÉCHARGER'} <ArrowUpRight size={15}/></span></a>)}</div></section>
 
       <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
     </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
