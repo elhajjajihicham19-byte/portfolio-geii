@@ -1,0 +1,35 @@
+/* Projets GEII/SAE : structure du BMS, photographies dans les chapitres */
+.legacy-study .bms-study-heading{padding-bottom:48px}
+.legacy-chapter-with-photo{display:grid;grid-template-columns:1fr .95fr;gap:37px;align-items:start}
+.legacy-chapter-narrative h4{max-width:800px}
+.legacy-chapter-narrative>p:not(.legacy-precision){font-size:15px;line-height:1.95;color:#bed1df;margin:0 0 20px}
+.legacy-chapter-photo-stack{display:flex;flex-direction:column;gap:18px}
+.legacy-chapter-figure{border:1px solid #41637e;background:#122537;display:flex;flex-direction:column;margin:0}
+.legacy-chapter-figure>button{padding:0;position:relative;cursor:zoom-in;background:radial-gradient(ellipse,#274863,#0d1e2b 80%);border:none;height:320px;display:grid;place-items:center}
+.legacy-chapter-figure>button img{height:100%;width:100%;object-fit:contain;padding:14px;transition:transform .3s}
+.legacy-chapter-figure>button:hover img{transform:scale(1.04)}
+.legacy-chapter-figure>button>span{position:absolute;bottom:14px;right:13px;display:flex;gap:7px;align-items:center;padding:9px 11px;background:#081725ef;border:1px solid #4d87a9;color:#cdeaff;font-size:10px;letter-spacing:.1em;font-weight:700}
+.legacy-chapter-figure>figcaption{padding:20px 22px;display:flex;flex-direction:column;gap:9px;background:#13293b}
+.legacy-chapter-figure>figcaption>strong{font-size:13px;color:#d3eaf9}
+.legacy-chapter-figure>figcaption>span{font-size:12px;line-height:1.7;color:#a9c0d2}
+.legacy-inline-sources{margin-top:30px;border-top:1px solid #395c77;padding-top:20px}
+.legacy-inline-sources>span{display:block;color:#79c2f3;font-size:10px;letter-spacing:.13em;font-weight:700;margin:0 0 19px}
+.legacy-inline-sources>a{display:flex;align-items:center;gap:12px;margin:10px 0;padding:15px 17px;background:#122c42;border:1px solid #436d8c;color:#b4def6}
+.legacy-inline-sources>a:hover{background:#23516f}
+.legacy-inline-sources>a svg{flex-shrink:0}
+.legacy-inline-sources>a span{flex:1;overflow-wrap:anywhere;font-size:13px;line-height:1.6;font-weight:600}
+.legacy-inline-sources>p{font-size:11px;color:#86aabe;line-height:1.7;margin:15px 0}
+.legacy-precision{display:flex;align-items:start;gap:11px;border-left:2px solid #5f9dc4;padding:15px;margin-top:23px;background:#122d43;color:#b0c6d7;font-size:13px;line-height:1.8}
+.legacy-precision svg{flex-shrink:0;margin-top:2px;color:#84cbfa}
+.legacy-skills-list{display:flex;flex-wrap:wrap;gap:11px;margin:24px 0 0}
+.legacy-skills-list span{border:1px solid #46799d;color:#b9e7ff;background:#152e43;padding:10px 13px;font-size:11px;font-weight:700}
+.legacy-no-photo{display:flex;align-items:start;gap:15px;background:#15283b;border:1px solid #345873;padding:22px;margin:35px 0}
+.legacy-no-photo svg{flex-shrink:0;color:#91caf0}
+.legacy-no-photo p{color:#aec2cf;font-size:13px;line-height:1.85;margin:0}
+.legacy-full-source{margin:20px 0 65px;background:#102236;border:1px solid #41607b;padding:0 25px 25px}
+.legacy-full-source summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:23px 0;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.12em;color:#a5ddff;list-style:none}
+.legacy-full-source summary::-webkit-details-marker{display:none}
+.legacy-full-source[open] summary svg{transform:rotate(90deg)}
+.legacy-full-source>p{font-size:13px;line-height:1.9;color:#a4bfd0;margin:10px 0 25px}
+.legacy-full-source .historical-chapter{padding:22px}
+@media(max-width:1100px){.legacy-chapter-with-photo{grid-template-columns:1fr}.legacy-chapter-figure>button{height:330px}}
