@@ -43,6 +43,7 @@ const projects = [
     critique:'Le principal apprentissage a été de distinguer une carte conçue d’une carte vérifiée. Une revue de nomenclature et des contrôles hors tension avant les essais auraient dû être systématiques. Une nouvelle série de mesures serait nécessaire après correction du montage.',
     skills:['Concevoir','Vérifier','Maintenir (diagnostic)'],
     evidence:[],
+    cover:'/legacy/legacy-1ed60ec4c59c2e.webp',
     note:'Les schémas KiCad, les photographies du PCB et les mesures sont présentés dans l’étude technique. Les essais de charge et de décharge n’ont pas validé le fonctionnement.'
   },
   {
@@ -291,14 +292,29 @@ function EnergyCore(){
 }
 function Scene(){return <div className="scene" aria-hidden="true"><Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={.3}/><Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/><EnergyCore/></Canvas></div>}
 
-function ProjectVisual({kind,image}){
-  if(image)return <div className="project-visual real-art"><img src={image} alt="Photographie ou schéma du projet" loading="lazy"/></div>;
-  if(kind==='cem')return <div className="project-visual real-art"><img src="/assets/cem-schema-reel.webp" alt="Schéma de redresseur étudié en CEM" loading="lazy"/></div>;
-  if(kind==='dialux')return <div className="project-visual real-art"><img src="/assets/dialux-reel-1.webp" alt="Capture réelle DIALux, répartition des luminaires" loading="lazy"/></div>;
-  if(kind==='building')return <div className="project-visual real-art"><img src="/assets/betem-plan-extrait-reel.webp" alt="Extrait de plan électrique réel, projet école à Sète" loading="lazy"/></div>;
-  if(kind==='legacy')return <div className="project-visual original-fallback"><div className="visual-grid"/><FileText size={92} strokeWidth={.75}/><span>PROJET GEII // DOSSIER DOCUMENTÉ</span></div>;
-  if(kind==='solar')return <div className="project-visual solar-art"><div className="visual-grid"/><div className="sun"/><div className="panel-grid">{Array.from({length:18},(_,i)=><span key={i}/>)}</div><span className="solar-label">PV // ÉTUDE ÉNERGÉTIQUE</span></div>;
-  return <div className="project-visual bms-art"><div className="visual-grid"/><div className="board"><div className="board-title">BMS // 4S</div>{[1,2,3,4].map(i=><div className="cell" key={i}>CELL 0{i}<span>3,7 V</span></div>)}<div className="chip">ML5243</div></div><span className="visual-disclaimer">ILLUSTRATION — NON CONTRACTUELLE</span></div>;
+function ProjectVisual({kind,image,alt='Illustration technique du projet',rotation=0,priority=false}){
+  const [imageFailed,setImageFailed]=useState(false);
+  const nativeIllustrations={
+    cem:'/assets/cem-schema-reel.webp',
+    dialux:'/assets/dialux-reel-1.webp',
+    building:'/assets/betem-plan-extrait-reel.webp'
+  };
+  const src=image||nativeIllustrations[kind]||null;
+  useEffect(()=>{setImageFailed(false)},[src]);
+
+  if(src&&!imageFailed){
+    return <div className={'project-visual real-art'+(src.startsWith('/assets/studies/')?' project-visual--document':'')}>
+      <img src={src} alt="" aria-hidden="true" className="project-visual__backdrop"
+        loading={priority?'eager':'lazy'}/>
+      <img src={src} alt={alt} className="project-visual__foreground"
+        loading={priority?'eager':'lazy'}
+        style={rotation?{transform:`rotate(${rotation}deg)`}:undefined}
+        onError={()=>setImageFailed(true)}/>
+    </div>;
+  }
+  if(kind==='legacy')return <div className="project-visual original-fallback"><div className="visual-grid"/><FileText size={92} strokeWidth={.75}/><span>SCHÉMAS ET ÉTUDE TECHNIQUE</span></div>;
+  if(kind==='solar')return <div className="project-visual solar-art"><div className="visual-grid"/><div className="sun"/><div className="panel-grid">{Array.from({length:12},(_,i)=><span key={i}/>)}</div><span className="solar-label">PV // 6 kWc · 12 MODULES</span></div>;
+  return <div className="project-visual bms-art"><div className="visual-grid"/><div className="board"><div className="board-title">BMS // 4S</div>{[1,2,3,4].map(i=><div className="cell" key={i}>CELL 0{i}<span>3,7 V</span></div>)}<div className="chip">ML5243</div></div><span className="visual-disclaimer">ILLUSTRATION SCHÉMATIQUE</span></div>;
 }
 function SectionHeader({number,title,aside}){return <div className="section-heading reveal"><span className="index">{number} / {title}</span><span className="rule"/>{aside&&<span className="heading-aside">{aside}</span>}</div>}
 function Chips({items}){return <div className="chips">{items.map(x=><span key={x}>{x}</span>)}</div>}
@@ -308,7 +324,7 @@ function EvidenceGrid({items,onZoom}){return <div className="evidence-grid">{ite
 function ProjectCard({project:p,onOpen,featured=false}){
   return <article className={'project reveal'+(featured?' project--featured':'')} key={p.id}>
     <div className="project-meta"><span>{p.no} / {String(academicProjects.length).padStart(2,'0')}</span><span>{p.field}</span></div>
-    <ProjectVisual kind={p.icon} image={p.cover}/>
+    <ProjectVisual kind={p.icon} image={p.cover} alt={'Photographie ou schéma : '+p.name} rotation={p.coverRotation||0}/>
     <div className="project-info">
       <div>
         <p className="project-subtitle">{p.period}</p>
@@ -429,7 +445,7 @@ function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
     </div>
     <div className="detail-reading-hint"><Mouse size={14}/> DÉFILEMENT À LA MOLETTE <span>·</span> CLIQUE SUR LES SCHÉMAS POUR LES AGRANDIR</div>
     <div className="detail-content">
-    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{['bms','pv'].includes(p.id)?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
+    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{['bms','pv'].includes(p.id)?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover} alt={'Photographie ou schéma : '+p.name} rotation={p.coverRotation||0} priority/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
     {p.id==='bms'&&<BmsCaseStudy onZoom={onZoom}/>}
     {p.id==='pv'&&<PvCaseStudy/>}
@@ -571,7 +587,7 @@ function App(){
       <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
     </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
     {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom} isZoomOpen={Boolean(zoom)}/>}
-    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" data-lenis-prevent onWheel={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
+    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" data-lenis-prevent onWheel={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title} style={zoom.rotation?{transform:`rotate(${zoom.rotation}deg)`}:undefined}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
   </div></>;
 }
 
