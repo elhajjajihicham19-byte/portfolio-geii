@@ -20,3 +20,14 @@ jobs:
         run: npm run build
       - name: Auditer les ressources, liens internes et accessibilité de base
         run: node scripts/audit_site.mjs
+      - name: Installer le pilote de test Chrome
+        run: npm install --no-save --ignore-scripts playwright-core@1.56.1
+      - name: Tester le portfolio dans Chrome sur trois résolutions
+        run: node scripts/browser_smoke.mjs
+      - name: Conserver les captures de l'audit navigateur
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-chrome-portfolio
+          path: audit-screenshots/
+          if-no-files-found: ignore
