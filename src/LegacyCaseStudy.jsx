@@ -17,12 +17,20 @@ const sectionNames=[
  '06 / COMPÉTENCES DÉVELOPPÉES',
 ];
 function IndentedSources({docs}){
+ const [active,setActive]=useState(null);
  if(!docs?.length)return null;
+ const selected=active===null?null:docs[active];
+ const fileId=selected?.url?.match(/drive\\.google\\.com\\/file\\/d\\/([^/]+)/)?.[1];
  return <div className="legacy-inline-sources">
   <span>PIÈCES JUSTIFICATIVES ET DOCUMENTS DE TRAVAIL</span>
-  {docs.map((d,i)=><a key={d.url+i} href={d.url} target="_blank" rel="noopener noreferrer">
-    <FileText size={16}/><span>{d.label}</span><ArrowUpRight size={15}/>
-  </a>)}
+  {docs.map((d,i)=><div key={d.url+i} className="legacy-source-item">
+    <a href={d.url} target="_blank" rel="noopener noreferrer"><FileText size={16}/><span>{d.label}</span><ArrowUpRight size={15}/></a>
+    {d.url?.includes('drive.google.com/file/d/')&&<button type="button" aria-expanded={active===i} onClick={()=>setActive(active===i?null:i)}>{active===i?'MASQUER':'APERÇU'}</button>}
+  </div>)}
+  {selected&&fileId&&<div className="legacy-inline-preview">
+    <iframe title={'Aperçu original : '+selected.label} loading="lazy" src={'https://drive.google.com/file/d/'+fileId+'/preview'}/>
+    <p>Document Google Drive d’origine ; son affichage dépend des autorisations accordées aux visiteurs.</p>
+  </div>}
   <p>Ces documents proviennent du portfolio initial et sont conservés sous leur nom d’origine.</p>
  </div>;
 }
