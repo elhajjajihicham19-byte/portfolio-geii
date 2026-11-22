@@ -26,12 +26,6 @@
 .legacy-no-photo{display:flex;align-items:start;gap:15px;background:#15283b;border:1px solid #345873;padding:22px;margin:35px 0}
 .legacy-no-photo svg{flex-shrink:0;color:#91caf0}
 .legacy-no-photo p{color:#aec2cf;font-size:13px;line-height:1.85;margin:0}
-.legacy-full-source{margin:20px 0 65px;background:#102236;border:1px solid #41607b;padding:0 25px 25px}
-.legacy-full-source summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:23px 0;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.12em;color:#a5ddff;list-style:none}
-.legacy-full-source summary::-webkit-details-marker{display:none}
-.legacy-full-source[open] summary svg{transform:rotate(90deg)}
-.legacy-full-source>p{font-size:13px;line-height:1.9;color:#a4bfd0;margin:10px 0 25px}
-.legacy-full-source .historical-chapter{padding:22px}
 @media(max-width:1100px){.legacy-chapter-with-photo{grid-template-columns:1fr}.legacy-chapter-figure>button{height:330px}}
 
 .legacy-source-item{display:flex;align-items:stretch;gap:10px;margin:10px 0}
