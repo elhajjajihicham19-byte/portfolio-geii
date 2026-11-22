@@ -77,3 +77,8 @@
 @media(max-width:1300px){.pv-real-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pv-real-monthly__chart{gap:4px}}
 @media(max-width:1060px){.pv-real-system__intro{flex-direction:column}.pv-real-system__intro>div{width:100%}.pv-real-system__intro>svg{transform:rotate(90deg)}.pv-real-balance__streams{grid-template-columns:1fr}.pv-real-monthly__header{flex-wrap:wrap}.pv-real-monthly__chart{overflow-x:auto}}
 @media(prefers-reduced-motion:reduce){.pv-real-monthly__stack{transition:none}}
+
+.pv-study .pv-real-title{font:650 clamp(19px,2vw,28px)/1.3 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#d5efff;margin:42px 0 20px}
+.pv-real-performance{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 22px}
+.pv-real-performance span{display:flex;flex:1;gap:8px;align-items:center;flex-wrap:wrap;min-width:200px;padding:14px 15px;border:1px solid #345a74;background:#122e43;color:#a8c7d9;font-size:11px;line-height:1.65}
+.pv-real-performance b{color:#dff4ff;font-size:13px}
