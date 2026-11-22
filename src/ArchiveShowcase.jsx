@@ -11,7 +11,7 @@ export default function ArchiveShowcase(){
   const [selected,setSelected]=useState(null);
   const [photo,setPhoto]=useState(null);
   const [filter,setFilter]=useState('tous');
-  const pages=useMemo(()=>ancienPortfolio.filter(p=>filter==='tous'||p.type===filter),[filter]);
+  const pages=useMemo(()=>ancienPortfolio.filter(p=>p.type!=='projet'&&(filter==='tous'||p.type===filter)),[filter]);
   const docCount=ancienPortfolio.reduce((n,p)=>n+(p.documents?.length||0),0);
   useEffect(()=>{
     if(!selected && !photo)return;
@@ -22,10 +22,10 @@ export default function ArchiveShowcase(){
     return()=>{document.body.style.overflow=previous;window.removeEventListener('keydown',onKey)};
   },[selected,photo]);
   return <section id="archives" className="section import-archives">
-    <div className="section-heading"><span className="index">05 / ARCHIVES DE L'ANCIEN PORTFOLIO</span><span className="rule"/><span className="heading-aside">SOURCES GOOGLE TAKEOUT · 2026</span></div>
+    <div className="section-heading"><span className="index">05 / PARCOURS & COMPÉTENCES D'ORIGINE</span><span className="rule"/><span className="heading-aside">SOURCES GOOGLE TAKEOUT · 2026</span></div>
     <div className="import-intro">
-      <div><p className="import-kicker">LA MÉMOIRE DES PROJETS</p><h2>TOUT MON <span>PARCOURS.</span></h2></div>
-      <p>Les rubriques de l'ancien portfolio sont reprises ici avec leurs textes intégraux, illustrations originales et liens de documents. Sélectionnez une page pour consulter le dossier complet dans le même esprit visuel que le BMS.</p>
+      <div><p className="import-kicker">LA MÉMOIRE DES PROJETS</p><h2>MA FORMATION, <span>MES COMPÉTENCES.</span></h2></div>
+      <p>Les douze projets de l'ancien site sont désormais directement intégrés aux études détaillées ci-dessus. Ici, je conserve les autres pages historiques : ma présentation, mon parcours et les compétences GEII, avec leur texte intégral.</p>
     </div>
     <div className="import-stats">
       <div><strong>{ancienPortfolio.length}</strong><span>PAGES IMPORTÉES</span></div>
@@ -33,7 +33,7 @@ export default function ArchiveShowcase(){
       <div><strong>{ancienPortfolio.reduce((n,p)=>n+(p.images?.length||0),0)}</strong><span>VISUELS RÉFÉRENCÉS</span></div>
     </div>
     <div className="import-filters" aria-label="Filtrer les archives">
-      {[['tous','TOUTES'],['projet','PROJETS'],['competence','COMPÉTENCES'],['profil','PRÉSENTATION'],['general','AUTRES']].map(([value,label])=><button key={value} type="button" className={filter===value?'active':''} onClick={()=>setFilter(value)}>{label}</button>)}
+      {[['tous','TOUTES'],['competence','COMPÉTENCES'],['profil','PRÉSENTATION'],['general','AUTRES']].map(([value,label])=><button key={value} type="button" className={filter===value?'active':''} onClick={()=>setFilter(value)}>{label}</button>)}
     </div>
     {ancienPortfolio.length===0&&<p className="import-placeholder">L'intégration est préparée sur GitHub. Exécute l'importeur Google Takeout indiqué dans le README afin d'ajouter les textes et les photographies d'origine.</p>}
     <div className="import-grid">{pages.map((page,i)=><button key={page.id} className="import-card" type="button" onClick={()=>setSelected(page)}>
