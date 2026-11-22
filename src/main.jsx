@@ -11,6 +11,7 @@ import { legacyProjects, originalFor, originalEvidence, originalDocuments } from
 import BmsCaseStudy from './BmsCaseStudy.jsx';
 import PvCaseStudy from './PvCaseStudy.jsx';
 import LegacyCaseStudy from './LegacyCaseStudy.jsx';
+import AppliedTechnicalStudy from './AppliedTechnicalStudy.jsx';
 import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 gsap.registerPlugin(ScrollTrigger);
@@ -290,7 +291,8 @@ function ProjectDetail({project:p,onClose,onZoom}){
     {p.id==='bms'&&<BmsCaseStudy onZoom={onZoom}/>}
     {p.id==='pv'&&<PvCaseStudy/>}
     {p.legacyOnly&&<LegacyCaseStudy project={p} onZoom={onZoom}/>}
-    {!p.legacyOnly&&!['bms','pv'].includes(p.id)&&<div className="detail-chapters">
+    {['cem','dialux'].includes(p.id)&&<AppliedTechnicalStudy project={p} onZoom={onZoom}/>}
+    {!p.legacyOnly&&!['bms','pv','cem','dialux'].includes(p.id)&&<div className="detail-chapters">
       <section><span className="chapter-index">01 / CONTEXTE</span><h3>Pourquoi ce projet ?</h3><p>{p.context}</p></section>
       <section><span className="chapter-index">02 / MON RÔLE</span><h3>Ce que j'ai réalisé</h3><p>{p.role}</p></section>
       <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((step,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{step}</span></li>)}</ol></section>
@@ -314,7 +316,7 @@ function ProjectDetail({project:p,onClose,onZoom}){
         <h3>{chapter.titre}</h3>{(chapter.blocs||[]).map((block,j)=><p key={j} className={block.type==='puce'?'historical-bullet':''}>{block.type==='puce'?'— ':''}{block.texte}</p>)}
       </section>)}</div>
     </details>}
-    {!p.legacyOnly&&<div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.id==='bms'?<div className="bms-embedded-evidence"><CheckCircle2 size={18}/><p>Les photographies du PCB et les mesures sont placées directement dans les chapitres techniques ci-dessus. Les pièces sources figurent ci-dessous.</p></div>:p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
+    {!p.legacyOnly&&!['cem','dialux'].includes(p.id)&&<div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.id==='bms'?<div className="bms-embedded-evidence"><CheckCircle2 size={18}/><p>Les photographies du PCB et les mesures sont placées directement dans les chapitres techniques ci-dessus. Les pièces sources figurent ci-dessous.</p></div>:p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
       {p.note&&<p className="source-note"><ShieldCheck size={17}/>{p.note}</p>}
       {p.docs?.length>0&&<div className="download-list">{p.docs.map(d=><div key={d.url}><span>{d.type}</span><div className="document-actions"><DocumentLink url={d.url} label={d.label}/><button className="preview-doc-button" type="button" onClick={()=>setPreviewDoc(d)}>APERÇU DU DOCUMENT <ExternalLink size={15}/></button></div></div>)}</div>}
     </div>}
