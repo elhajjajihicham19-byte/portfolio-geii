@@ -80,10 +80,10 @@ const projects = [
     note:'Les valeurs de puissance et de stockage sont des scénarios d’étude. Les performances restent à vérifier par simulation.'
   },
   {
-    id:'cem', no:'04', name:'Compatibilité électromagnétique', short:'Harmoniques d’un redresseur et stratégies de filtrage', field:'ÉLECTRONIQUE DE PUISSANCE', period:'Travaux pratiques · BUT3',
-    description:'Étude par simulation des perturbations harmoniques provoquées par un pont redresseur alimentant une charge capacitive et analyse de techniques de réduction.',
-    status:'Simulations PSIM et analyse harmonique', color:'cyan', icon:'cem', chips:['PSIM','CEM','Redressement','FFT','Filtrage','PFC'],
-    metrics:[['50 Hz','fréquence réseau'],['≈ 139 %','THD initial'],['0,58','facteur de puissance initial']],
+    id:'cem', no:'04', name:'Compatibilité électromagnétique', short:'Harmoniques, filtre LC accordé à 150 Hz et PFC Boost', field:'ÉLECTRONIQUE DE PUISSANCE', period:'Travaux pratiques · BUT3',
+    description:'Comparaison sous PSIM du redresseur capacitif, de l’inductance série, d’un filtre LC accordé sur 150 Hz et d’un PFC Boost à courant sinusoïdal.',
+    status:'Simulations du filtre LC et du PFC analysées', color:'cyan', icon:'cem', chips:['PSIM','CEM','FFT','Filtre LC 150 Hz','PFC Boost','Harmoniques'],
+    metrics:[['139 → 3 %','THD initial → PFC'],['0,58 → ≈ 1','facteur de puissance'],['150 Hz','filtre accordé H3']],
     context:'Un redresseur à diodes avec filtrage capacitif prélève un courant fortement non sinusoïdal sur le réseau. Cette déformation engendre des composantes harmoniques et modifie le facteur de puissance.',
     role:'Étude des formes d’onde, interprétation des courants de recharge du condensateur et comparaison de solutions de filtrage passif et actif dans le compte rendu de TP.',
     method:[
