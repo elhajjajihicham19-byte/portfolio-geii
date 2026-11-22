@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Stars } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail, Maximize2, Minimize2, PanelRightOpen, Mouse } from 'lucide-react';
 import { legacyProjects, originalFor, originalEvidence, originalDocuments } from './legacyProjects.js';
 import BmsCaseStudy from './BmsCaseStudy.jsx';
 import PvCaseStudy from './PvCaseStudy.jsx';
@@ -287,11 +287,40 @@ function ProjectYearGroup({items,onOpen,featureTutored=false}){
   </div>;
 }
 
-function ProjectDetail({project:p,onClose,onZoom}){
+function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
   const dialogRef=useRef(null);
-  useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape')onClose()};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose]);
-  return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
-    <div className="detail-header"><span className="index">{p.id==='betem'?'DOSSIER DE STAGE / BETEM':`DÉCRYPTAGE / PROJET ${p.no}`}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
+  const [readingMode,setReadingMode]=useState(false);
+  const savedScrollProgress=useRef(0);
+  const switchMode=(next)=>{
+    if(next===readingMode)return;
+    const el=dialogRef.current;
+    if(el)savedScrollProgress.current=el.scrollTop/Math.max(1,el.scrollHeight-el.clientHeight);
+    setReadingMode(next);
+  };
+  useLayoutEffect(()=>{
+    const el=dialogRef.current;
+    if(el)el.scrollTop=savedScrollProgress.current*Math.max(0,el.scrollHeight-el.clientHeight);
+  },[readingMode]);
+  useEffect(()=>{
+    dialogRef.current?.focus({preventScroll:true});
+    const handle=e=>{if(e.key==='Escape'&&!isZoomOpen)onClose()};
+    window.addEventListener('keydown',handle);
+    return()=>window.removeEventListener('keydown',handle);
+  },[onClose,isZoomOpen]);
+  return <div className={'detail-overlay'+(readingMode?' detail-overlay--reader':'')} onClick={onClose}>
+   <article className={'detail-panel'+(readingMode?' detail-panel--reader':'')} data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()} onWheel={e=>e.stopPropagation()}>
+    <div className="detail-header">
+     <span className="index">{p.id==='betem'?'DOSSIER DE STAGE / BETEM':`DÉCRYPTAGE / PROJET ${p.no}`}</span>
+     <div className="detail-header-actions">
+      <div className="detail-view-switch" role="group" aria-label="Mode de consultation de l’étude">
+       <button type="button" aria-pressed={!readingMode} onClick={()=>switchMode(false)} title="Consultation classique en panneau latéral"><PanelRightOpen size={17}/> CLASSIQUE</button>
+       <button type="button" aria-pressed={readingMode} onClick={()=>switchMode(true)} title="Lecture plein écran avec illustrations agrandies">{readingMode?<Minimize2 size={17}/>:<Maximize2 size={17}/>} PLEIN ÉCRAN</button>
+      </div>
+      <button type="button" onClick={onClose} className="detail-close"><X size={19}/> FERMER</button>
+     </div>
+    </div>
+    <div className="detail-reading-hint"><Mouse size={14}/> DÉFILEMENT À LA MOLETTE <span>·</span> CLIQUE SUR LES SCHÉMAS POUR LES AGRANDIR</div>
+    <div className="detail-content">
     <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{['bms','pv'].includes(p.id)?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
     {p.id==='bms'&&<BmsCaseStudy onZoom={onZoom}/>}
@@ -307,19 +336,33 @@ function ProjectDetail({project:p,onClose,onZoom}){
       <section className="critical-section"><span className="chapter-index">05 / PRISE DE RECUL</span><h3>Mon autoévaluation</h3><p>{p.critique}</p></section>
     </div>}
     <div className="detail-footer"><div><span>COMPÉTENCES ASSOCIÉES</span><Chips items={p.skills}/></div><button type="button" onClick={onClose} className="secondary-button"><ArrowLeft size={16}/> RETOUR AU PORTFOLIO</button></div>
+    </div>
   </article></div>;
 }
 
 function App(){
   const [project,setProject]=useState(null);const [zoom,setZoom]=useState(null);
+  const lenisRef=useRef(null);
   const closeDetail=()=>{setProject(null);setZoom(null)};
   useEffect(()=>{
-    const lenis=new Lenis({duration:1.2,smoothWheel:true});let raf;const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);
+    const lenis=new Lenis({duration:1.2,smoothWheel:true,prevent:node=>Boolean(node.closest('[data-lenis-prevent]'))});lenisRef.current=lenis;let raf;const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);
     lenis.on('scroll',ScrollTrigger.update);
     const anims=gsap.utils.toArray('.reveal').map(el=>gsap.fromTo(el,{opacity:0,y:35},{opacity:1,y:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}}));
-    return()=>{cancelAnimationFrame(raf);lenis.destroy();anims.forEach(a=>a.kill());ScrollTrigger.getAll().forEach(t=>t.kill())};
+    return()=>{cancelAnimationFrame(raf);lenis.destroy();lenisRef.current=null;anims.forEach(a=>a.kill());ScrollTrigger.getAll().forEach(t=>t.kill())};
   },[]);
-  useEffect(()=>{document.body.style.overflow=(project||zoom)?'hidden':'';return()=>{document.body.style.overflow=''}},[project,zoom]);
+  useEffect(()=>{
+    const hasDialog=Boolean(project||zoom);
+    document.body.style.overflow=hasDialog?'hidden':'';
+    if(hasDialog)lenisRef.current?.stop();
+    else lenisRef.current?.start();
+    return()=>{document.body.style.overflow=''};
+  },[project,zoom]);
+  useEffect(()=>{
+    if(!zoom)return;
+    const handle=e=>{if(e.key==='Escape'){e.stopPropagation();setZoom(null)}};
+    window.addEventListener('keydown',handle);
+    return()=>window.removeEventListener('keydown',handle);
+  },[zoom]);
   const openProject=(p)=>{setProject(p);setZoom(null)};
   return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><div className="grain" aria-hidden="true"/>
     <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
@@ -393,8 +436,8 @@ function App(){
 
       <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
     </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
-    {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom}/>}
-    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
+    {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom} isZoomOpen={Boolean(zoom)}/>}
+    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" data-lenis-prevent onWheel={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
   </div></>;
 }
 
