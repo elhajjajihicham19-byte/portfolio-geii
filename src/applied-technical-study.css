@@ -29,3 +29,8 @@
 .technical-doc-link small{display:block;font-size:10px;letter-spacing:.1em;margin-top:8px;color:#37607b}
 .technical-doc-link:hover{background:#88d0fc}
 @media(max-width:1100px){.technical-image-wide .technical-figure>button{height:300px}}
+
+.technical-requirements{background:radial-gradient(ellipse at 20% 15%,#275877,#122c43 80%);border:1px solid #477b9c;padding:29px;display:flex;flex-direction:column;gap:8px}
+.technical-requirements>span{font-size:10px;letter-spacing:.13em;color:#9bd6fb;font-weight:700;margin-bottom:12px}
+.technical-requirements>strong{font:700 35px/1.2 'Space Grotesk',sans-serif;letter-spacing:-.06em;color:#e8f6ff}
+.technical-requirements>small{font-size:10px;color:#aec6d6;letter-spacing:.12em;margin-bottom:22px}
