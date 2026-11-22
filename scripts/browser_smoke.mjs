@@ -41,7 +41,9 @@ try{
   for(const [width,height] of [[1366,768],[1920,1080],[2560,1440]]){
     jsErrors.length=0;
     await page.setViewportSize({width,height});
-    await page.waitForTimeout(250);
+    await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+    await page.locator('.hero').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
     await page.screenshot({path:`${directory}/accueil-${width}x${height}.png`,
       animations:'disabled',timeout:90000});
     const geometry=await page.evaluate(()=>{
