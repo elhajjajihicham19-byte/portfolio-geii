@@ -173,8 +173,6 @@
   background:radial-gradient(circle,rgba(61,155,238,.15),rgba(39,121,203,.045) 43%,transparent 71%);
   pointer-events:none;opacity:.56;will-change:left,top
 }
-/* Sur les études, le contenu est prioritaire ; les effets du site restent derrière. */
-.detail-overlay,.zoom-overlay{z-index:70}
 @media(max-width:1050px){.circuit-bus{display:none}}
 @media(prefers-reduced-motion:reduce){
   .circuit-bus__charge,.site .section::before,.site .competency-card,
