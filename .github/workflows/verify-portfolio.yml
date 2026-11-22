@@ -18,3 +18,5 @@ jobs:
         run: node scripts/verify_portfolio.mjs
       - name: Compiler le portfolio React
         run: npm run build
+      - name: Auditer les ressources, liens internes et accessibilité de base
+        run: node scripts/audit_site.mjs
