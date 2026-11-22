@@ -66,10 +66,10 @@ const projects = [
     note:'Les documents et extraits de plans présentés ont été validés pour publication par BETEM.'
   },
   {
-    id:'pv', no:'03', name:'Étude photovoltaïque', short:'Autoconsommation, surplus et stockage', field:'TRANSITION ÉNERGÉTIQUE', period:'Projet tutoré · BUT3',
-    description:'Étude comparative d’une installation photovoltaïque résidentielle selon la puissance du champ, le profil de consommation, l’architecture de conversion et le stockage.',
-    status:'Étude en cours — hypothèses à confirmer', color:'violet', icon:'solar', chips:['SAM','PVGIS','3 / 6 kWc','Micro-onduleurs','Batterie'],
-    metrics:[['3 / 6 kWc','variantes à étudier'],['10 kWh','batterie envisagée'],['Été / hiver','profils de charge']],
+    id:'pv', no:'03', name:'Étude photovoltaïque', short:'Simulation Sunny Design 6 kWc et comparaison avec le stockage', field:'TRANSITION ÉNERGÉTIQUE', period:'Projet tutoré · BUT3',
+    description:'Simulation d’un champ photovoltaïque résidentiel de 6 kWc sous Sunny Design : production, autoconsommation, injection réseau et dimensionnement de l’onduleur ; comparaison avec batterie à poursuivre.',
+    status:'Scénario 6 kWc simulé · Batterie et autres variantes à comparer', color:'violet', icon:'solar', chips:['Sunny Design','6 kWc','9 711 kWh/an','Autoconsommation','Stockage à étudier'],
+    metrics:[['9 711 kWh','production annuelle simulée'],['15,2 %','taux d’autoconsommation'],['40,9 %','taux d’autonomie']],
     context:'Pour un même logement, l’objectif est de comparer la vente du surplus et le stockage sur batterie à partir de profils de consommation identiques et d’hypothèses explicites.',
     role:'Construction de la méthode d’étude : définition du logement de référence, bilan d’énergie par usage, comparaison des profils saisonniers et scénarios à simuler.',
     method:[
@@ -79,12 +79,12 @@ const projects = [
       'Comparaison sous SAM de scénarios autoconsommation / revente / batterie.',
       'Étude des différences entre onduleur centralisé et micro-onduleurs.'
     ],
-    results:'Le document de cadrage et la méthode de comparaison sont établis. Les performances énergétiques et économiques définitives restent à calculer ; aucun gain de stockage ou de rentabilité n’est annoncé à ce stade.',
+    results:'Pour 12 panneaux totalisant 6 kWc et un onduleur de 5 kW, Sunny Design estime 9 711 kWh/an, 1 474 kWh autoconsommés, 8 237 kWh injectés et 2 126 kWh soutirés. Le profil de référence consomme 3 600 kWh/an : 15,2 % d’autoconsommation, 40,9 % d’autonomie. Les variantes batterie et 3 kWc restent à simuler.',
     critique:'La qualité des conclusions dépendra surtout des données de consommation et du réalisme des hypothèses. Il faudra distinguer les résultats simulés des mesures et effectuer une étude de sensibilité sur les prix, les rendements et les profils de charge.',
     skills:['Concevoir','Vérifier','Installer (pré-étude)'],
     evidence:[],
     docs:[{label:'Document de cadrage photovoltaïque',url:'/documents/Etude-photovoltaique-cadrage.docx',type:'DOCX · document de travail'}],
-    note:'Les valeurs de puissance et de stockage sont des scénarios d’étude. Les performances restent à vérifier par simulation.'
+    note:'Les résultats chiffrés décrivent une configuration Sunny Design 6 kWc sans batterie à Laroque ; ce sont des estimations logicielles, non des mesures ni un retour sur investissement démontré.'
   },
   {
     id:'cem', no:'04', name:'Compatibilité électromagnétique', short:'Harmoniques, filtre LC accordé à 150 Hz et PFC Boost', field:'ÉLECTRONIQUE DE PUISSANCE', period:'Travaux pratiques · BUT3',
