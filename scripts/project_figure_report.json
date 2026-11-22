@@ -14,11 +14,5 @@
     "geii-testeur-de-batterie": 1,
     "betem": 8
   },
-  "errors": [
-    {
-      "project": "geii-retrofit-maquette-knx",
-      "document": "KNX — schémas électriques",
-      "reason": "page 3 missing"
-    }
-  ]
+  "errors": []
 }

@@ -17,19 +17,19 @@
       "chapter": 2
     },
     {
+      "image": "/assets/studies/geii-capteur-de-temperature/01-page-011.webp",
+      "title": "Programmation et affichage sur LCD",
+      "desc": "Thermomètre numérique — rapport de projet — page 11",
+      "source": "Étude technique GEII — Thermomètre numérique — rapport de projet",
+      "page": 11,
+      "chapter": 2
+    },
+    {
       "image": "/assets/studies/geii-capteur-de-temperature/01-page-012.webp",
-      "title": "Commande LCD et traitement numérique",
+      "title": "Routage de la carte et relevés de tension",
       "desc": "Thermomètre numérique — rapport de projet — page 12",
       "source": "Étude technique GEII — Thermomètre numérique — rapport de projet",
       "page": 12,
-      "chapter": 3
-    },
-    {
-      "image": "/assets/studies/geii-capteur-de-temperature/01-page-013.webp",
-      "title": "Fiche de mesures et routage",
-      "desc": "Thermomètre numérique — rapport de projet — page 13",
-      "source": "Étude technique GEII — Thermomètre numérique — rapport de projet",
-      "page": 13,
       "chapter": 3
     }
   ],
