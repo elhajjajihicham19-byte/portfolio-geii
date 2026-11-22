@@ -4,14 +4,15 @@ import {
   ChartNoAxesCombined, FileText, ClipboardList, ShieldCheck,
   PanelsTopLeft, Calculator, Gauge, ZoomIn, Info, AlertCircle, CircleCheckBig
 } from 'lucide-react';
+import {PvSunnyDesignReference,PvSunnyElectrical,PvSunnyRoof,PvSunnyEnergyBalance,PvSunnyMonthly,PvSunnyEconomics} from './PvSunnyResults.jsx';
 import './pv-case-study.css';
 
 const DOCUMENT='/documents/Etude-photovoltaique-cadrage.docx';
 const CASES=[
   {id:'vente',short:'A / VENTE DU SURPLUS',label:'Autoconsommation et injection',
-    description:'Nous consommons directement la production disponible. Le surplus non utilisé est injecté sur le réseau selon les conditions de raccordement et de vente.'},
+    description:'L’habitation consomme directement la production disponible. Le surplus non utilisé est injecté sur le réseau selon les conditions de raccordement et de vente.'},
   {id:'stockage',short:'B / STOCKAGE',label:'Autoconsommation et batterie',
-    description:'Nous donnons la priorité aux usages du logement, puis au stockage de l’excédent. La batterie peut restituer une partie de cette énergie en soirée, après les pertes de conversion.'},
+    description:'La stratégie donne la priorité aux usages du logement, puis au stockage de l’excédent. La batterie peut restituer une partie de cette énergie en soirée, après les pertes de conversion.'},
 ];
 const fields=[
   ['LOGEMENT','Même profil de consommation dans les deux scénarios'],
@@ -20,12 +21,12 @@ const fields=[
   ['HYPOTHÈSES','Pertes, rendements, tarifs, horaires et vieillissement documentés']
 ];
 const steps=[
-  ['01','Bilan électrique','Nous établissons la consommation par usage (chauffage, eau chaude, cuisson, appareils), avec puissance, durée et énergie.'],
-  ['02','Profil horaire','Nous distinguons les journées été/hiver et jours ouvrés/week-ends afin de tenir compte du décalage entre production et consommation.'],
-  ['03','Ressource solaire','Nous utilisons les données du site, l’orientation, la pente et les ombrages pour définir la production à simuler avec PVGIS.'],
-  ['04','Conversion','Nous comparons un onduleur centralisé et des micro-onduleurs, en séparant ce choix du mode de valorisation du surplus.'],
-  ['05','Simulation','Nous préparons dans SAM deux scénarios soumis aux mêmes hypothèses, avec et sans stockage, avant d’interpréter les résultats.'],
-  ['06','Bilan comparatif','Nous comparerons les flux d’énergie, les achats au réseau, les recettes, les coûts et une sensibilité aux hypothèses.']
+  ['01','Bilan électrique','J’établis la consommation par usage (chauffage, eau chaude, cuisson, appareils), avec puissance, durée et énergie.'],
+  ['02','Profil horaire','Je distingue les journées été/hiver et jours ouvrés/week-ends afin de tenir compte du décalage entre production et consommation.'],
+  ['03','Ressource solaire','J’utilise les données du site, l’orientation, la pente et les ombrages pour définir la production à simuler avec PVGIS.'],
+  ['04','Conversion','Je compare un onduleur centralisé et des micro-onduleurs, en séparant ce choix du mode de valorisation du surplus.'],
+  ['05','Simulation','Je prépare dans SAM deux scénarios soumis aux mêmes hypothèses, avec et sans stockage, avant d’interpréter les résultats.'],
+  ['06','Bilan comparatif','Je comparerai les flux d’énergie, les achats au réseau, les recettes, les coûts et une sensibilité aux hypothèses.']
 ];
 function EvidenceLabel({children}){return <span className="pv-evidence-label">{children}</span>}
 function Formula({name,eq,caption}){return <div className="pv-formula"><span>{name}</span><strong>{eq}</strong><p>{caption}</p></div>}
@@ -66,19 +67,20 @@ function TableCompare(){
  <tr><td>Demande en soirée</td><td>Achat éventuel au réseau</td><td>Restitution depuis la batterie puis achat éventuel</td></tr>
  <tr><td>Pertes supplémentaires</td><td>Pertes de conversion du système PV</td><td>Pertes de conversion et rendement aller-retour batterie</td></tr>
  <tr><td>Indicateurs économiques</td><td>Économies sur les achats + recettes d’injection</td><td>Économies possibles + investissement et remplacement du stockage</td></tr>
- <tr><td>Résultat chiffré à ce stade</td><td><span className="pv-pending">À SIMULER</span></td><td><span className="pv-pending">À SIMULER</span></td></tr>
+ <tr><td>Résultat chiffré à ce stade</td><td><strong>Cas 6 kWc : 9 711 kWh/an, 15,2 % autoconsommés, 40,9 % d’autonomie (Sunny Design)</strong></td><td><span className="pv-pending">À SIMULER</span></td></tr>
  </tbody></table></div>;
 }
 export default function PvCaseStudy(){
  const [mode,setMode]=useState('vente');
  const [roof,setRoof]=useState('1 pan');
- const [power,setPower]=useState('3 kWc');
+ const [power,setPower]=useState('6 kWc');
  const [showMethods,setShowMethods]=useState(false);
  return <div className="bms-study pv-study">
   <div className="bms-study-heading">
    <span>PROJET TUTORÉ / ÉLECTRICITÉ ET MAÎTRISE DE L’ÉNERGIE</span>
    <h3>PRODUIRE, CONSOMMER <em>OU STOCKER ?</em></h3>
-   <p>Dans cette étude, nous cherchons à déterminer, pour un même logement, s’il est plus pertinent de vendre l’excédent photovoltaïque ou de le stocker. Notre démarche consiste à comparer les flux d’énergie et les coûts avec des hypothèses identiques. Le dimensionnement définitif et les résultats de simulation restent à établir.</p>
+   <p>J’étudie la valorisation de la production photovoltaïque d’un logement : consommation directe, injection du surplus ou stockage sur batterie. J’ai désormais un <strong>premier scénario chiffré sous SMA Sunny Design</strong> : une installation de 6 kWc sans batterie, simulée pour Laroque. Les variantes 3 kWc, trois pans et batterie restent à comparer sur des hypothèses équivalentes.</p>
+   <PvSunnyDesignReference/>
   </div>
 
   <section className="bms-chapter" aria-labelledby="pv-problem">
@@ -86,16 +88,17 @@ export default function PvCaseStudy(){
    <div className="bms-chapter-grid">
     <div className="bms-narrative">
      <h4 id="pv-problem">Comparer deux stratégies à conditions égales.</h4>
-     <p>Nous avons défini deux modes de valorisation du surplus : <strong>injection sur le réseau</strong> et <strong>stockage sur batterie</strong>. Pour obtenir une comparaison pertinente, nous devons conserver le même logement, le même champ photovoltaïque et le même profil de consommation.</p>
-     <p>Nous avons également prévu de comparer différentes puissances et configurations de toiture. Les valeurs ci-dessous correspondent à des <strong>scénarios d’étude</strong> : elles ne représentent pas une installation réalisée ou un dimensionnement validé.</p>
+     <p>J’ai défini deux stratégies : <strong>l’autoconsommation avec injection du surplus</strong> et <strong>l’autoconsommation avec batterie</strong>. Pour comparer leurs performances, je conserve le même logement, le même champ photovoltaïque et le même profil de consommation.</p>
+     <p>Un premier calcul sous <strong>Sunny Design 6.22.2 (18 septembre 2026)</strong> décrit précisément le cas <strong>6 kWc, pan sud à 33°, sans stockage</strong>, avec un logement consommant 3 600 kWh/an. Les autres variantes ci-dessous restent des scénarios à évaluer, non des résultats acquis sur installation réelle.</p>
      <div className="bms-spec-grid"><div className="bms-spec"><strong>3 / 6 kWc</strong><span>puissances PV envisagées</span></div><div className="bms-spec"><strong>1 / 3 pans</strong><span>configurations de toiture</span></div><div className="bms-spec"><strong>10 kWh</strong><span>capacité nominale de batterie envisagée</span></div><div className="bms-spec"><strong>ÉTÉ / HIVER</strong><span>profils horaires à comparer</span></div></div>
     </div>
     <div className="pv-brief">
-     <span>NOTRE PROBLÉMATIQUE</span>
+     <span>PROBLÉMATIQUE</span>
      <strong>Quelle stratégie valorise le mieux le surplus pour un profil de consommation donné ?</strong>
      <p>La réponse dépend de l’autoconsommation directe, du surplus réellement disponible, du rendement du stockage et des conditions économiques.</p>
      <div><CircleCheckBig size={18}/> Comparaison à hypothèses identiques</div>
-     <div><AlertCircle size={18}/> Aucune rentabilité démontrée à ce stade</div>
+     <div><CircleCheckBig size={18}/> Premier scénario 6 kWc simulé sous Sunny Design</div>
+     <div><AlertCircle size={18}/> Batterie et rentabilité complète non validées</div>
     </div>
    </div>
   </section>
@@ -103,7 +106,7 @@ export default function PvCaseStudy(){
   <section className="bms-chapter" aria-labelledby="pv-architecture">
    <div className="bms-chapter-index"><span>02 / ARCHITECTURES ÉNERGÉTIQUES</span><PanelsTopLeft size={22}/></div>
    <h4 id="pv-architecture">Deux façons de valoriser l’énergie excédentaire.</h4>
-   <p className="bms-chapter-lead">Nous distinguons le choix du mode de valorisation (vente ou stockage) de l’architecture électrique (onduleur centralisé ou micro-onduleurs). Les deux critères seront étudiés séparément afin d’isoler leur influence sur les résultats.</p>
+   <p className="bms-chapter-lead">Je distingue la stratégie de valorisation (injection ou stockage) de la technologie de conversion (onduleur centralisé ou micro-onduleurs). Le cas chiffré disponible correspond à un <strong>SMA Sunny Boy 5.0</strong> et à deux chaînes raccordées sur des entrées MPPT distinctes.</p>
    <div className="pv-tabs" role="group" aria-label="Choisir le scénario affiché">{CASES.map(c=><button key={c.id} type="button" aria-pressed={mode===c.id} className={mode===c.id?'active':''} onClick={()=>setMode(c.id)}>{c.short}</button>)}</div>
    <PvFlow mode={mode}/>
    <p className="pv-current-description">{CASES.find(c=>c.id===mode).description}</p>
@@ -111,32 +114,39 @@ export default function PvCaseStudy(){
     <div><span>OPTION 01</span><strong>Onduleur centralisé</strong><p>Un convertisseur pour l’ensemble ou une partie du champ : tension des chaînes, MPPT et comportement en cas d’ombres à vérifier.</p></div>
     <div><span>OPTION 02</span><strong>Micro-onduleurs</strong><p>Conversion au niveau des modules ou petits groupes de modules : souplesse d’orientation et suivi à comparer en tenant compte des coûts.</p></div>
    </div>
+   <h5 className="pv-real-title">Dimensionnement vérifié dans la simulation 6 kWc</h5>
+   <PvSunnyElectrical/>
   </section>
 
   <section className="bms-chapter" aria-labelledby="pv-roof">
    <div className="bms-chapter-index"><span>03 / IMPLANTATION ET DIMENSIONNEMENT</span><Sun size={22}/></div>
    <h4 id="pv-roof">L’implantation influence directement la production.</h4>
-   <p className="bms-chapter-lead">Pour distinguer l’effet de la configuration du toit, nous avons prévu deux cas : des modules répartis sur un pan ou sur trois pans. Chaque variante devra être évaluée avec son orientation, son inclinaison et ses ombrages.</p>
+   <p className="bms-chapter-lead">La simulation Sunny Design porte sur <strong>12 panneaux DMEGC de 500 Wc</strong> regroupés sur un pan orienté sud (azimut 0°, inclinaison 33°). Je conserve en parallèle une variante sur trois pans, dont la production reste à établir en tenant compte des orientations et des ombrages.</p>
    <RoofFigure/>
-   <EvidenceLabel>ILLUSTRATIONS DE PRINCIPE — NON ISSUES D'UN RELEVÉ DE TOITURE</EvidenceLabel>
+   <EvidenceLabel>SCHÉMAS CONCEPTUELS DES DEUX VARIANTES</EvidenceLabel>
+   <h5 className="pv-real-title">Implantation du cas simulé sur le pan sud</h5>
+   <PvSunnyRoof/>
    <div className="pv-config">
     <div><label htmlFor="pv-roof-select">CONFIGURATION DE TOITURE</label><select id="pv-roof-select" value={roof} onChange={e=>setRoof(e.target.value)}><option>1 pan</option><option>3 pans</option></select></div>
     <div><label htmlFor="pv-power-select">PUISSANCE ENVISAGÉE</label><select id="pv-power-select" value={power} onChange={e=>setPower(e.target.value)}><option>3 kWc</option><option>6 kWc</option></select></div>
-    <p>Variante affichée : <strong>{roof} / {power}</strong>. Ces choix préparent la comparaison et ne calculent pas une production réelle.</p>
+    <p>Variante affichée : <strong>{roof} / {power}</strong>. {roof==='1 pan'&&power==='6 kWc'?'Cas de référence documenté par Sunny Design : 9 711 kWh/an estimés, avec 12 modules au sud.':'Variante de comparaison encore à simuler ; aucune production chiffrée n’est attribuée à cette sélection.'}</p>
    </div>
-   <div className="pv-caution"><Info size={18}/><p>Le premier cadrage envisageait aussi une vingtaine de modules. Nous ne retiendrons définitivement ni le nombre de panneaux ni leur puissance avant l’analyse des besoins et de la surface disponible.</p></div>
+   <div className="pv-caution"><Info size={18}/><p>Le cas 6 kWc de Sunny Design est une <strong>configuration simulée et documentée</strong>, pas une installation réalisée. Il ne démontre pas les performances d’un autre toit, d’un système à micro-onduleurs ou d’une batterie. Les vérifications réglementaires, d’ombrage et de pose restent distinctes.</p></div>
   </section>
 
   <section className="bms-chapter" aria-labelledby="pv-consumption">
    <div className="bms-chapter-index"><span>04 / BESOINS DU LOGEMENT ET SIMULATIONS</span><ChartNoAxesCombined size={22}/></div>
    <h4 id="pv-consumption">Pourquoi le profil horaire compte autant que la production annuelle.</h4>
-   <p className="bms-chapter-lead">Nous avons choisi de partir d’un bilan des usages du logement, puis de construire des profils horaires représentatifs en été et en hiver. Deux maisons ayant la même consommation annuelle peuvent présenter des taux d’autoconsommation différents si leurs besoins se situent à des heures distinctes.</p>
+   <p className="bms-chapter-lead">Le profil de charge utilisé par Sunny Design correspond à une <strong>famille de deux adultes actifs et deux enfants</strong>, avec une consommation de <strong>3 600 kWh/an</strong>. La simulation fournit des flux annuels et mensuels précis, mais pas un relevé de consommation réel du logement ni une étude horaire de batterie.</p>
+   <PvSunnyEnergyBalance/>
+   <h5 className="pv-real-title">Production et échanges réseau, mois par mois</h5>
+   <PvSunnyMonthly/>
    <div className="pv-schedule">
     <div><span>MATIN</span><Sun size={20}/><strong>Production croissante</strong><p>Comparer la production au chauffage, à l’eau chaude et aux usages du matin.</p></div>
     <div><span>MIDI</span><Sun size={25}/><strong>Excédent possible</strong><p>Évaluer l’énergie réellement disponible pour l’injection ou la recharge.</p></div>
     <div><span>SOIR</span><House size={20}/><strong>Consommation du logement</strong><p>Vérifier l’intérêt d’une restitution sur batterie lorsque la production baisse.</p></div>
    </div>
-   <EvidenceLabel>CHRONOLOGIE EXPLICATIVE — PAS DE PROFIL MESURÉ</EvidenceLabel>
+   <EvidenceLabel>CHRONOLOGIE EXPLICATIVE — COMPLÉMENT AUX RÉSULTATS MENSUELS SIMULÉS</EvidenceLabel>
    <div className="pv-workflow">
     {steps.map(([num,title,detail])=><div key={num}><b>{num}</b><div><strong>{title}</strong><p>{detail}</p></div></div>)}
    </div>
@@ -149,22 +159,24 @@ export default function PvCaseStudy(){
 
   <section className="bms-chapter" aria-labelledby="pv-compare">
    <div className="bms-chapter-index"><span>05 / COMPARAISON ET VALIDATION</span><Calculator size={22}/></div>
-   <h4 id="pv-compare">Quels résultats nous permettront de choisir ?</h4>
-   <p className="bms-chapter-lead">Nous comparerons les deux scénarios à production et consommation égales. Pour le stockage, il faudra notamment retrancher les pertes aller-retour de la batterie et tenir compte de son coût d’acquisition, de sa durée de vie et des cycles réalisés.</p>
+   <h4 id="pv-compare">Ce que montre déjà le cas de référence.</h4>
+   <p className="bms-chapter-lead">J’ai obtenu un premier bilan quantifié pour l’autoconsommation avec injection du surplus, <strong>sans optimisation de charge ni batterie</strong>. Il sert désormais de référence pour comparer le stockage, après intégration des pertes aller-retour, du coût d’investissement et des éventuels remplacements.</p>
    <TableCompare/>
-   <div className="pv-pending-panel"><AlertCircle size={24}/><div><strong>SIMULATIONS ET RENTABILITÉ : RÉSULTATS NON ENCORE VALIDÉS</strong><p>Les documents actuellement disponibles définissent le périmètre de l’étude et ses indicateurs. Ils ne donnent pas encore de production annuelle, de taux d’autoconsommation final ni de temps de retour sur investissement vérifié. Aucun résultat fictif n’est ajouté au portfolio.</p></div></div>
+   <h5 className="pv-real-title">Indicateurs économiques du cas sans batterie</h5>
+   <PvSunnyEconomics/>
+   <div className="pv-pending-panel"><AlertCircle size={24}/><div><strong>UNE RÉFÉRENCE SIMULÉE, PAS ENCORE UN COMPARATIF DE RENTABILITÉ</strong><p>La production et les flux annuels du cas 6 kWc sont estimés par Sunny Design. Le logiciel présente aussi des bénéfices économiques indicatifs, mais le coût complet d’installation et les hypothèses tarifaires ne sont pas détaillés dans ce rapport. Les scénarios avec batterie, 3 kWc et trois pans n’ont pas encore de bilan comparable.</p></div></div>
   </section>
 
   <section className="bms-chapter bms-chapter--conclusion" aria-labelledby="pv-outlook">
    <div className="bms-chapter-index"><span>06 / COMPÉTENCES ET PERSPECTIVES</span><ShieldCheck size={22}/></div>
-   <h4 id="pv-outlook">Passer des hypothèses à une comparaison argumentée.</h4>
+   <h4 id="pv-outlook">Interpréter les résultats avant de choisir un stockage.</h4>
    <div className="bms-learning-grid">
-    <div><span>CONCEVOIR</span><p>Nous structurons les scénarios, les hypothèses de toiture et les choix de conversion pour établir une méthode de dimensionnement cohérente.</p></div>
-    <div><span>VÉRIFIER</span><p>Nous prévoyons de confronter les bilans d’énergie, les simulations et les résultats économiques aux mêmes conditions de référence.</p></div>
+    <div><span>CONCEVOIR</span><p>Je structure les scénarios, les hypothèses de toiture et les choix de conversion pour établir une méthode de dimensionnement cohérente.</p></div>
+    <div><span>VÉRIFIER</span><p>Je prévois de confronter les bilans d’énergie, les simulations et les résultats économiques aux mêmes conditions de référence.</p></div>
     <div><span>ESPRIT CRITIQUE</span><p>Je cherche à distinguer une amélioration du taux d’autonomie d’un véritable gain économique, sans conclure avant les simulations.</p></div>
    </div>
-   <p className="bms-final-note">La prochaine étape consiste à valider la consommation de référence, les caractéristiques des toitures et les paramètres des équipements, puis à exécuter les scénarios sous SAM et PVGIS. Les performances annoncées dans cette étude seront actualisées uniquement lorsque les résultats seront disponibles et justifiés.</p>
-   <div className="pv-source-document"><div><FileText size={26}/><div><strong>Document de cadrage du projet photovoltaïque</strong><p>Problématique, scénarios A/B, méthode de comparaison et indicateurs de suivi.</p></div></div><a href={DOCUMENT} target="_blank" rel="noopener noreferrer">CONSULTER LE CAHIER DES CHARGES <ArrowUpRight size={17}/></a></div>
+   <p className="bms-final-note">Le cas Sunny Design de 6 kWc montre qu’une production annuelle de 9 711 kWh n’assure que 40,9 % d’autonomie à un logement consommant 3 600 kWh/an : une grande partie du solaire disponible est injectée au réseau. Cette observation justifie l’étude d’un déplacement des usages ou d’une batterie, mais ne prouve pas que le stockage sera économiquement préférable. Je poursuivrai avec les scénarios 3 kWc et trois pans, puis les simulations avec batterie et leurs coûts réels sous SAM/PVGIS.</p>
+   <div className="pv-source-document"><div><FileText size={26}/><div><strong>Références de l’étude</strong><p>Rapport Sunny Design 6.22.2 « PTUT », 18/09/2026, 11 pages : configuration, bilans et projections. Document de cadrage : scénarios et hypothèses du projet tutoré. Les figures de cette fiche sont reconstituées à partir des données du rapport, sans être présentées comme des captures du logiciel.</p></div></div><a href={DOCUMENT} target="_blank" rel="noopener noreferrer">CONSULTER LE CAHIER DES CHARGES <ArrowUpRight size={17}/></a></div>
   </section>
  </div>;
 }
