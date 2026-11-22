@@ -190,6 +190,19 @@ const documents = [
   {title:'Compte rendu DIALux',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Captures originales et analyse de variantes d’éclairage.',url:'/documents/Compte-rendu-DIALux.docx',icon:FileText},
 ];
 
+
+/* Bibliothèque documentaire complète des pièces jointes de l'ancien portfolio.
+   Les URL sont celles du Drive d'origine ; leur accessibilité publique dépend du partage. */
+documents.push(...ancienPortfolio.flatMap(page=>(page.documents||[]).map(doc=>({
+  title:doc.titre||'Document technique',
+  type:page.titre.toUpperCase(),
+  desc:'Pièce originale référencée dans le portfolio Google Sites.',
+  url:doc.url,
+  external:true,
+  icon:FileText
+}))));
+
+
 function EnergyCore(){
   const group=useRef(null);const torus=useRef(null);
   useFrame(({clock,pointer})=>{
