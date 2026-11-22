@@ -71,7 +71,7 @@ export default function BmsCaseStudy({onZoom}){
         <Figure src={images.board} title="Assemblage réel de la carte" caption="Gros plan sur le PCB, les connexions de puissance, le porte-fusible et les composants soudés." onZoom={onZoom}/>
       </div>
       <div className="bms-report-figure-single">
-        <ReportFigure page={6} title="Schéma d’architecture original — ML5243" caption="Page 6 du rapport tutoré : broches du superviseur, MOSFET de charge/décharge et détection thermique. Capture du document d'origine, non redessinée." onZoom={onZoom} wide/>
+        <ReportFigure page={6} title="Schéma d’architecture original — ML5243" caption="Page 6 du rapport tutoré : broches du superviseur, MOSFET de charge/décharge et détection thermique. Capture du document d'origine, non redessinée. La mention « 5S » sur la planche est à clarifier : le cahier des charges décrit un pack 4S." onZoom={onZoom} wide/>
       </div>
     </section>
 
