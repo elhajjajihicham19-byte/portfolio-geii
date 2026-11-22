@@ -88,6 +88,7 @@ export function PvSunnyEnergyBalance(){
     <MiniMetric value="8 237 kWh" label="Surplus injecté au réseau"/>
     <MiniMetric value="2 126 kWh" label="Énergie achetée au réseau"/>
    </div>
+   <div className="pv-real-performance"><span><b>1 619 kWh/kWc</b> production spécifique estimée</span><span><b>86,3 %</b> indice de performance déclaré</span><span><b>99,7 %</b> facteur d’utilisation de l’énergie indiqué</span></div>
    <div className="pv-real-balance__streams">
      <div><div className="pv-real-balance__stream-label"><Sun size={18}/> <strong>PRODUCTION SOLAIRE · 9 711 kWh</strong></div>
        <div className="pv-real-balance__bar" role="img" aria-label="15,2 % de la production autoconsommée, 84,8 % injectée">
@@ -159,7 +160,7 @@ export function PvSunnyEconomics(){
      <MiniMetric value="15 658 €" label="Économies cumulées affichées à 20 ans"/>
      <MiniMetric value="65 t" label="Réduction de CO₂ estimée sur 20 ans"/>
    </div>
-   <div className="pv-real-analysis"><Info size={20}/><p>Ces montants sont ceux <strong>présentés par Sunny Design</strong> et non des recettes constatées. Le rapport ne détaille pas ici les tarifs appliqués, le coût complet de l’installation, les frais de maintenance ni les modalités de calcul des économies sur 20 ans. Ils ne suffisent donc pas pour annoncer une rentabilité ou un délai d’amortissement fiable.</p></div>
+   <div className="pv-real-analysis"><Info size={20}/><p>Ces montants sont ceux <strong>présentés par Sunny Design</strong> et non des recettes constatées. Le rapport ne détaille pas ici les tarifs appliqués, le coût complet de l’installation, les frais de maintenance ni les modalités de calcul des économies sur 20 ans. En particulier, le montant affiché de 103 €/mois ne doit pas être multiplié mécaniquement par 240 mois ni ajouté aux autres économies. Ces indications ne suffisent donc pas pour annoncer une rentabilité ou un délai d’amortissement fiable.</p></div>
    <small className="pv-real-origin">Données économiques affichées dans Sunny Design, p. 5 · À vérifier dans une étude de rentabilité dédiée.</small>
  </div>;
 }
