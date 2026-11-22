@@ -59,7 +59,7 @@ const projectClassification={
     description:'En BUT1, j’ai étudié l’installation électrique d’une habitation, réparti les circuits sur un tableau à trois rangées et choisi les protections adaptées aux différents usages.',
     status:'Étude de conception réalisée — vérifications à compléter'},
   'malaxeur': {year:1, category:'applied', nature:'SAE S2', metrics:[['≈ 36,7 s','temps de cycle'],['PH0–PH7','phases automatisées'],['PT100','mesure de température']]},
-  'moteur-dc-pilot-par-bus-can': {year:2, category:'applied', nature:'SAE / ÉLECTRONIQUE EMBARQUÉE', metrics:[['Bus CAN','communication'],['DRV8251A','commande moteur'],['Pont en H','étage de puissance']]},
+  'moteur-dc-pilot-par-bus-can': {year:2, category:'applied', nature:'SAE / ÉLECTRONIQUE EMBARQUÉE', metrics:[['0,10 A','commande moteur testée'],['80 mA','limitation relevée'],['CAN','trames étudiées']],status:'Essais sur carte pédagogique — mesures et écarts analysés'},
   'rs510': {year:2, category:'applied', nature:'RÉALISATION PRATIQUE', metrics:[['0–50 Hz','variation de fréquence'],['0–10 V','consigne analogique'],['RS510','variateur']]},
   'retrofit-maquette-knx': {year:2, category:'applied', nature:'RÉALISATION PRATIQUE', metrics:[['29 V DC','alimentation bus'],['ETS6','programmation'],['KNX','réseau domotique']]},
   'robot-suiveur-de-ligne': {year:1, category:'applied', nature:'SAE DOCUMENTÉE', metrics:[['≈ 967 Hz','fréquence PWM relevée'],['LM324','amplificateur'],['IR','détection de ligne']]},
