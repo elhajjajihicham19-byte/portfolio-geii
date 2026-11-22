@@ -148,7 +148,25 @@ for(const [project,archive] of [[projects[0],originalBMS],[projects[1],originalB
   }
 }
 projects.push(...legacyProjects);
-projects.forEach((project,index)=>{ project.no=String(index+1).padStart(2,'0') });
+// Distinction explicite entre projet tutoré, SAE documentée et autres travaux.
+// La fiche BETEM reste disponible depuis « Expérience professionnelle »,
+// mais ne figure plus dans les réalisations universitaires.
+projects.find(p=>p.id==='bms').category='tutored';
+projects.find(p=>p.id==='bms').nature='PROJET TUTORÉ';
+projects.find(p=>p.id==='pv').category='tutored';
+projects.find(p=>p.id==='pv').nature='PROJET TUTORÉ';
+for(const id of ['cem','dialux']){
+  const practical=projects.find(p=>p.id===id);
+  if(practical){practical.category='applied';practical.nature='TRAVAUX PRATIQUES'}
+}
+const academicProjects=projects.filter(p=>p.id!=='betem');
+const tutoredProjects=academicProjects.filter(p=>p.category==='tutored')
+  .sort((a,b)=>['bms','pv','geii-capteur-de-temperature'].indexOf(a.id)-['bms','pv','geii-capteur-de-temperature'].indexOf(b.id));
+const appliedProjects=academicProjects.filter(p=>p.category!=='tutored');
+academicProjects.forEach((p,i)=>{p.no=String(i+1).padStart(2,'0')});
+const betemExperience=projects.find(p=>p.id==='betem');
+betemExperience.no='ST';
+
 
 const competencies = [
   {
@@ -232,6 +250,26 @@ function Chips({items}){return <div className="chips">{items.map(x=><span key={x
 function DocumentLink({url,label,external=false}){return <a className="document-link" href={url} target="_blank" rel="noopener noreferrer">{label}{external?<ExternalLink size={15}/>:<Download size={15}/>}</a>}
 function EvidenceGrid({items,onZoom}){return <div className="evidence-grid">{items.map((ev,i)=><button key={i} className="evidence-item" type="button" onClick={()=>onZoom(ev)} title="Agrandir la preuve"><div className="evidence-image"><img src={ev.image} alt={ev.title} loading="lazy"/></div><div className="evidence-info"><span>{String(i+1).padStart(2,'0')} / PREUVE AUTHENTIQUE</span><b>{ev.title}</b><small>{ev.desc}</small></div><ArrowUpRight size={16}/></button>)}</div>}
 
+function ProjectCard({project:p,onOpen,featured=false}){
+  return <article className={'project reveal'+(featured?' project--featured':'')} key={p.id}>
+    <div className="project-meta"><span>{p.no} / {String(academicProjects.length).padStart(2,'0')}</span><span>{p.field}</span></div>
+    <ProjectVisual kind={p.icon} image={p.cover}/>
+    <div className="project-info">
+      <div>
+        <p className="project-subtitle">{p.period}</p>
+        <h3>{p.name}</h3>
+        <p className="project-strap">{p.short}</p>
+        <span className={'project-nature'+(featured?' project-nature--featured':'')}>{p.nature||'RÉALISATION UNIVERSITAIRE'}</span>
+      </div>
+      <p className="project-summary">{p.description}</p>
+      <Chips items={p.chips}/>
+      <div className="project-action"><span>{p.status}</span>
+        <button type="button" onClick={()=>onOpen(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button>
+      </div>
+    </div>
+  </article>;
+}
+
 function getDocumentPreviewUrl(url){
   const fileMatch=url.match(/^https:\/\/drive\.google\.com\/file\/d\/([^/]+)/);
   if(fileMatch)return 'https://drive.google.com/file/d/'+fileMatch[1]+'/preview';
@@ -243,7 +281,7 @@ function ProjectDetail({project:p,onClose,onZoom}){
   const [previewDoc,setPreviewDoc]=useState(null);
   useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape'){if(previewDoc)setPreviewDoc(null);else onClose()}};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose,previewDoc]);
   return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
-    <div className="detail-header"><span className="index">DÉCRYPTAGE / PROJET {p.no}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
+    <div className="detail-header"><span className="index">{p.id==='betem'?'DOSSIER DE STAGE / BETEM':`DÉCRYPTAGE / PROJET ${p.no}`}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
     <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line"><CheckCircle2 size={15}/>{p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
     {!p.legacyOnly&&<div className="detail-chapters">
@@ -306,11 +344,46 @@ function App(){
 
       <section id="competences" className="section competence-section"><SectionHeader number="03" title="RÉFÉRENTIEL GEII" aside="4 COMPÉTENCES · PARCOURS EME"/><div className="competence-intro reveal"><h2>CE QUE JE <span>DÉVELOPPE.</span></h2><p>Les quatre compétences du parcours sont reliées à des situations de projet, à des preuves et à un retour critique. Les apprentissages critiques listés ci-dessous sont ceux du niveau BUT3.</p></div><div className="competency-grid">{competencies.map((c,i)=><article className="competency-card reveal" key={c.id}><div className="competency-index"><span>{c.no} / 04</span><span className="competency-mark">{String(i+1).padStart(2,'0')}</span></div><h3>{c.name}</h3><p className="competency-title">{c.title}</p><p>{c.description}</p><div className="competency-line">APPRENTISSAGES CRITIQUES BUT3</div><ul>{c.critical.map(x=><li key={x}>{x}</li>)}</ul><div className="competency-line">PREUVES & APPLICATIONS</div><p className="competency-evidence">{c.evidence}</p><div className="competency-projects">{c.projects.map(id=>{let p=projects.find(x=>x.id===id);return <button key={id} type="button" onClick={()=>openProject(p)}>{p.name}<ArrowUpRight size={13}/></button>})}</div><div className="self-review"><span>MON REGARD CRITIQUE</span><p>{c.review}</p></div></article>)}</div><p className="competence-source">Référence : Programme national du BUT GEII, parcours EME, niveaux et apprentissages critiques. <a href={REFERENTIEL} target="_blank" rel="noopener noreferrer">Consulter le document officiel <ExternalLink size={13}/></a></p></section>
 
-      <section id="projets" className="section projects"><SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside={`${projects.length} ÉTUDES COMPLÈTES`}/><div className="projects-intro reveal"><h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2><p>Ouvrir chaque projet pour voir la méthode, les résultats, les preuves originales et l'autoévaluation.</p></div><div className="projects-list">{projects.map(p=><article className="project reveal" key={p.id}><div className="project-meta"><span>{p.no} / {String(projects.length).padStart(2,'0')}</span><span>{p.field}</span></div><ProjectVisual kind={p.icon} image={p.cover}/><div className="project-info"><div><p className="project-subtitle">{p.period}</p><h3>{p.name}</h3><p className="project-strap">{p.short}</p></div><p className="project-summary">{p.description}</p><Chips items={p.chips}/><div className="project-action"><span>{p.status}</span><button type="button" onClick={()=>openProject(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button></div></div></article>)}</div></section>
+
+      <section id="projets" className="section projects">
+        <SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside={`${academicProjects.length} ÉTUDES UNIVERSITAIRES`}/>
+        <div className="projects-intro reveal">
+          <h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2>
+          <p>Deux parcours de réalisation : les projets tutorés au premier plan, puis les SAE et travaux pratiques. Chaque dossier présente la démarche, les résultats et les preuves originales.</p>
+        </div>
+
+        <div className="projects-group projects-group--tutored">
+          <div className="projects-group-heading reveal">
+            <div className="projects-group-heading-main">
+              <span className="projects-group-index">01 / SUIVI DE PROJET</span>
+              <h3>PROJETS <em>TUTORÉS.</em></h3>
+              <p>Des travaux de conception développés sur plusieurs semaines, avec une démarche complète : cahier des charges, architecture, essais et analyse critique.</p>
+            </div>
+            <span className="projects-group-count">{String(tutoredProjects.length).padStart(2,'0')} DOSSIERS</span>
+          </div>
+          <div className="projects-list">
+            {tutoredProjects.map((p,i)=><ProjectCard key={p.id} project={p} featured={i<2} onOpen={openProject}/>)}
+          </div>
+        </div>
+
+        <div className="projects-group projects-group--applied">
+          <div className="projects-group-heading reveal">
+            <div className="projects-group-heading-main">
+              <span className="projects-group-index">02 / MISE EN APPLICATION</span>
+              <h3>SAE & <em>RÉALISATIONS PRATIQUES.</em></h3>
+              <p>Des systèmes conçus, câblés, programmés ou vérifiés pendant le BUT GEII. Les SAE identifiées et les travaux pratiques sont distingués dans chaque fiche pour respecter la nature réelle des activités.</p>
+            </div>
+            <span className="projects-group-count">{String(appliedProjects.length).padStart(2,'0')} DOSSIERS</span>
+          </div>
+          <div className="projects-list">
+            {appliedProjects.map(p=><ProjectCard key={p.id} project={p} onOpen={openProject}/>)}
+          </div>
+        </div>
+      </section>
 
       <ArchiveShowcase/>
 
-      <section id="experience" className="section experience"><SectionHeader number="05" title="EXPÉRIENCE PROFESSIONNELLE"/><div className="experience-grid"><div className="reveal"><span className="superline">STAGE · AVRIL — JUIN 2026</span><h2>DU COURS<br/>AU <span>BUREAU D'ÉTUDES.</span></h2><p className="experience-lead">10 semaines dans l'environnement d'un bureau d'études électriques à Montpellier, avec une immersion sur des projets de bâtiments.</p><button className="primary as-button" type="button" onClick={()=>openProject(projects[1])}>EXPLORER LE STAGE <ArrowUpRight size={17}/></button></div><div className="experience-details reveal"><div className="experience-company"><span>ENTREPRISE</span><strong>BETEM — Montpellier</strong></div><div className="experience-company"><span>DOMAINE</span><strong>Études CFO / CFA et basse tension</strong></div><div className="experience-company"><span>LOGICIELS UTILISÉS</span><strong>AutoCAD, Revit, Caneco BT, DIALux evo</strong></div><div className="experience-company"><span>COMPÉTENCES MOBILISÉES</span><strong>Concevoir · Vérifier · Préparer l'installation</strong></div><div className="experience-acquired"><b>CE QUE CETTE EXPÉRIENCE M'A APPORTÉ</b><p>Une meilleure compréhension de la production des plans et pièces écrites, de la cohérence entre les livrables, du rôle de chaque intervenant et des contraintes concrètes d'un projet.</p></div></div></div></section>
+      <section id="experience" className="section experience"><SectionHeader number="05" title="EXPÉRIENCE PROFESSIONNELLE"/><div className="experience-grid"><div className="reveal"><span className="superline">STAGE · AVRIL — JUIN 2026</span><h2>DU COURS<br/>AU <span>BUREAU D'ÉTUDES.</span></h2><p className="experience-lead">10 semaines dans l'environnement d'un bureau d'études électriques à Montpellier, avec une immersion sur des projets de bâtiments.</p><button className="primary as-button" type="button" onClick={()=>openProject(betemExperience)}>EXPLORER LE STAGE <ArrowUpRight size={17}/></button></div><div className="experience-details reveal"><div className="experience-company"><span>ENTREPRISE</span><strong>BETEM — Montpellier</strong></div><div className="experience-company"><span>DOMAINE</span><strong>Études CFO / CFA et basse tension</strong></div><div className="experience-company"><span>LOGICIELS UTILISÉS</span><strong>AutoCAD, Revit, Caneco BT, DIALux evo</strong></div><div className="experience-company"><span>COMPÉTENCES MOBILISÉES</span><strong>Concevoir · Vérifier · Préparer l'installation</strong></div><div className="experience-acquired"><b>CE QUE CETTE EXPÉRIENCE M'A APPORTÉ</b><p>Une meilleure compréhension de la production des plans et pièces écrites, de la cohérence entre les livrables, du rôle de chaque intervenant et des contraintes concrètes d'un projet.</p></div></div></div></section>
 
       <section id="documents" className="section documents"><SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="SOURCES AUTHENTIQUES"/><div className="documents-heading reveal"><h2>DES TRACES <span>CONCRÈTES.</span></h2><p>Les documents disponibles complètent le récit des projets. Les pièces non retrouvées ne sont pas remplacées par de faux justificatifs.</p></div><div className="documents-grid reveal">{documents.map((d,i)=><a key={d.title} href={d.url} target="_blank" rel="noopener noreferrer" className="doc-card"><div className="doc-num">{String(i+1).padStart(2,'0')} / ARCHIVE</div><d.icon size={30}/><div><span className="doc-type">{d.type}</span><h3>{d.title}</h3><p>{d.desc}</p></div><span className="doc-open">{d.external?'OUVRIR LA SOURCE':'TÉLÉCHARGER'} <ArrowUpRight size={15}/></span></a>)}</div><div className="proof-caveat reveal"><AlertCircle size={20}/><p><strong>Documents encore à intégrer :</strong> schéma électronique original KiCad, vues de PCB et photographies du prototype BMS, ainsi que ton CV et l'URL exacte de ton profil LinkedIn. Les documents contractuels complets du stage restent exclus tant que leur publication n'est pas autorisée.</p></div></section>
 
