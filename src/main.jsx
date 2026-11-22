@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Stars } from '@react-three/drei';
+import { AdditiveBlending } from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -236,17 +237,55 @@ const highlightedDocuments=[
 const remainingDocuments=documents.filter(doc=>!highlightedDocuments.includes(doc));
 
 function EnergyCore(){
-  const group=useRef(null);const torus=useRef(null);
+  const group=useRef(null);
+  const torus=useRef(null);
+  const halo=useRef(null);
   useFrame(({clock,pointer})=>{
     if(!group.current||!torus.current)return;
-    const t=clock.elapsedTime;group.current.rotation.y=t*.12+pointer.x*.18;group.current.rotation.x=pointer.y*.12;torus.current.rotation.z=t*.15;
+    const t=clock.elapsedTime;
+    group.current.rotation.y=t*.12+pointer.x*.18;
+    group.current.rotation.x=pointer.y*.12;
+    torus.current.rotation.z=t*.15;
+    // Respiration lumineuse lente et discrète : aucun clignotement.
+    if(halo.current)halo.current.opacity=.10+Math.sin(t*.68)*.022;
   });
-  return <group ref={group} position={[1.7,0,0]}><Float speed={1.3} floatIntensity={.45} rotationIntensity={.25}>
-      <mesh ref={torus}><torusKnotGeometry args={[1.38,.012,240,14,2,5]}/><meshBasicMaterial color="#46b9ff" transparent opacity={.8}/></mesh>
-      {[0,1,2,3].map(i=><mesh key={i} rotation={[i*.55,i*.8,i*.35]}><torusGeometry args={[1.45+i*.18,.006,5,170]}/><meshBasicMaterial color={i%2?'#3c6dff':'#62d6ff'} transparent opacity={.35}/></mesh>)}
-      <mesh><icosahedronGeometry args={[.52,1]}/><meshBasicMaterial color="#2359af" wireframe transparent opacity={.48}/></mesh>
+  return <group ref={group} position={[1.7,0,0]}>
+    <Float speed={1.3} floatIntensity={.45} rotationIntensity={.25}>
+      <group ref={torus}>
+        {/* Lueur proche de la courbe : transparence additive, sans bloom coûteux. */}
+        <mesh>
+          <torusKnotGeometry args={[1.38,.049,240,12,2,5]}/>
+          <meshBasicMaterial ref={halo} color="#4cbcff" transparent opacity={.10}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusKnotGeometry args={[1.38,.025,240,12,2,5]}/>
+          <meshBasicMaterial color="#65ceff" transparent opacity={.19}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusKnotGeometry args={[1.38,.012,240,14,2,5]}/>
+          <meshBasicMaterial color="#74d8ff" transparent opacity={.88}/>
+        </mesh>
+      </group>
+      {[0,1,2,3].map(i=><group key={i} rotation={[i*.55,i*.8,i*.35]}>
+        <mesh>
+          <torusGeometry args={[1.45+i*.18,.019,5,170]}/>
+          <meshBasicMaterial color={i%2?'#417fff':'#65ceff'} transparent opacity={.085}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusGeometry args={[1.45+i*.18,.006,5,170]}/>
+          <meshBasicMaterial color={i%2?'#3c6dff':'#62d6ff'} transparent opacity={.35}/>
+        </mesh>
+      </group>)}
+      <mesh>
+        <icosahedronGeometry args={[.52,1]}/>
+        <meshBasicMaterial color="#2359af" wireframe transparent opacity={.48}/>
+      </mesh>
       <pointLight color="#2e96ff" intensity={8} distance={8}/>
-    </Float></group>;
+    </Float>
+  </group>;
 }
 function Scene(){return <div className="scene" aria-hidden="true"><Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={.3}/><Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/><EnergyCore/></Canvas></div>}
 
