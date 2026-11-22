@@ -405,3 +405,22 @@ button:focus-visible,a:focus-visible {outline:2px solid #7dccff;outline-offset:4
 .documents-heading p{max-width:530px;font-size:13px;line-height:1.8}
 .documents-grid .doc-card h3{font-size:clamp(19px,1.55vw,23px);letter-spacing:-.035em}
 @media(max-width:800px){.documents-heading{align-items:flex-start;flex-direction:column;gap:14px}}
+
+/* Page de garde : halo électrique bleuté très discret derrière le noyau WebGL. */
+.hero .scene::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 25% 41% at 71% 48%,
+    rgba(70,171,255,.14) 0%,
+    rgba(34,115,215,.065) 48%,
+    transparent 84%);
+  mix-blend-mode:screen;
+  opacity:.7;
+  animation:hero-electric-glow 14s ease-in-out infinite;
+}
+@keyframes hero-electric-glow{
+  0%,100%{opacity:.45;transform:scale(.97)}
+  50%{opacity:.78;transform:scale(1.035)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero .scene::after{animation:none;opacity:.5}
+}
