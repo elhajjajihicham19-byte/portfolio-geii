@@ -1,0 +1,36 @@
+name: Extraire les véritables figures du BMS
+on:
+  push:
+    branches: [migration-google-takeout-2026]
+    paths:
+      - scripts/import_bms_figures.py
+      - .github/workflows/import-bms-figures.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-figures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Installer le convertisseur et le client Google Drive
+        run: python -m pip install --quiet gdown pymupdf pillow
+      - name: Générer les 8 figures depuis le PDF original
+        run: python scripts/import_bms_figures.py
+      - name: Enregistrer les images dans la branche
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets/bms/rapport-page-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "Ajouter les figures authentiques du rapport BMS [skip ci]"
+            git push origin HEAD:migration-google-takeout-2026
+          fi
