@@ -1,4 +1,7 @@
 name: Vérifier la migration du portfolio
+concurrency:
+  group: portfolio-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 on:
   pull_request:
     branches: [main]
@@ -23,11 +26,13 @@ jobs:
       - name: Auditer les ressources, liens internes et accessibilité de base
         run: node scripts/audit_site.mjs
       - name: Installer le pilote de test Chrome
+        if: github.event_name == 'push'
         run: npm install --no-save --ignore-scripts playwright-core@1.56.1
       - name: Tester le portfolio dans Chrome sur trois résolutions
+        if: github.event_name == 'push'
         run: node scripts/browser_smoke.mjs
       - name: Conserver les captures de l'audit navigateur
-        if: always()
+        if: always() && github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: audit-chrome-portfolio
