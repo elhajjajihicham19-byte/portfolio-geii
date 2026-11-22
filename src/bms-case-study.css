@@ -86,13 +86,6 @@
  .bms-learning-grid{grid-template-columns:1fr}
 }
 
-.bms-old-transcript{border:1px solid #395670;background:#101c2b;margin:24px 0 55px;padding:0 22px 25px}
-.bms-old-transcript>summary{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:24px 0;cursor:pointer;color:#a9dfff;letter-spacing:.1em;font-size:11px;font-weight:700;list-style:none}
-.bms-old-transcript>summary::-webkit-details-marker{display:none}
-.bms-old-transcript[open]>summary svg{transform:rotate(90deg)}
-.bms-old-transcript>p{font-size:13px;color:#bfc9d5;line-height:1.85;margin:5px 0 25px}
-.bms-old-transcript .historical-grid{gap:17px}
-.bms-old-transcript .historical-chapter{padding:22px}
 .bms-embedded-evidence{display:flex;align-items:start;gap:15px;background:#102f34;border:1px solid #396a73;color:#a7cfcf;padding:17px 19px;margin:15px 0}
 .bms-embedded-evidence svg{flex-shrink:0;color:#78d2b6}
 .bms-embedded-evidence p{margin:0;font-size:13px;line-height:1.8}
