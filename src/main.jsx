@@ -557,9 +557,18 @@ function App(){
   const zoomRef=useRef(null);
   const closeDetail=()=>{setProject(null);setZoom(null)};
   useEffect(()=>{
-    const lenis=new Lenis({duration:1.2,smoothWheel:true,prevent:node=>Boolean(node?.closest?.('[data-lenis-prevent]'))});lenisRef.current=lenis;let raf;const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lenis=new Lenis({duration:reduce?.1:1.2,smoothWheel:!reduce,
+      prevent:node=>Boolean(node?.closest?.('[data-lenis-prevent]'))});
+    lenisRef.current=lenis;
+    let raf;
+    const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};
+    raf=requestAnimationFrame(tick);
     lenis.on('scroll',ScrollTrigger.update);
-    const anims=gsap.utils.toArray('.reveal').map(el=>gsap.fromTo(el,{opacity:0,y:35},{opacity:1,y:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}}));
+    const anims=reduce?[]:gsap.utils.toArray('.reveal').map(el=>
+      gsap.fromTo(el,{opacity:0,y:35},{opacity:1,y:0,duration:.85,ease:'power3.out',
+        scrollTrigger:{trigger:el,start:'top 90%',once:true}})
+    );
     return()=>{cancelAnimationFrame(raf);lenis.destroy();lenisRef.current=null;anims.forEach(a=>a.kill());ScrollTrigger.getAll().forEach(t=>t.kill())};
   },[]);
   useEffect(()=>{
@@ -590,12 +599,13 @@ function App(){
   const selectProject=p=>{
     setSelectedProjectId(p.id);
     requestAnimationFrame(()=>{
-      lenisRef.current?.scrollTo('#project-featured',{offset:-80,duration:.85});
+      const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      lenisRef.current?.scrollTo('#project-featured',{offset:-80,duration:.85,immediate:reduced});
     });
   };
   return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><ElectricAmbient paused={Boolean(project||zoom)}/><CircuitInteractions paused={Boolean(project||zoom)}/><div className="grain" aria-hidden="true"/>{!project&&!zoom&&<EdgeNavigation/>}
-    <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
-    <main>
+    <header className="topbar" inert={Boolean(project||zoom)}><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
+    <main inert={Boolean(project||zoom)}>
       <section className="hero" id="accueil"><Scene paused={Boolean(project||zoom)}/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><div className="hero-actions">
       <a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a>
       <a className="hero-quicklink" href="https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view" target="_blank" rel="noopener noreferrer"><FileText size={16}/> MON CV <ArrowUpRight size={14}/></a>
@@ -687,7 +697,7 @@ function App(){
       </section>
 
       <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
-    </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
+    </main><footer inert={Boolean(project||zoom)}><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
     {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom} isZoomOpen={Boolean(zoom)}/>}
     {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" ref={zoomRef} tabIndex={-1} data-lenis-prevent onWheel={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title} style={zoom.rotation?{transform:`rotate(${zoom.rotation}deg)`}:undefined}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
   </div></>;
