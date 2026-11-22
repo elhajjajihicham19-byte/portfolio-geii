@@ -22,15 +22,18 @@ const missingCemFigures=cemFigureNames
   .filter(file=>!fs.existsSync(file));
 
 const technicalManifest=JSON.parse(fs.readFileSync('src/projectTechnicalEvidence.json','utf8'));
+const studyPlan=JSON.parse(fs.readFileSync('scripts/project_figure_plan.json','utf8'));
+const expectedStudies=studyPlan.length;
+const expectedStudyFigures=studyPlan.reduce((count,project)=>count+project.files.reduce((n,source)=>n+source.pages.length,0),0);
 const evidenceEntries=Object.entries(technicalManifest);
 const evidenceFigures=evidenceEntries.flatMap(([project,images])=>images.map(item=>({project,...item})));
 const missingStudyFigures=evidenceFigures
  .filter(item=>!item.image||!item.image.startsWith('/assets/studies/')||!fs.existsSync(path.join('public',item.image.slice(1))))
  .map(item=>({project:item.project,image:item.image}));
 const invalidSourceFigures=evidenceFigures.filter(item=>!item.title||!item.desc||item.chapter<0||item.chapter>5);
-const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,missingCemFigures,studyFigureCount:evidenceFigures.length,studyProjects:evidenceEntries.length,missingStudyFigures,invalidSourceFigures:invalidSourceFigures.length,incompletePages:incomplete.map(p=>p.titre)};
+const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,missingCemFigures,studyFigureCount:evidenceFigures.length,studyProjects:evidenceEntries.length,expectedStudies,expectedStudyFigures,missingStudyFigures,invalidSourceFigures:invalidSourceFigures.length,incompletePages:incomplete.map(p=>p.titre)};
 console.log(JSON.stringify(counts,null,2));
-if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||missingCemFigures.length||missingStudyFigures.length||invalidSourceFigures.length||incomplete.length){
+if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||missingCemFigures.length||missingStudyFigures.length||invalidSourceFigures.length||evidenceEntries.length!==expectedStudies||evidenceFigures.length!==expectedStudyFigures||incomplete.length){
  console.error('Vérification de la migration non validée. Consulter les données ci-dessus.');
  process.exit(1);
 }
