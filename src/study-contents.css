@@ -1,0 +1,49 @@
+/* Sommaire latéral des études — discret lorsqu'il est replié. */
+.study-toc{
+ position:fixed;right:clamp(13px,2vw,38px);top:24vh;z-index:112;
+ display:flex;align-items:flex-start;gap:0;
+ width:45px;max-width:min(310px,35vw);
+ border:1px solid #3b6c91;background:#0b253bcc;
+ box-shadow:0 8px 28px #0006;
+ backdrop-filter:blur(14px);
+ transition:width .34s cubic-bezier(.2,.78,.2,1);
+}
+.study-toc--open,.study-toc:focus-within{width:285px;background:#0a2034f5}
+.study-toc__trigger{
+ display:flex;align-items:center;flex-direction:column;gap:13px;
+ min-height:138px;width:43px;flex:none;padding:17px 6px 13px;
+ background:#173c5b;border:0;color:#a5dcfc;cursor:pointer;
+ transition:background .25s;
+}
+.study-toc__trigger>span{writing-mode:vertical-rl;font-size:9px;letter-spacing:.12em;font-weight:750}
+.study-toc__trigger>svg:last-child{transition:transform .25s}
+.study-toc--open .study-toc__trigger>svg:last-child{transform:rotate(180deg)}
+.study-toc__trigger:hover,.study-toc__trigger:focus-visible{background:#236998;color:#eefaff}
+.study-toc__body{
+ display:flex;flex-direction:column;flex:1;min-width:0;max-height:65vh;overflow-y:auto;
+ padding:18px 13px 17px 0;opacity:0;pointer-events:none;visibility:hidden;
+ transition:opacity .2s,visibility .2s;scrollbar-width:thin;
+}
+.study-toc--open .study-toc__body,.study-toc:focus-within .study-toc__body{
+ opacity:1;pointer-events:auto;visibility:visible;
+}
+.study-toc__title{color:#81bedf;letter-spacing:.13em;font-size:9px;font-weight:800;padding:0 9px 15px}
+.study-toc__chapter{
+ display:flex;align-items:start;gap:10px;
+ width:100%;text-align:left;padding:11px 9px;background:transparent;
+ border:0;border-left:2px solid transparent;color:#a7c4d9;
+ cursor:pointer;transition:background .22s,color .22s,border-color .22s;
+}
+.study-toc__chapter small{color:#6bafda;font-size:10px;font-weight:750;margin-top:2px}
+.study-toc__chapter span{font-size:11px;font-weight:600;line-height:1.5}
+.study-toc__chapter:hover,.study-toc__chapter:focus-visible,.study-toc__chapter--active{
+ border-left-color:#88d7ff;background:#194566;color:#effaff;
+}
+.study-toc__chapter:focus-visible,.study-toc__trigger:focus-visible{outline:2px solid #a0e5ff;outline-offset:2px}
+@media(max-width:1120px){
+ .study-toc{top:18vh;right:8px}
+ .study-toc--open{width:265px}
+}
+@media(prefers-reduced-motion:reduce){
+ .study-toc,.study-toc *, .study-toc__body{transition:none!important}
+}
