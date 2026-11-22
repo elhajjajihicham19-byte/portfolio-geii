@@ -51,7 +51,7 @@ Cet inventaire a été établi à partir du manifeste `src/ancienPortfolio.json`
 
 ## Vérifications avant publication
 
-1. **BETEM** : la présence du rapport et du support de soutenance sur Drive ne donne pas l'autorisation de rendre publics les plans, photos, données du client ou documents professionnels.
+1. **BETEM** : l'étudiant a confirmé que BETEM a validé la diffusion des documents et plans utilisés pour son portfolio. Ce point est donc considéré comme autorisé sur la base de sa confirmation ; conserver une sélection pertinente des pièces publiées.
 2. **CV** : son accès depuis le compte Drive est confirmé, mais il n'est pas identifié comme partagé. Éviter de distribuer la version intégrale sans validation des données personnelles à rendre publiques.
 3. **Collaborateurs et groupes** : les documents universitaires peuvent comporter des noms, signatures, coordonnées ou résultats appartenant à d'autres étudiants ; relire avant publication.
 4. **Liens Google Drive** : ils ne fonctionneront pour les visiteurs que si des permissions adaptées sont accordées. On pourra privilégier des captures de schémas soigneusement anonymisées plutôt que publier les fichiers complets.
