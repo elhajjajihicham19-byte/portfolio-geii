@@ -9,7 +9,7 @@
 .electric-ambient__wire path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .electric-ambient__track{stroke-width:1.5;opacity:.64}
 .electric-ambient__pulse{
-  stroke:#7dd4ff;stroke-width:2.1;opacity:.54;
+  stroke:#7dd4ff;stroke-width:2.1;opacity:calc(.43 + var(--electric-flow-boost,0));transition:opacity .45s ease-out;
   stroke-dasharray:85 1700;stroke-dashoffset:1800;
   filter:drop-shadow(0 0 6px rgba(54,164,255,.38));
   animation:electric-current var(--pulse-duration,28s) linear infinite;
@@ -58,5 +58,5 @@
 @media(max-width:950px){.electric-ambient{display:none}}
 @media(prefers-reduced-motion:reduce){
   .electric-ambient__pulse,.electric-ambient__node,.electric-ambient__glow{animation:none!important}
-  .electric-ambient__pulse{opacity:.22;stroke-dashoffset:0}
+  .electric-ambient__pulse{opacity:.22;stroke-dashoffset:0;transition:none}
 }
