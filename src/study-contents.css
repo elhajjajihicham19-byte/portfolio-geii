@@ -1,14 +1,14 @@
 /* Sommaire latéral des études — discret lorsqu'il est replié. */
 .study-toc{
  position:fixed;right:clamp(13px,2vw,38px);top:24vh;z-index:112;
- display:flex;align-items:flex-start;gap:0;
+ display:flex;flex-direction:row-reverse;align-items:flex-start;gap:0;
  width:45px;max-width:min(310px,35vw);
  border:1px solid #3b6c91;background:#0b253bcc;
  box-shadow:0 8px 28px #0006;
  backdrop-filter:blur(14px);
  transition:width .34s cubic-bezier(.2,.78,.2,1);
 }
-.study-toc--open,.study-toc:focus-within{width:285px;background:#0a2034f5}
+.study-toc--open{width:285px;background:#0a2034f5}
 .study-toc__trigger{
  display:flex;align-items:center;flex-direction:column;gap:13px;
  min-height:138px;width:43px;flex:none;padding:17px 6px 13px;
@@ -21,10 +21,10 @@
 .study-toc__trigger:hover,.study-toc__trigger:focus-visible{background:#236998;color:#eefaff}
 .study-toc__body{
  display:flex;flex-direction:column;flex:1;min-width:0;max-height:65vh;overflow-y:auto;
- padding:18px 13px 17px 0;opacity:0;pointer-events:none;visibility:hidden;
+ padding:18px 0 17px 13px;opacity:0;pointer-events:none;visibility:hidden;
  transition:opacity .2s,visibility .2s;scrollbar-width:thin;
 }
-.study-toc--open .study-toc__body,.study-toc:focus-within .study-toc__body{
+.study-toc--open .study-toc__body{
  opacity:1;pointer-events:auto;visibility:visible;
 }
 .study-toc__title{color:#81bedf;letter-spacing:.13em;font-size:9px;font-weight:800;padding:0 9px 15px}
