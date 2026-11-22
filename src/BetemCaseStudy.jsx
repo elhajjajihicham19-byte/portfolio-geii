@@ -65,7 +65,7 @@ function StageDocuments({docs}){
   </div>
 }
 export default function BetemCaseStudy({project,onZoom}){
-  const media=project.evidence||[];
+  const media=(project.evidence||[]).filter(item=>item.image!=='/assets/betem-plan-extrait-reel.webp');
   return <div className="bms-study betem-study">
     <div className="bms-study-heading"><span>STAGE PROFESSIONNEL / AVRIL — JUIN 2026</span><h3>DES ÉTUDES <em>AUX LIVRABLES.</em></h3><p>Chez BETEM Montpellier, j’ai participé à la conception d’installations électriques pour des bâtiments, avec un projet principal consacré à l’école Jean Macé. Les plans, schémas et photographies sont directement associés aux missions réalisées.</p></div>
     {stages.map((step,i)=>{
