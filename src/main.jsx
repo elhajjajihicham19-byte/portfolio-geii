@@ -9,6 +9,7 @@ import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download
 import ArchiveShowcase from './ArchiveShowcase.jsx';
 import { legacyProjects, originalFor, originalEvidence, originalDocuments } from './legacyProjects.js';
 import BmsCaseStudy from './BmsCaseStudy.jsx';
+import PvCaseStudy from './PvCaseStudy.jsx';
 import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 gsap.registerPlugin(ScrollTrigger);
@@ -283,10 +284,11 @@ function ProjectDetail({project:p,onClose,onZoom}){
   useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape'){if(previewDoc)setPreviewDoc(null);else onClose()}};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose,previewDoc]);
   return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
     <div className="detail-header"><span className="index">{p.id==='betem'?'DOSSIER DE STAGE / BETEM':`DÉCRYPTAGE / PROJET ${p.no}`}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
-    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{p.id==='bms'?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
+    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{['bms','pv'].includes(p.id)?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
     {p.id==='bms'&&<BmsCaseStudy onZoom={onZoom}/>}
-    {!p.legacyOnly&&p.id!=='bms'&&<div className="detail-chapters">
+    {p.id==='pv'&&<PvCaseStudy/>}
+    {!p.legacyOnly&&!['bms','pv'].includes(p.id)&&<div className="detail-chapters">
       <section><span className="chapter-index">01 / CONTEXTE</span><h3>Pourquoi ce projet ?</h3><p>{p.context}</p></section>
       <section><span className="chapter-index">02 / MON RÔLE</span><h3>Ce que j'ai réalisé</h3><p>{p.role}</p></section>
       <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((step,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{step}</span></li>)}</ol></section>
