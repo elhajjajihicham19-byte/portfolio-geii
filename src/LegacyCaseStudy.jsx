@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {ArrowUpRight, BookOpen, Camera, FileText, Info, Layers3, ShieldCheck, ZoomIn} from 'lucide-react';
 import {legacyNarratives} from './legacyNarratives.js';
+import {projectTechnicalInsights} from './projectTechnicalInsights.js';
+import projectTechnicalEvidence from './projectTechnicalEvidence.json';
 import './legacy-case-study.css';
 
 /**
@@ -39,10 +41,21 @@ function LegacyPhoto({ev,onZoom,i}){
    <img src={ev.image} alt={ev.title} loading="lazy"/>
    <span><ZoomIn size={17}/> AGRANDIR</span>
   </button>
-  <figcaption><strong>FIGURE {String(i+1).padStart(2,'0')}</strong>
+  <figcaption><strong>{ev.title?.startsWith('Illustration du projet')?'FIGURE '+String(i+1).padStart(2,'0'):ev.title||'FIGURE '+String(i+1).padStart(2,'0')}</strong>
    <span>{ev.desc||'Photographie ou schéma authentique du projet.'}</span>
   </figcaption>
  </figure>
+}
+function TechnicalInsight({item}){
+ return <div className="study-insight">
+  <span className="study-insight-overline">ANALYSE TECHNIQUE</span>
+  <h5>{item.title}</h5>
+  <p>{item.text}</p>
+  {!!item.metrics?.length&&<div className="study-insight-metrics">{item.metrics.map(([value,label],idx)=><div key={idx}><strong>{value}</strong><span>{label}</span></div>)}</div>}
+  {!!item.table&&<div className="study-insight-table"><table><thead><tr>{item.table.columns.map((title,idx)=><th key={idx}>{title}</th>)}</tr></thead>
+  <tbody>{item.table.rows.map((row,i)=><tr key={i}>{row.map((cell,j)=><td key={j}>{cell}</td>)}</tr>)}</tbody></table></div>}
+  {item.note&&<div className="study-insight-caveat"><Info size={18}/><p>{item.note}</p></div>}
+ </div>;
 }
 function picturePositions(count){
  if(count===0)return [];
@@ -56,6 +69,8 @@ export default function LegacyCaseStudy({project,onZoom}){
  if(!data)return null;
  const figures=project.evidence||[];
  const pictureChapters=picturePositions(figures.length);
+ const reportFigures=projectTechnicalEvidence[project.id]||[];
+ const insights=projectTechnicalInsights[project.id]||[];
  return <div className="bms-study legacy-study">
   <div className="bms-study-heading">
    <span>{project.nature} / BUT{project.year}</span>
@@ -64,16 +79,22 @@ export default function LegacyCaseStudy({project,onZoom}){
   </div>
   {data.chapters.map(([title,body],i)=>{
    const figureIndexes=pictureChapters.reduce((acc,pos,index)=>{if(pos===i)acc.push(index);return acc},[]);
+   const chapterMedia=[
+     ...figureIndexes.map(index=>({item:figures[index],index})),
+     ...reportFigures.filter(fig=>fig.chapter===i).map((item,index)=>({item,index:figureIndexes.length+index}))
+   ];
+   const chapterInsights=insights.filter(item=>item.chapter===i);
    return <section key={i} className="bms-chapter legacy-chapter" aria-labelledby={'geii-section-'+project.id+'-'+i}>
     <div className="bms-chapter-index"><span>{sectionNames[i]}</span>{i===0?<BookOpen size={22}/>:i===1?<Layers3 size={22}/>:i===3?<Camera size={22}/>:i===5?<ShieldCheck size={22}/>:<Info size={22}/>}</div>
-    <div className={figureIndexes.length?'legacy-chapter-with-photo':'legacy-chapter-without-photo'}>
+    <div className={chapterMedia.length?'legacy-chapter-with-photo':'legacy-chapter-without-photo'}>
      <div className="legacy-chapter-narrative">
       <h4 id={'geii-section-'+project.id+'-'+i}>{title}</h4>
       <p>{body}</p>
+      {chapterInsights.map((insight,j)=><TechnicalInsight key={j} item={insight}/>)}
       {i===3&&<IndentedSources docs={project.docs}/>}
       {i===5&&<div className="legacy-skills-list">{(project.skills||[]).map(skill=><span key={skill}>{skill}</span>)}</div>}
      </div>
-     {!!figureIndexes.length&&<div className="legacy-chapter-photo-stack">{figureIndexes.map(index=><LegacyPhoto key={index} ev={figures[index]} onZoom={onZoom} i={index}/>)}</div>}
+     {!!chapterMedia.length&&<div className="legacy-chapter-photo-stack">{chapterMedia.map(({item,index},j)=><LegacyPhoto key={item.image+'-'+j} ev={item} onZoom={onZoom} i={index}/>)}</div>}
     </div>
    </section>
   })}
