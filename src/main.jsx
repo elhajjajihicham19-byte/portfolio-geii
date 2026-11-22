@@ -301,8 +301,8 @@ function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
     const el=dialogRef.current;
     if(el)el.scrollTop=savedScrollProgress.current*Math.max(0,el.scrollHeight-el.clientHeight);
   },[readingMode]);
+  useEffect(()=>{dialogRef.current?.focus({preventScroll:true})},[]);
   useEffect(()=>{
-    dialogRef.current?.focus({preventScroll:true});
     const handle=e=>{if(e.key==='Escape'&&!isZoomOpen)onClose()};
     window.addEventListener('keydown',handle);
     return()=>window.removeEventListener('keydown',handle);
@@ -345,7 +345,7 @@ function App(){
   const lenisRef=useRef(null);
   const closeDetail=()=>{setProject(null);setZoom(null)};
   useEffect(()=>{
-    const lenis=new Lenis({duration:1.2,smoothWheel:true,prevent:node=>Boolean(node.closest('[data-lenis-prevent]'))});lenisRef.current=lenis;let raf;const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);
+    const lenis=new Lenis({duration:1.2,smoothWheel:true,prevent:node=>Boolean(node?.closest?.('[data-lenis-prevent]'))});lenisRef.current=lenis;let raf;const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);
     lenis.on('scroll',ScrollTrigger.update);
     const anims=gsap.utils.toArray('.reveal').map(el=>gsap.fromTo(el,{opacity:0,y:35},{opacity:1,y:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}}));
     return()=>{cancelAnimationFrame(raf);lenis.destroy();lenisRef.current=null;anims.forEach(a=>a.kill());ScrollTrigger.getAll().forEach(t=>t.kill())};
