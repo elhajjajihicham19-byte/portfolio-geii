@@ -1,0 +1,21 @@
+name: Vérifier la migration du portfolio
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [migration-google-takeout-2026]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Installer les dépendances
+        run: npm install
+      - name: Contrôler les 20 pages, 12 projets et les images
+        run: node scripts/verify_portfolio.mjs
+      - name: Compiler le portfolio React
+        run: npm run build
