@@ -181,3 +181,20 @@
   .site .project-visual::after{animation:none!important}
   .electric-ambient__cursor{display:none}
 }
+
+/* Impulsion de liaison entre deux sections réellement positionnées. */
+.circuit-bus__surge{
+ position:absolute;left:-3px;top:var(--surge-from);
+ z-index:3;width:8px;height:54px;pointer-events:none;
+ background:radial-gradient(ellipse at center,rgba(156,229,255,.89),rgba(58,172,250,.28) 40%,transparent 75%);
+ filter:drop-shadow(0 0 13px #58c2ff);
+ transform:translateY(-50%);
+ animation:circuit-bus-transfer var(--surge-time,.7s) cubic-bezier(.24,.66,.48,.98) both;
+}
+@keyframes circuit-bus-transfer{
+ from{top:var(--surge-from);opacity:.2}
+ 25%{opacity:1}
+ 75%{opacity:.8}
+ to{top:var(--surge-to);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){.circuit-bus__surge{display:none;animation:none}}
