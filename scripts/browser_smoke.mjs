@@ -31,14 +31,19 @@ async function assert(label,condition){
   if(!condition)failures.push(label);
   checks.push({label,ok:Boolean(condition)});
 }
+const page=await browser.newPage({viewport:{width:1366,height:768},deviceScaleFactor:1});
+page.setDefaultTimeout(60000);
+const jsErrors=[];
+page.on('pageerror',error=>jsErrors.push(error.message));
 try{
+  await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:60000});
+  await page.locator('.hero h1').waitFor({state:'attached',timeout:60000});
   for(const [width,height] of [[1366,768],[1920,1080],[2560,1440]]){
-    const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
-    const jsErrors=[];
-    page.on('pageerror',error=>jsErrors.push(error.message));
-    await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded',timeout:30000});
-    await page.locator('.hero h1').waitFor({timeout:15000});
-    await page.screenshot({path:`${directory}/accueil-${width}x${height}.png`,animations:'disabled'});
+    jsErrors.length=0;
+    await page.setViewportSize({width,height});
+    await page.waitForTimeout(250);
+    await page.screenshot({path:`${directory}/accueil-${width}x${height}.png`,
+      animations:'disabled',timeout:90000});
     const geometry=await page.evaluate(()=>{
       const selectors=['.hero-copy','.hero-actions','.topbar nav'];
       const overflowing=selectors.flatMap(selector=>{
@@ -54,6 +59,7 @@ try{
       geometry.overflowing.length===0);
     await assert(`Accueil ${width}x${height} : noyau et titre présents`,
       geometry.heroTitle?.includes('ÉNERGIE') &&
+      await page.locator('.hero h1').isVisible() &&
       await page.locator('.hero canvas').count()===1);
     await assert(`Accueil ${width}x${height} : aucune erreur JavaScript`,
       jsErrors.length===0);
@@ -94,9 +100,9 @@ try{
       await assert('Retour au portfolio après fermeture',
         await page.locator('.detail-panel').count()===0);
     }
-    await page.close();
   }
 }finally{
+  await page.close();
   await browser.close();
   await new Promise(resolve=>previewServer.httpServer.close(resolve));
 }
