@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Stars } from '@react-three/drei';
-import { AdditiveBlending, CatmullRomCurve3, Vector3 } from 'three';
+import { AdditiveBlending } from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -241,138 +241,94 @@ const remainingDocuments=documents.filter(doc=>!highlightedDocuments.includes(do
 
 // Représentation artistique d'un électron : langage visuel bleu électrique,
 // trajectoires orbitales et noyau lumineux (non une représentation quantique).
-// Huit cercles de champ, orientés sur des plans différents dans l'espace.
-// Aucun électron ne tourne désormais sur ces cercles : seules les lignes de
-// champ indépendantes conservent leurs impulsions lumineuses vers le centre.
-const FIELD_RINGS=[
-  {radius:1.17,tilt:[.9,.35,.55],color:'#62caff'},
-  {radius:1.33,tilt:[.27,.16,.5],color:'#6dd7ff'},
-  {radius:1.43,tilt:[1.4,.75,.2],color:'#468fff'},
-  {radius:1.56,tilt:[1.14,.58,.1],color:'#458fff'},
-  {radius:1.67,tilt:[.45,1.25,.8],color:'#8ce3ff'},
-  {radius:1.79,tilt:[.68,1.08,.4],color:'#8ce3ff'},
-  {radius:1.96,tilt:[1.25,.15,.95],color:'#488bea'},
-  {radius:2.17,tilt:[.3,1.5,1.15],color:'#5abfff'}
-];
-
-function FieldRing({radius,tilt,color}){
-  return <group rotation={tilt}>
-    <mesh>
-      <torusGeometry args={[radius,.006,6,200]}/>
-      <meshBasicMaterial color={color} transparent opacity={.27}
-        depthWrite={false}/>
-    </mesh>
-    <mesh>
-      <torusGeometry args={[radius,.022,6,200]}/>
-      <meshBasicMaterial color={color} transparent opacity={.065}
-        blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-    </mesh>
-  </group>;
-}
-
-// Lignes de champ représentées dans toutes les directions de l'espace
-// (répartition sphérique de Fibonacci). Le déplacement des points lumineux
-// est orienté vers le centre, comme pour le champ d'une charge négative.
-// L'ensemble est une interprétation graphique, pas une simulation physique.
-const ELECTRIC_FIELD_PATHS=Array.from({length:22},(_,i)=>{
-  const n=22;
-  const y=1-2*(i+.5)/n;
-  const azimuth=i*Math.PI*(3-Math.sqrt(5));
-  const r=Math.sqrt(1-y*y);
-  const direction=new Vector3(Math.cos(azimuth)*r,y,Math.sin(azimuth)*r);
-  const tangent=new Vector3().crossVectors(
-    direction,Math.abs(y)>.91?new Vector3(1,0,0):new Vector3(0,1,0)
-  ).normalize();
-  const bend=Math.sin(i*1.8)*.13;
-  const curve=new CatmullRomCurve3([
-    direction.clone().multiplyScalar(.58),
-    direction.clone().multiplyScalar(1.03).addScaledVector(tangent,bend*.6),
-    direction.clone().multiplyScalar(1.59).addScaledVector(tangent,bend),
-    direction.clone().multiplyScalar(2.38).addScaledVector(tangent,bend*.65)
-  ]);
-  return {curve,offset:i/22,color:i%3===0?'#8bdfff':'#398be6',pulse:i%2===0};
-});
-
-function ElectricFieldLines({reducedMotion=false}){
-  const pulses=useRef([]);
-  useFrame(({clock})=>{
-    ELECTRIC_FIELD_PATHS.forEach((path,i)=>{
-      if(!path.pulse||!pulses.current[i])return;
-      const progress=reducedMotion ? 0.6 : 1-((clock.elapsedTime*.105+path.offset)%1);
-      pulses.current[i].position.copy(path.curve.getPointAt(progress));
-    });
-  });
-  return <group>
-    {ELECTRIC_FIELD_PATHS.map((path,i)=><group key={i}>
-      <mesh>
-        <tubeGeometry args={[path.curve,44,.0055,4,false]}/>
-        <meshBasicMaterial color={path.color} transparent opacity={.17}
-          blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-      </mesh>
-      {path.pulse&&<group ref={el=>{pulses.current[i]=el}}>
-        <mesh>
-          <sphereGeometry args={[.026,10,10]}/>
-          <meshBasicMaterial color="#dcf5ff" transparent opacity={.88}
-            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-        </mesh>
-        <mesh>
-          <sphereGeometry args={[.083,10,10]}/>
-          <meshBasicMaterial color="#55b9ff" transparent opacity={.11}
-            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-        </mesh>
-      </group>}
-    </group>)}
-  </group>;
-}
-
-function ElectronHero(){
+function EnergyCore({reducedMotion=false}){
   const group=useRef(null);
-  const nucleusGlow=useRef(null);
-  const [reducedMotion,setReducedMotion]=useState(false);
-  useEffect(()=>{
-    const query=window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update=()=>setReducedMotion(query.matches);
-    update();
-    query.addEventListener?.('change',update);
-    return()=>query.removeEventListener?.('change',update);
-  },[]);
+  const torus=useRef(null);
+  const halo=useRef(null);
   useFrame(({clock,pointer})=>{
-    if(!group.current)return;
+    if(!group.current||!torus.current||reducedMotion)return;
     const t=clock.elapsedTime;
-    group.current.rotation.y=(reducedMotion?0:t*.12)+pointer.x*.16;
-    group.current.rotation.x=pointer.y*.1;
-    if(nucleusGlow.current){
-      nucleusGlow.current.opacity=.13+(reducedMotion?0:Math.sin(t*.65)*.025);
-    }
+    group.current.rotation.y=t*.12+pointer.x*.18;
+    group.current.rotation.x=pointer.y*.12;
+    torus.current.rotation.z=t*.15;
+    // Respiration lumineuse lente et discrète : aucun clignotement.
+    if(halo.current)halo.current.opacity=.10+Math.sin(t*.68)*.022;
   });
   return <group ref={group} position={[1.7,0,0]}>
-    <Float speed={reducedMotion?0:1.2} floatIntensity={reducedMotion?0:.32}
-      rotationIntensity={reducedMotion?0:.12}>
+    <Float speed={reducedMotion?0:1.3} floatIntensity={reducedMotion?0:.45} rotationIntensity={reducedMotion?0:.25}>
+      <group ref={torus}>
+        {/* Lueur proche de la courbe : transparence additive, sans bloom coûteux. */}
+        <mesh>
+          <torusKnotGeometry args={[1.38,.049,240,12,2,5]}/>
+          <meshBasicMaterial ref={halo} color="#4cbcff" transparent opacity={.10}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusKnotGeometry args={[1.38,.025,240,12,2,5]}/>
+          <meshBasicMaterial color="#65ceff" transparent opacity={.19}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusKnotGeometry args={[1.38,.012,240,14,2,5]}/>
+          <meshBasicMaterial color="#74d8ff" transparent opacity={.88}/>
+        </mesh>
+      </group>
+      {[0,1,2,3].map(i=><group key={i} rotation={[i*.55,i*.8,i*.35]}>
+        <mesh>
+          <torusGeometry args={[1.45+i*.18,.019,5,170]}/>
+          <meshBasicMaterial color={i%2?'#417fff':'#65ceff'} transparent opacity={.085}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusGeometry args={[1.45+i*.18,.006,5,170]}/>
+          <meshBasicMaterial color={i%2?'#3c6dff':'#62d6ff'} transparent opacity={.35}/>
+        </mesh>
+      </group>)}
       <mesh>
-        <sphereGeometry args={[.19,28,28]}/>
-        <meshBasicMaterial color="#e7faff" transparent opacity={.92}/>
+        <icosahedronGeometry args={[.52,1]}/>
+        <meshBasicMaterial color="#2359af" wireframe transparent opacity={.48}/>
       </mesh>
-      <mesh>
-        <sphereGeometry args={[.38,28,28]}/>
-        <meshBasicMaterial ref={nucleusGlow} color="#47baff" transparent opacity={.13}
-          blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-      </mesh>
-      <mesh rotation={[.2,.5,.3]}>
-        <icosahedronGeometry args={[.54,1]}/>
-        <meshBasicMaterial color="#2c69c2" wireframe transparent opacity={.38}/>
-      </mesh>
-      <ElectricFieldLines reducedMotion={reducedMotion}/>
-      {FIELD_RINGS.map((ring,i)=><FieldRing key={i} {...ring}/>)}
-      <pointLight color="#2e96ff" intensity={7.5} distance={8}/>
+      <pointLight color="#2e96ff" intensity={8} distance={8}/>
     </Float>
   </group>;
 }
-function Scene(){
-  return <div className="scene" aria-hidden="true">
-    <Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}>
-      <ambientLight intensity={.34}/>
-      <Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/>
-      <ElectronHero/>
+function Scene({paused=false}){
+  const sceneRef=useRef(null);
+  const [inView,setInView]=useState(true);
+  const [tabVisible,setTabVisible]=useState(true);
+  const [reducedMotion,setReducedMotion]=useState(false);
+
+  useEffect(()=>{
+    const query=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync=()=>setReducedMotion(query.matches);
+    sync();
+    query.addEventListener?.('change',sync);
+    return()=>query.removeEventListener?.('change',sync);
+  },[]);
+  useEffect(()=>{
+    const node=sceneRef.current;
+    if(!node||typeof IntersectionObserver==='undefined')return;
+    const observer=new IntersectionObserver(([entry])=>setInView(entry.isIntersecting),{
+      rootMargin:'160px 0px'
+    });
+    observer.observe(node);
+    return()=>observer.disconnect();
+  },[]);
+  useEffect(()=>{
+    const sync=()=>setTabVisible(document.visibilityState!=='hidden');
+    sync();
+    document.addEventListener('visibilitychange',sync);
+    return()=>document.removeEventListener('visibilitychange',sync);
+  },[]);
+
+  const playing=inView&&tabVisible&&!paused&&!reducedMotion;
+  return <div ref={sceneRef} className="scene" aria-hidden="true">
+    <Canvas frameloop={playing?'always':'demand'} camera={{position:[0,0,6],fov:48}}
+      dpr={[1,1.5]} gl={{alpha:true,antialias:true}}>
+      <ambientLight intensity={.3}/>
+      <Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade
+        speed={reducedMotion?0:.4}/>
+      <EnergyCore reducedMotion={reducedMotion}/>
     </Canvas>
   </div>;
 }
@@ -585,7 +541,7 @@ function App(){
   return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><ElectricAmbient/><CircuitInteractions paused={Boolean(project||zoom)}/><div className="grain" aria-hidden="true"/>{!project&&!zoom&&<EdgeNavigation/>}
     <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
     <main>
-      <section className="hero" id="accueil"><Scene/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
+      <section className="hero" id="accueil"><Scene paused={Boolean(project||zoom)}/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
 
       <section id="profil" className="section about"><SectionHeader number="01" title="INFORMATIONS PERSONNELLES"/><div className="about-grid"><div className="reveal"><h2>QUI<br/>SUIS<span>-JE ?</span></h2><div className="identity-block"><span>HICHAM EL HAJJAJI</span><strong>Étudiant en BUT3 GEII</strong><small>IUT Montpellier–Sète · Parcours EME</small></div></div><div className="about-text reveal"><p>Après un baccalauréat général avec les spécialités mathématiques et physique, puis une première année en informatique, j'ai choisi le <strong>BUT Génie Électrique et Informatique Industrielle</strong> pour approfondir les systèmes électriques et leur fonctionnement.</p><p>Ce qui m'intéresse particulièrement : le transport et la distribution de l'énergie, les réseaux HTA/HTB, les postes électriques, les installations basse tension et l'électronique de puissance.</p><p>J'aime relier les principes physiques aux situations réelles : dimensionner, simuler, chercher l'origine d'un défaut et justifier les décisions techniques.</p><div className="profile-facts"><div><MapPin size={16}/><span>Montpellier / Sète, France</span></div><div><GraduationCap size={16}/><span>BUT3 · GEII / EME</span></div><div><BriefcaseBusiness size={16}/><span>Permis B</span></div><div><FileText size={16}/><a href="https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view" target="_blank" rel="noopener noreferrer">CV original sur Google Drive ↗</a></div><div><Link2 size={16}/><a href="https://www.linkedin.com/in/hicham-el-hajjaji" target="_blank" rel="noopener noreferrer">Mon profil LinkedIn ↗</a></div></div><a href="#contact" className="inline-action">ME CONTACTER <ArrowUpRight size={16}/></a></div></div>
       </section>
