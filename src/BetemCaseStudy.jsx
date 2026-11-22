@@ -44,10 +44,10 @@ const icons=[Building2,Layers3,CircuitBoard,Gauge,ClipboardCheck,GraduationCap];
 function Evidence({item,i,onZoom}){
   return <figure className="betem-evidence">
     <button type="button" onClick={()=>onZoom(item)} aria-label={'Agrandir le document de stage '+(i+1)}>
-      <img loading="lazy" src={item.image} alt={item.title||'Document visuel du stage BETEM'}/>
+      <img loading="lazy" src={item.image} alt={item.title||'Plan ou photographie du stage BETEM'}/>
       <span><ZoomIn size={16}/> AGRANDIR</span>
     </button>
-    <figcaption><strong>DOCUMENT VISUEL {String(i+1).padStart(2,'0')}</strong><span>Extrait ou photographie issu des travaux du stage chez BETEM.</span></figcaption>
+    <figcaption><strong>FIGURE {String(i+1).padStart(2,'0')}</strong><span>Extrait ou photographie issu des travaux du stage chez BETEM.</span></figcaption>
   </figure>
 }
 function StageDocuments({docs}){
@@ -56,7 +56,7 @@ function StageDocuments({docs}){
   const chosen=preview===null?null:docs[preview];
   const id=chosen?.url?.includes('drive.google.com/file/d/')?chosen.url.split('/file/d/')[1]?.split('/')[0]:null;
   return <div className="betem-stage-documents">
-    <div className="betem-doc-intro"><FileText size={22}/><div><strong>Pièces de présentation du stage</strong><p>Rapport de stage et support de soutenance disponibles dans leur version d’origine.</p></div></div>
+    <div className="betem-doc-intro"><FileText size={22}/><div><strong>Pièces de présentation du stage</strong><p>Rapport de stage et présentation de soutenance.</p></div></div>
     {docs.map((doc,i)=><div className="betem-doc-item" key={doc.url+i}>
       <a href={doc.url} target="_blank" rel="noopener noreferrer"><FileText size={16}/>{doc.label}<ArrowUpRight size={16}/></a>
       <button type="button" aria-expanded={preview===i} onClick={()=>setPreview(preview===i?null:i)}>{preview===i?'MASQUER':'APERÇU'}</button>
