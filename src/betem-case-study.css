@@ -34,3 +34,18 @@
 .betem-doc-preview p{font-size:11px;color:#9fbcd1;margin:12px 4px;line-height:1.75}
 @media(max-width:1050px){.betem-stage-layout{grid-template-columns:1fr}.betem-stage-facts{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.betem-evidence-grid{grid-template-columns:1fr}.betem-stage-facts{grid-template-columns:1fr}}
+
+/* Études de la mission BETEM : mesures et simulations à côté des plans */
+.betem-comparison{margin:28px 0 26px;border-top:1px solid #3d6787;padding:23px 0 10px}
+.betem-comparison h5{color:#a5dffc;font-size:12px;letter-spacing:.13em;line-height:1.5;margin:20px 0 16px}
+.betem-comparison>p{color:#bed2df;font-size:13px;line-height:1.9;margin:0 0 17px}
+.betem-comparison-table{overflow-x:auto;margin:24px 0 32px;border:1px solid #386380}
+.betem-comparison-table table{width:100%;min-width:570px;border-collapse:collapse;text-align:left}
+.betem-comparison-table th{background:#183b55;color:#b9e1f9;padding:14px;font-size:10px;letter-spacing:.08em}
+.betem-comparison-table td{background:#112839;color:#c5d7e4;padding:14px;font-size:12px;line-height:1.7;border-top:1px solid #41617a}
+.betem-comparison-table td:first-child{font-weight:700;color:#edf7fc}
+.betem-comparison-note{background:#20354a;border-left:2px solid #90c7e8;padding:14px 16px;color:#c4dbea!important;font-size:12px!important}
+.betem-stage-layout:not(:has(figure)) .betem-comparison{max-width:1000px}
+.betem-evidence-grid .betem-evidence>button{height:360px;background:#edf0f3}
+.betem-evidence-grid .betem-evidence>button img{padding:12px}
+@media(max-width:760px){.betem-evidence-grid .betem-evidence>button{height:300px}}
