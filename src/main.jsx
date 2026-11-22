@@ -13,8 +13,11 @@ import PvCaseStudy from './PvCaseStudy.jsx';
 import LegacyCaseStudy from './LegacyCaseStudy.jsx';
 import AppliedTechnicalStudy from './AppliedTechnicalStudy.jsx';
 import BetemCaseStudy from './BetemCaseStudy.jsx';
+import EdgeNavigation from './EdgeNavigation.jsx';
+import ElectricAmbient from './ElectricAmbient.jsx';
 import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
+import './documents-compact.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const REFERENTIEL = 'https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2023-12/g-nie-lectrique-et-informatique-industrielle-30834.pdf';
@@ -224,6 +227,14 @@ documents.push(...ancienPortfolio.flatMap(page=>(page.documents||[]).map(doc=>({
 }))));
 
 
+const highlightedDocuments=[
+  documents[0],
+  documents[1],
+  documents.find(doc=>doc.type==='STAGE CHEZ BETEM'&&doc.title==='Rapport de stage'),
+  documents[2]
+].filter(Boolean);
+const remainingDocuments=documents.filter(doc=>!highlightedDocuments.includes(doc));
+
 function EnergyCore(){
   const group=useRef(null);const torus=useRef(null);
   useFrame(({clock,pointer})=>{
@@ -343,6 +354,7 @@ function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
 
 function App(){
   const [project,setProject]=useState(null);const [zoom,setZoom]=useState(null);
+  const [showDocumentCatalogue,setShowDocumentCatalogue]=useState(false);
   const lenisRef=useRef(null);
   const closeDetail=()=>{setProject(null);setZoom(null)};
   useEffect(()=>{
@@ -365,7 +377,7 @@ function App(){
     return()=>window.removeEventListener('keydown',handle);
   },[zoom]);
   const openProject=(p)=>{setProject(p);setZoom(null)};
-  return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><div className="grain" aria-hidden="true"/>
+  return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><ElectricAmbient/><div className="grain" aria-hidden="true"/>{!project&&!zoom&&<EdgeNavigation/>}
     <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
     <main>
       <section className="hero" id="accueil"><Scene/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
@@ -433,7 +445,35 @@ function App(){
         </div>
       </section>
 
-      <section id="documents" className="section documents"><SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="SOURCES AUTHENTIQUES"/><div className="documents-heading reveal"><h2>DES TRACES <span>CONCRÈTES.</span></h2><p>Les rapports, schémas, cahiers de recette et procédures de test sont associés aux études correspondantes. Cette bibliothèque rassemble également leurs documents complémentaires.</p></div><div className="documents-grid reveal">{documents.map((d,i)=><a key={d.url+'-'+i} href={d.url} target="_blank" rel="noopener noreferrer" className="doc-card"><div className="doc-num">{String(i+1).padStart(2,'0')} / DOCUMENT</div><d.icon size={30}/><div><span className="doc-type">{d.type}</span><h3>{d.title}</h3><p>{d.desc}</p></div><span className="doc-open">{d.external?'OUVRIR LA SOURCE':'TÉLÉCHARGER'} <ArrowUpRight size={15}/></span></a>)}</div></section>
+      <section id="documents" className="section documents">
+        <SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="DOSSIERS TECHNIQUES"/>
+        <div className="documents-heading reveal">
+          <h2>DES TRACES <span>CONCRÈTES.</span></h2>
+          <p>Accès aux rapports, schémas et pièces de conception. Les documents sont également accessibles depuis leurs études respectives.</p>
+        </div>
+        <div className="documents-quick-list">
+          {highlightedDocuments.map((doc,i)=><a className="documents-quick-link" href={doc.url}
+            target="_blank" rel="noopener noreferrer" key={doc.url+'-'+i}>
+            <doc.icon size={19}/>
+            <span><small>{doc.type}</small><strong>{doc.title}</strong></span>
+            <ArrowUpRight size={17}/>
+          </a>)}
+        </div>
+        <button className="documents-expand" type="button"
+          onClick={()=>setShowDocumentCatalogue(open=>!open)}
+          aria-expanded={showDocumentCatalogue} aria-controls="document-catalogue">
+          <FileText size={17}/>
+          <span>{showDocumentCatalogue?'MASQUER LES DOCUMENTS COMPLÉMENTAIRES':`PARCOURIR LES ${remainingDocuments.length} AUTRES DOCUMENTS`}</span>
+          <ChevronRight size={18} className={showDocumentCatalogue?'documents-expand__chevron documents-expand__chevron--open':'documents-expand__chevron'}/>
+        </button>
+        <div id="document-catalogue" className="documents-catalogue" hidden={!showDocumentCatalogue}>
+          {remainingDocuments.map((doc,i)=><a key={doc.url+'-'+i}
+            href={doc.url} target="_blank" rel="noopener noreferrer" className="documents-catalogue-link">
+            <div><span>{doc.type}</span><strong>{doc.title}</strong></div>
+            <ArrowUpRight size={16}/>
+          </a>)}
+        </div>
+      </section>
 
       <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
     </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
