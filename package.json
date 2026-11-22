@@ -1,1 +1,28 @@
-{"name":"portfolio-geii-immersif","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"vite --host 0.0.0.0","build":"vite build","preview":"vite preview"},"dependencies":{"@react-three/fiber":"^9.0.0","@react-three/drei":"^10.0.0","three":"^0.175.0","react":"^19.0.0","react-dom":"^19.0.0","gsap":"^3.12.7","lenis":"^1.2.3","lucide-react":"^0.468.0"},"devDependencies":{"vite":"^6.2.0"}}
+{
+  "name": "portfolio-geii-immersif",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "import:takeout": "node scripts/import_takeout.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.0.0",
+    "@react-three/drei": "^10.0.0",
+    "three": "^0.175.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "gsap": "^3.12.7",
+    "lenis": "^1.2.3",
+    "lucide-react": "^0.468.0"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0",
+    "adm-zip": "^0.5.16",
+    "cheerio": "^1.1.2",
+    "sharp": "^0.34.3"
+  }
+}
