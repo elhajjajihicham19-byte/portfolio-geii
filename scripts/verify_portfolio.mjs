@@ -21,10 +21,17 @@ const missingCemFigures=cemFigureNames
   .map(name=>'public/assets/cem/'+name+'.webp')
   .filter(file=>!fs.existsSync(file));
 
-const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,missingCemFigures,incompletePages:incomplete.map(p=>p.titre)};
+const technicalManifest=JSON.parse(fs.readFileSync('src/projectTechnicalEvidence.json','utf8'));
+const evidenceEntries=Object.entries(technicalManifest);
+const evidenceFigures=evidenceEntries.flatMap(([project,images])=>images.map(item=>({project,...item})));
+const missingStudyFigures=evidenceFigures
+ .filter(item=>!item.image||!item.image.startsWith('/assets/studies/')||!fs.existsSync(path.join('public',item.image.slice(1))))
+ .map(item=>({project:item.project,image:item.image}));
+const invalidSourceFigures=evidenceFigures.filter(item=>!item.title||!item.desc||item.chapter<0||item.chapter>5);
+const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,missingCemFigures,studyFigureCount:evidenceFigures.length,studyProjects:evidenceEntries.length,missingStudyFigures,invalidSourceFigures:invalidSourceFigures.length,incompletePages:incomplete.map(p=>p.titre)};
 console.log(JSON.stringify(counts,null,2));
-if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||missingCemFigures.length||incomplete.length){
+if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||missingCemFigures.length||missingStudyFigures.length||invalidSourceFigures.length||incomplete.length){
  console.error('Vérification de la migration non validée. Consulter les données ci-dessus.');
  process.exit(1);
 }
-console.log('Portfolio vérifié : 8 figures BMS et 7 figures PSIM CEM présentes.');
+console.log('Portfolio vérifié : figures BMS, simulations CEM et extraits authentiques des études GEII présents.');
