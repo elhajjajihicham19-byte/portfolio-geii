@@ -191,13 +191,6 @@ button:focus-visible,a:focus-visible {outline:2px solid #7dccff;outline-offset:4
 .project-visual.original-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;color:#75bdf0;background:radial-gradient(circle at 52% 45%,#24476b,#0c1928 75%)}
 .original-fallback>svg{filter:drop-shadow(0 0 25px #5ab6ff55);z-index:1}
 .original-fallback>span{z-index:1;font-size:11px;letter-spacing:.18em;font-weight:700;color:#afd4ee}
-.historical-dossier{margin:62px 0 68px;padding-top:38px;border-top:1px solid #3c5c75}
-.historical-context{max-width:810px;color:#a4bdcf;font-size:14px;line-height:1.9;margin:22px 0 35px}
-.historical-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-.historical-chapter{background:linear-gradient(145deg,#122436,#0e1b28);border:1px solid #2b4a65;padding:28px 30px 32px;min-width:0}
-.historical-chapter h3{font-size:clamp(21px,1.8vw,30px);letter-spacing:-.04em;line-height:1.2;margin:19px 0 22px;color:#f1f6fa}
-.historical-chapter p{color:#b6c9d6;font-size:14px;line-height:1.9;overflow-wrap:anywhere;margin:0 0 14px}
-.historical-chapter p.historical-bullet{padding:10px 13px;background:#173148;border-left:2px solid #75bff3}
 .document-actions{display:flex;flex-wrap:wrap;align-items:center;gap:11px;justify-content:end}
 .preview-doc-button{border:1px solid #436c89;background:#122c40;color:#b9e3ff;padding:12px 14px;display:flex;align-items:center;gap:9px;letter-spacing:.07em;font-size:10px;font-weight:700}
 .preview-doc-button:hover{background:#225171}
