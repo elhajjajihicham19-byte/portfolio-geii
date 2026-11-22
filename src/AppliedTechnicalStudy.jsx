@@ -87,7 +87,7 @@ function DialuxStudy({project:p,onZoom}){
     <p>J’ai commencé par modéliser la salle I022a, de <strong>8 × 7,5 × 3,4 m</strong>, avec un plan de travail à 0,80 m et un facteur de maintenance de 0,90. Pour les activités générales d’une salle de classe, l’étude retient un éclairement moyen d’au moins <strong>500 lux</strong> et une uniformité d’au moins <strong>0,60</strong>.</p>
     <p>J’ai sélectionné le luminaire THORN OMEGA M 4100-840 HF SRG Q600, d’une puissance de <strong>29,1 W</strong>, pour comparer deux implantations.</p>
     <div className="bms-spec-grid"><div className="bms-spec"><strong>60 m²</strong><span>surface de la salle</span></div><div className="bms-spec"><strong>≥ 500 lx</strong><span>éclairement moyen cible</span></div><div className="bms-spec"><strong>≥ 0,60</strong><span>uniformité demandée</span></div><div className="bms-spec"><strong>29,1 W</strong><span>puissance par luminaire</span></div></div>
-   </div><Figure evidence={nine} onZoom={onZoom}/></div>
+   </div><div className="technical-requirements"><span>CRITÈRES DE LA SALLE DE CLASSE</span><strong>500 lux</strong><small>ÉCLAIREMENT MOYEN MINIMAL</small><strong>0,60</strong><small>UNIFORMITÉ MINIMALE</small><strong>UGR ≤ 19</strong><small>ÉBLOUISSEMENT À VÉRIFIER</small></div></div>
   </Chapter>
   <Chapter number={2} title="PREMIÈRE IMPLANTATION" icon={<Lightbulb size={22}/>}>
    <h4>Neuf luminaires en grille 3 × 3.</h4>
