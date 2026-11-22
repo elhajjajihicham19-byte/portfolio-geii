@@ -8,10 +8,23 @@ const missing=refs.filter(src=>src.startsWith('/legacy/')&&!fs.existsSync(path.j
 const incomplete=pages.filter(p=>!p.sections||p.sections.length===0||!(p.sections.some(s=>(s.blocs||[]).length)));
 const reportPages=[6,9,10,11,14,15,16,17];
 const missingBmsFigures=reportPages.map(p=>'public/assets/bms/rapport-page-'+String(p).padStart(2,'0')+'.webp').filter(file=>!fs.existsSync(file));
-const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,incompletePages:incomplete.map(p=>p.titre)};
+const cemFigureNames=[
+  'filtre-accorde-schema',
+  'filtre-accorde-chronogrammes',
+  'filtre-accorde-spectres',
+  'pfc-schema-boost',
+  'pfc-commande-hysteresis',
+  'pfc-bande-hysteresis',
+  'pfc-chronogrammes',
+];
+const missingCemFigures=cemFigureNames
+  .map(name=>'public/assets/cem/'+name+'.webp')
+  .filter(file=>!fs.existsSync(file));
+
+const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,missingCemFigures,incompletePages:incomplete.map(p=>p.titre)};
 console.log(JSON.stringify(counts,null,2));
-if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||incomplete.length){
+if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||missingCemFigures.length||incomplete.length){
  console.error('Vérification de la migration non validée. Consulter les données ci-dessus.');
  process.exit(1);
 }
-console.log('Migration documentaire et 8 figures originales du BMS vérifiées.');
+console.log('Portfolio vérifié : 8 figures BMS et 7 figures PSIM CEM présentes.');
