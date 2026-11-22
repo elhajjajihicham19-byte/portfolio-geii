@@ -47,6 +47,24 @@ const projectSettings = {
     skills:['Concevoir','Vérifier']
   }
 };
+// Les niveaux sont issus des pages GEII et, pour le malaxeur,
+// du cahier de recette « SAE S2 » daté de mai 2025.
+// Le dimensionnement domestique est présenté comme projet tutoré de BUT1.
+const projectClassification={
+  'capteur-de-temperature': {year:1, category:'tutored', nature:'PROJET TUTORÉ', metrics:[['0–50 °C','plage de mesure'],['LM335','capteur de température'],['STM32','contrôle et affichage']]},
+  'cblage-domestique': {year:1, category:'applied', nature:'RÉALISATION PRATIQUE', metrics:[['2','espaces étudiés'],['Va-et-vient','commande éclairage'],['Télérupteur','commande d’éclairage']]},
+  'd-lectronique': {year:1, category:'applied', nature:'RÉALISATION PRATIQUE', metrics:[['Modulo 6','compteur'],['1 à 6','valeurs affichées'],['7 segments','affichage']]},
+  'dimensionnement-lectrique': {year:1, category:'tutored', nature:'PROJET TUTORÉ', metrics:[['3','rangées du tableau'],['30 mA','protection différentielle'],['NF C 15-100','référence de conception']],
+    name:'Dimensionnement électrique domestique',
+    description:'En BUT1, j’ai étudié l’installation électrique d’une habitation, réparti les circuits sur un tableau à trois rangées et choisi les protections adaptées aux différents usages.',
+    status:'Étude de conception réalisée — vérifications à compléter'},
+  'malaxeur': {year:1, category:'applied', nature:'SAE S2', metrics:[['≈ 36,7 s','temps de cycle'],['PH0–PH7','phases automatisées'],['PT100','mesure de température']]},
+  'moteur-dc-pilot-par-bus-can': {year:2, category:'applied', nature:'SAE / ÉLECTRONIQUE EMBARQUÉE', metrics:[['Bus CAN','communication'],['DRV8251A','commande moteur'],['Pont en H','étage de puissance']]},
+  'rs510': {year:2, category:'applied', nature:'RÉALISATION PRATIQUE', metrics:[['0–50 Hz','variation de fréquence'],['0–10 V','consigne analogique'],['RS510','variateur']]},
+  'retrofit-maquette-knx': {year:2, category:'applied', nature:'RÉALISATION PRATIQUE', metrics:[['29 V DC','alimentation bus'],['ETS6','programmation'],['KNX','réseau domotique']]},
+  'robot-suiveur-de-ligne': {year:1, category:'applied', nature:'SAE DOCUMENTÉE', metrics:[['≈ 967 Hz','fréquence PWM relevée'],['LM324','amplificateur'],['IR','détection de ligne']]},
+  'testeur-de-batterie': {year:1, category:'applied', nature:'RÉALISATION PRATIQUE', metrics:[['5','fonctions électroniques'],['Comparateur','décision analogique'],['LED','indication d’état']]}
+};
 const firstParagraph=page=>{
   for(const section of page.sections||[]){
     for(const block of section.blocs||[]){
@@ -70,10 +88,9 @@ const extractImages=page=>{
   }));
 };
 const extractDocs=page=>(page.documents||[]).map(d=>({
-  label:d.titre||'Document technique original',
+  label:d.titre||'Schéma ou rapport technique',
   url:d.url,
-  type:'SOURCE GOOGLE DRIVE · ORIGINAL',
-  original:true
+  type:'RAPPORT OU SCHÉMA',
 }));
 export function originalFor(name){
   return ancienPortfolio.find(p=>p.source===name+'.html')||null;
@@ -85,30 +102,28 @@ export const legacyProjects=ancienPortfolio
   .map((page,index)=>{
     const meta=projectSettings[page.id]||{field:'GÉNIE ÉLECTRIQUE & INFORMATIQUE INDUSTRIELLE',chips:['BUT GEII'],skills:['Concevoir','Vérifier']};
     const evidence=extractImages(page);
+    const classification=projectClassification[page.id]||{year:1,category:'applied',nature:'PROJET GEII',metrics:[]};
     return {
       id:'geii-'+page.id,
-      category:page.id==='capteur-de-temperature'?'tutored':'applied',
-      nature:page.id==='capteur-de-temperature'?'PROJET TUTORÉ':page.id==='robot-suiveur-de-ligne'?'SAE DOCUMENTÉE':'RÉALISATION UNIVERSITAIRE',
-      name:page.titre,
+      category:classification.category,
+      year:classification.year,
+      nature:classification.nature,
+      name:classification.name||page.titre,
       no:String(index+6).padStart(2,'0'),
       short:page.sections?.[0]?.titre||'Étude et réalisation technique',
       field:meta.field,
-      period:'Projet universitaire · BUT GEII',
-      description:firstParagraph(page),
-      status:'Étude et documents techniques consultables',
+      period:(classification.category==='tutored'?'Projet tutoré':'Projet universitaire')+' · BUT'+classification.year,
+      description:classification.description||firstParagraph(page),
+      status:classification.status||'Travaux réalisés — démarche et résultats présentés',
       color:'cyan',
       icon:'legacy',
       cover:evidence[0]?.image||null,
       chips:meta.chips,
       skills:meta.skills,
-      metrics:[
-        ['6','chapitres techniques'],
-        [String(evidence.length),'visuels spécifiques'],
-        [String(page.documents?.length||0),'documents originaux']
-      ],
+      metrics:classification.metrics,
       evidence,
       docs:extractDocs(page),
       legacyOnly:true,
-      note:'Les résultats, schémas et observations sont issus des travaux réalisés. Les compétences associées décrivent les apprentissages mobilisés, sans constituer à elles seules une attestation de conformité.',
+      note:'Les résultats et choix techniques sont analysés selon les conditions des essais. Les compétences associées décrivent les apprentissages mobilisés, sans attestation de conformité globale.',
     };
   });
