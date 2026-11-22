@@ -1,0 +1,66 @@
+/* Finition 2026 — accès professionnel, navigation des projets et transitions */
+.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:16px;margin-top:28px}
+.hero-actions .primary{margin:0;white-space:nowrap}
+.hero-quicklink{
+ display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:0 8px;
+ color:#b6d7ee;font-size:10px;font-weight:750;letter-spacing:.13em;
+ border-bottom:1px solid #417293;transition:color .25s,border-color .25s,filter .25s
+}
+.hero-quicklink svg{flex-shrink:0;color:#68c4ff}
+.hero-quicklink:hover,.hero-quicklink:focus-visible{
+ color:#fff;border-color:#95deff;filter:drop-shadow(0 0 8px rgba(59,160,240,.4))
+}
+.hero-quicklink:focus-visible{outline:2px solid #9cdbff;outline-offset:4px}
+.hero-specialties{
+ margin-top:24px;display:flex;flex-wrap:wrap;gap:9px;
+ color:#7daccb;font-size:10px;line-height:1.7;letter-spacing:.1em;font-weight:700
+}
+.hero-specialties span{color:#52bafb}
+
+.project-selector__choice{
+ min-height:112px;gap:13px;padding:11px 13px;align-items:center
+}
+.project-selector__thumbnail{
+ display:grid;place-items:center;flex-shrink:0;
+ width:100px;height:83px;overflow:hidden;
+ background:radial-gradient(circle at 50% 40%,#1b4b67,#091c30);
+ border:1px solid #426d8a;box-shadow:inset 0 0 22px #062034
+}
+.project-selector__thumbnail img{
+ width:100%;height:100%;object-fit:contain;
+ filter:contrast(1.04) saturate(.9);background:transparent
+}
+.project-selector__thumbnail>span{display:grid;place-items:center;color:#9bdfff}
+.project-selector__choice-text{gap:7px}
+.project-selector__choice-text strong{font-size:13px;color:#e7f5ff;line-height:1.35}
+.project-selector__choice-meta{
+ font-size:9px;font-weight:750;letter-spacing:.08em;line-height:1.4;
+ color:#7ebfe7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.project-selector__choice-meta span{color:#527b9b;padding:0 3px}
+.project-selector__choice-text small{font-size:11px;color:#90abc0}
+.project-selector__choice>svg{width:18px}
+.project-selector__choice:hover .project-selector__thumbnail,
+.project-selector__choice:focus-visible .project-selector__thumbnail{
+ border-color:#a2e8ff;box-shadow:0 0 17px rgba(60,157,228,.24)
+}
+/* Un nouvel élément remplace l'ancien sans conserver d'opacité GSAP. */
+.project--switching{
+ opacity:1;
+ animation:project-power-switch .56s cubic-bezier(.2,.8,.2,1) both
+}
+@keyframes project-power-switch{
+ 0%{opacity:.25;transform:translate3d(0,18px,0);filter:brightness(.72)}
+ 55%{opacity:1;filter:brightness(1.16)}
+ 100%{opacity:1;transform:translate3d(0,0,0);filter:brightness(1)}
+}
+@media(max-width:1240px){
+ .hero-actions{gap:11px}
+ .hero-quicklink{padding:0 4px}
+ .project-selector__thumbnail{width:81px;height:70px}
+ .project-selector__choice{min-height:95px}
+}
+@media(prefers-reduced-motion:reduce){
+ .project--switching{animation:none!important}
+ .hero-quicklink{transition:none}
+}
