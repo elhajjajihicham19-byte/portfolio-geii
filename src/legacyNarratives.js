@@ -63,14 +63,14 @@ export const legacyNarratives = {
   ]
  },
  'geii-moteur-dc-pilot-par-bus-can': {
-  subtitle:'DRV8251A · pont en H · acquisition · communication CAN',
+  subtitle:'DRV8251A · pont en H · mesures électriques · réseau CAN',
   chapters:[
-   ['Piloter un moteur à courant continu via un bus CAN','Nous avons travaillé sur un prototype réunissant la commande en vitesse et en sens de rotation, la mesure de grandeurs électriques et la communication sur un bus CAN.'],
-   ['Réunir puissance, mesure et communication','L’architecture comporte un pont en H DRV8251A, une chaîne de mesure du courant, un diviseur de mesure de tension, un transceiver CAN, un codeur incrémental et des fonctions de protection et de stockage des paramètres.'],
-   ['Concevoir les fonctions électroniques','Nous avons réparti le système en fonctions FP, étudié les liaisons avec le microcontrôleur et préparé le dossier de fabrication du prototype.'],
-   ['Mettre en place une procédure de test','Nous avons prévu les contrôles de continuité, de protection contre l’inversion de polarité, de fonctionnement des LED, de commande moteur, de limitation du courant et de communication CAN. Le dossier décrit cette procédure ; les mesures détaillées restent à consulter dans les pièces jointes.'],
-   ['Vérifier les interfaces avant de conclure','La qualité du prototype dépend du fonctionnement conjoint de l’alimentation, de l’électronique de puissance, de l’acquisition et du réseau. La présence d’une procédure ne constitue pas à elle seule une validation de toutes les fonctions.'],
-   ['Retour sur les compétences développées','Cette SAE m’a permis d’articuler plusieurs fonctions électroniques et de mesurer l’importance de vérifier les interfaces entre sous-ensembles.']
+   ['Concevoir un système de pilotage CAN','J’ai étudié la commande bidirectionnelle d’un moteur à courant continu au moyen d’un shield connecté à une NUCLEO-F303RE. La carte regroupe une interface de puissance, des mesures électriques, les protections et la communication CAN.'],
+   ['Associer les fonctions de puissance et de communication','J’ai étudié le pont en H DRV8251A, le conditionnement des mesures, les commandes PWM et le transceiver CAN. La répartition en fonctions permet de distinguer les interfaces de puissance des signaux transmis au microcontrôleur.'],
+   ['Préparer le dossier de fabrication','J’ai établi les schémas de conception et l’implantation de la carte. Les fonctions de protection et les connexions de commande ont été réparties afin de simplifier les essais de continuité, de motorisation et de communication.'],
+   ['Réaliser une campagne d’essais documentée','J’ai préparé une procédure et consigné des essais sur la carte pédagogique de l’enseignant. La continuité, la protection contre l’inversion de polarité, plusieurs séquences de LED et la commande moteur à 0,10 A sont déclarées réussies dans le rapport. Les valeurs de mesure et leur comparaison aux tolérances sont détaillées ci-dessous.'],
+   ['Analyser les écarts avant de conclure','La fiche de test reporte 1,869 V pour une acquisition attendue à 2,00 V ±2 %, 80 mA pour un seuil de 100 mA et 190 mA pour 200 mA attendus. Ces écarts doivent être signalés, même lorsque la colonne Résultat indique PASS. La procédure réalisée sur la carte de l’enseignant ne valide pas automatiquement mon prototype.'],
+   ['Compétences acquises','Ce travail m’a permis de relier conception de PCB, électronique de puissance et communication embarquée. J’ai surtout appris à confronter les mesures aux critères de validation plutôt qu’à reprendre uniquement un statut PASS.']
   ]
  },
  'geii-rs510': {
