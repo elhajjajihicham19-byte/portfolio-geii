@@ -1,66 +1,71 @@
-# Portfolio GEII / EME — version enrichie (desktop)
+# Portfolio GEII / EME — version interactive ordinateur
 
-Portfolio React + Vite + Three.js + GSAP + Lenis, adapté aux consignes du cahier des charges **BUT23 FA – 2026–2027** (partie Portfolio BUT3, pages 4 et 8).
+Portfolio de compétences BUT3 Génie Électrique et Informatique Industrielle, parcours **Électricité et Maîtrise de l’Énergie**. Application React + Vite + Three.js + GSAP + Lenis, avec études techniques authentiques.
 
-## Démarrer sur Windows (PowerShell)
+## Version de référence
 
-1. Décompresser le ZIP dans `Téléchargements`.
-2. Ouvrir le dossier **portfolio-geii-v2** dans VS Code.
-3. Ouvrir le terminal **dans ce dossier** (vérifier que `package.json` est présent avec `dir`).
-4. Exécuter :
+- Dépôt GitHub : `elhajjajihicham19-byte/portfolio-geii`
+- Branche de travail : **`migration-google-takeout-2026`**
+- PR en brouillon : https://github.com/elhajjajihicham19-byte/portfolio-geii/pull/1
+- Branche `main` conservée séparément jusqu'à décision de publication.
+
+**Ne pas repartir d'un ancien ZIP** : utiliser la version actuelle de la branche GitHub.
+
+## Exécution Windows (PowerShell)
+
+Depuis le dossier où se trouve `package.json` :
 
 ```powershell
+git status
+git switch migration-google-takeout-2026
+git pull origin migration-google-takeout-2026
 npm.cmd install
+npm.cmd run audit
 npm.cmd run dev
 ```
 
-5. Ouvrir l'URL indiquée par Vite, généralement `http://localhost:5173`.
+Ouvrir l'adresse Vite indiquée, généralement `http://localhost:5173/`. Avant `git pull`, vérifier `git status` si des modifications locales ont été faites sous VS Code.
 
-**Important** : garder le terminal ouvert tant que vous consultez le portfolio. Si une ancienne version tourne déjà, faire `Ctrl + C` dans l'ancien terminal et lancer la nouvelle version, ou utiliser le port affiché par Vite.
+Pour prévisualiser **la version compilée** :
 
-## Sections de cette version
+```powershell
+npm.cmd run build
+npm.cmd run preview
+```
 
-- Accueil avec cœur énergétique WebGL.
-- Informations personnelles et projet professionnel.
-- Ma formation : bac général → L1 informatique → BUT3 GEII EME → projet d'école d'ingénieurs.
-- Quatre compétences du programme national EME : Concevoir, Vérifier, Maintenir et Installer, avec apprentissages critiques de BUT3, liens vers les preuves et autoévaluation.
-- Cinq dossiers projet développés : BMS 4S, stage BETEM, photovoltaïque, CEM, DIALux.
-- Expérience professionnelle et contact.
-- Bibliothèque de documents consultables ou téléchargeables.
+`npm.cmd run audit` contrôle la structure de l'ancien portfolio, les documents, la présence et l'intégrité des images, les références internes, les ancres, l'accessibilité de base et les métadonnées. GitHub Actions exécute aussi ces contrôles.
 
-## Origine et statut des preuves
+## Structure
 
-**Fichiers authentiques mis à disposition dans cette version :**
+- Accueil avec **noyau énergétique abstrait** WebGL, links CV/LinkedIn et orientation professionnelle.
+- Profil, formation, quatre compétences BUT GEII EME.
+- **14 projets universitaires**, tutorés en premier puis SAE et réalisations pratiques, du BUT3 au BUT1 ; un dossier visible à la fois et un sélecteur illustré.
+- Dossiers avec figures techniques, sommaire latéral et consultation classique ou plein écran.
+- Stage **BETEM** uniquement dans l'expérience professionnelle.
+- Documents, preuves, contact.
 
-- `public/documents/TP-CEM-Hicham-El-Hajjaji.pdf` : compte rendu CEM de 34 pages de l'étudiant, utilisé pour des extraits de schémas et de courbes (`cem-*-reel.webp`).
-- `public/documents/Compte-rendu-DIALux.docx` : compte rendu DIALux fourni précédemment, contenant les captures `dialux-reel-*.webp`. Attention, le document est une version de travail, avec des champs à compléter.
-- `public/documents/Etude-photovoltaique-cadrage.docx` : document de cadrage de l'étude photovoltaïque ; résultats définitifs non établis.
-- `public/assets/betem-plan-extrait-reel.webp` : extrait d'un plan de travail CFO/CFA de l'école Jean Macé à Sète, accessible dans les documents de projet déjà fournis. **Ne pas publier cet extrait sans confirmation des droits de diffusion par le maître de stage/entreprise et le client.** Le plan complet et le CCTP ne sont volontairement pas inclus.
+## Données et précautions
 
-**À compléter** : les images et schémas natifs KiCad du BMS (non récupérés), une photo originale du prototype, le CV réel et l'URL exacte LinkedIn. Le visuel de BMS est illustratif ; il est correctement étiqueté et **ne prétend pas être un schéma KiCad original**. Le visuel solaire est également illustratif.
+- **BMS 4S** : figures KiCad et photos du prototype authentiques ; les essais de charge/décharge ne sont **pas validés**.
+- **Photovoltaïque** : seule la configuration **6 kWc sans batterie** est simulée et chiffrée sous SMA Sunny Design (9 711 kWh/an). Les variantes 3 kWc, trois pans et batterie restent à comparer. Les courbes sont reconstruites à partir du rapport.
+- **CEM / DIALux** : extraits authentiques et rapports disponibles.
+- **BETEM** : les extraits CFO/CFA présentés ont été indiqués par le propriétaire du portfolio comme validés par BETEM pour diffusion. Veiller à ne pas élargir ce périmètre sans nouvelle validation.
+- Autres projets GEII : photos d'origine et figures de dossiers dans `public/legacy` et `public/assets/studies`.
 
-## Sources de rédaction
+## Repères techniques
 
-- Ancien portfolio public Google Sites : page d'accueil, présentation de la formation GEII, BMS, contact.
-- Cahier des charges `BUT23 FA - 26-27 - CdC Projets et PF - V2.pdf` : partie BUT3 / Portfolio et annexe 4.
-- Référentiel officiel national BUT GEII, parcours EME, pages 22–29 du document ministère : https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2023-12/g-nie-lectrique-et-informatique-industrielle-30834.pdf
-- Documents techniques originaux cités ci-dessus et informations déjà échangées avec l'étudiant.
+- `src/main.jsx` : application et noyau énergétique.
+- `src/StudyContents.jsx` et `src/StudyHighlights.jsx` : sommaire et preuves des études.
+- `src/CircuitInteractions.jsx` et `src/ElectricAmbient.jsx` : progression et effets électriques.
+- `src/PvCaseStudy.jsx`, `src/PvSunnyResults.jsx`, `src/BmsCaseStudy.jsx` : études détaillées.
+- `src/legacyProjects.js`, `src/projectTechnicalEvidence.json` : dossiers historiques.
+- `scripts/verify_portfolio.mjs`, `scripts/audit_site.mjs` : audits automatisés.
+- `public/assets`, `public/legacy`, `public/documents` : ressources du site.
 
-## Prudence avant publication
+Les animations 3D sont suspendues hors écran et lorsque le dossier est ouvert. L'option système de mouvement réduit est prise en compte.
 
-1. Relire les formulations qui décrivent votre rôle et le périmètre des interventions.
-2. Confirmer les droits pour tout extrait de plan professionnel (vous pouvez supprimer `betem-plan-extrait-reel.webp` et son affichage pour une diffusion publique sans accord).
-3. Mettre à jour les études en cours et les liens CV/LinkedIn avant la soutenance.
-4. Tester sur un PC de bureau et vérifier les téléchargements.
+## Préparer la publication
 
-## Technique
+Consulter [CONTROLE-PUBLICATION.md](CONTROLE-PUBLICATION.md). La compilation et l'audit statique **ne remplacent pas un test réel dans Chrome/Edge**, notamment à 1366 × 768, 1920 × 1080 et 2560 × 1440. Vérifier aussi CV et LinkedIn en navigation privée, pour confirmer les autorisations d'accès.
 
-`src/main.jsx` : application et textes du portfolio.
-
-`src/style.css` : thème visuel, grilles, cases studies et animations.
-
-`public/assets/` : illustrations techniques réelles et visuels.
-
-`public/documents/` : preuves téléchargeables.
-
-La plateforme d'origine Google Sites n'a pas été modifiée. Le projet est à ouvrir et à héberger séparément.
+Le domaine et la plateforme d'hébergement **ne sont pas encore fixés**. Les URL locales commencent par `/assets/` et `/documents/` : elles supposent une publication à la racine du domaine. Un déploiement sous un sous-chemin nécessite une adaptation préalable. Les métadonnées spécifiques au domaine (canonical, og:url et aperçu social illustré) seront ajoutées une fois l'adresse finale choisie.
