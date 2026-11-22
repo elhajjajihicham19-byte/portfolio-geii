@@ -241,39 +241,32 @@ const remainingDocuments=documents.filter(doc=>!highlightedDocuments.includes(do
 
 // Représentation artistique d'un électron : langage visuel bleu électrique,
 // trajectoires orbitales et noyau lumineux (non une représentation quantique).
-function ElectronOrbit({radius=1.5,speed=1,phase=0,tilt=[0,0,0],color='#65ceff',reducedMotion=false}){
-  const electron=useRef(null);
-  const halo=useRef(null);
-  useFrame(({clock})=>{
-    const t=reducedMotion?phase:clock.elapsedTime*speed+phase;
-    if(electron.current){
-      electron.current.position.set(Math.cos(t)*radius,Math.sin(t)*radius*.52,0);
-    }
-    if(halo.current){
-      halo.current.opacity=.16+(reducedMotion?0:Math.sin(clock.elapsedTime*.72+phase)*.025);
-    }
-  });
+// Huit cercles de champ, orientés sur des plans différents dans l'espace.
+// Aucun électron ne tourne désormais sur ces cercles : seules les lignes de
+// champ indépendantes conservent leurs impulsions lumineuses vers le centre.
+const FIELD_RINGS=[
+  {radius:1.17,tilt:[.9,.35,.55],color:'#62caff'},
+  {radius:1.33,tilt:[.27,.16,.5],color:'#6dd7ff'},
+  {radius:1.43,tilt:[1.4,.75,.2],color:'#468fff'},
+  {radius:1.56,tilt:[1.14,.58,.1],color:'#458fff'},
+  {radius:1.67,tilt:[.45,1.25,.8],color:'#8ce3ff'},
+  {radius:1.79,tilt:[.68,1.08,.4],color:'#8ce3ff'},
+  {radius:1.96,tilt:[1.25,.15,.95],color:'#488bea'},
+  {radius:2.17,tilt:[.3,1.5,1.15],color:'#5abfff'}
+];
+
+function FieldRing({radius,tilt,color}){
   return <group rotation={tilt}>
-    <mesh scale={[1,.52,1]}>
-      <torusGeometry args={[radius,.009,8,220]}/>
-      <meshBasicMaterial color={color} transparent opacity={.36}/>
+    <mesh>
+      <torusGeometry args={[radius,.006,6,200]}/>
+      <meshBasicMaterial color={color} transparent opacity={.27}
+        depthWrite={false}/>
     </mesh>
-    <mesh scale={[1,.52,1]}>
-      <torusGeometry args={[radius,.028,8,220]}/>
-      <meshBasicMaterial color={color} transparent opacity={.085}
+    <mesh>
+      <torusGeometry args={[radius,.022,6,200]}/>
+      <meshBasicMaterial color={color} transparent opacity={.065}
         blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
     </mesh>
-    <group ref={electron}>
-      <mesh>
-        <sphereGeometry args={[.061,20,20]}/>
-        <meshBasicMaterial color="#effaff" toneMapped={false}/>
-      </mesh>
-      <mesh>
-        <sphereGeometry args={[.145,20,20]}/>
-        <meshBasicMaterial ref={halo} color={color} transparent opacity={.16}
-          blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
-      </mesh>
-    </group>
   </group>;
 }
 
@@ -369,12 +362,7 @@ function ElectronHero(){
         <meshBasicMaterial color="#2c69c2" wireframe transparent opacity={.38}/>
       </mesh>
       <ElectricFieldLines reducedMotion={reducedMotion}/>
-      <ElectronOrbit radius={1.33} speed={1.18} phase={0}
-        tilt={[.27,.16,.5]} color="#6dd7ff" reducedMotion={reducedMotion}/>
-      <ElectronOrbit radius={1.56} speed={.9} phase={2.1}
-        tilt={[1.14,.58,.1]} color="#458fff" reducedMotion={reducedMotion}/>
-      <ElectronOrbit radius={1.79} speed={.73} phase={4.2}
-        tilt={[.68,1.08,.4]} color="#8ce3ff" reducedMotion={reducedMotion}/>
+      {FIELD_RINGS.map((ring,i)=><FieldRing key={i} {...ring}/>)}
       <pointLight color="#2e96ff" intensity={7.5} distance={8}/>
     </Float>
   </group>;
