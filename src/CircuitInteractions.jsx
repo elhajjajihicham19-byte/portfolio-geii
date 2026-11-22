@@ -31,6 +31,7 @@ export default function CircuitInteractions({paused=false}){
     let frame=0;
     let active='accueil';
     let previous=window.scrollY;
+    let settleTimer=0;
 
     const update=()=>{
       frame=0;
@@ -41,10 +42,9 @@ export default function CircuitInteractions({paused=false}){
       root.style.setProperty('--electric-scroll-progress',progress.toFixed(4));
 
       // Repère la section qui traverse l'axe de lecture du visiteur.
-      const boundary=y+window.innerHeight*.46;
       let next=content[0].id;
       for(const section of content){
-        if(section.node.offsetTop<=boundary)next=section.id;
+        if(section.node.getBoundingClientRect().top<=window.innerHeight*.46)next=section.id;
       }
       if(next!==active){
         const previousSection=content.find(s=>s.id===active);
@@ -64,8 +64,11 @@ export default function CircuitInteractions({paused=false}){
       previous=y;
     };
     const schedule=()=>{
-      if(frame)return;
-      frame=requestAnimationFrame(update);
+      if(frame===0)frame=requestAnimationFrame(update);
+      if(settleTimer)clearTimeout(settleTimer);
+      settleTimer=window.setTimeout(()=>{
+        root.style.setProperty('--electric-flow-boost','0');
+      },170);
     };
     schedule();
     window.addEventListener('scroll',schedule,{passive:true});
@@ -92,6 +95,7 @@ export default function CircuitInteractions({paused=false}){
       window.removeEventListener('pointermove',move);
       if(frame)cancelAnimationFrame(frame);
       if(pointerFrame)cancelAnimationFrame(pointerFrame);
+      if(settleTimer)clearTimeout(settleTimer);
       content.forEach(s=>s.node.classList.remove('is-conducting'));
       root.style.removeProperty('--electric-flow-boost');
       root.style.removeProperty('--electric-scroll-progress');
