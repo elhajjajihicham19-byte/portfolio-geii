@@ -35,3 +35,25 @@
 .legacy-inline-preview{margin:13px 0 25px;padding:13px;background:#10283b;border:1px solid #436c87}
 .legacy-inline-preview iframe{display:block;background:white;border:0;width:100%;height:520px}
 .legacy-inline-preview>p{font-size:11px;line-height:1.7;color:#93b7cf;padding:10px 3px 0;margin:0}
+
+/* Analyse métier et essais réels : au contact des captures du rapport */
+.study-insight{margin:26px 0 28px;border-top:1px solid #3b5d75;background:linear-gradient(145deg,#122b40,#0c1c2c);padding:24px 23px 26px}
+.study-insight-overline{color:#83caf5;font-weight:700;letter-spacing:.14em;font-size:10px}
+.study-insight h5{color:#e3f5ff;font:600 clamp(18px,1.7vw,24px)/1.26 'Space Grotesk',sans-serif;letter-spacing:-.045em;margin:13px 0 14px}
+.study-insight>p{color:#bed0de;font-size:13px;line-height:1.9;margin:0 0 21px}
+.study-insight-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:11px;margin-top:18px}
+.study-insight-metrics>div{background:#1b3b50;border:1px solid #456a86;padding:15px 13px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.study-insight-metrics strong{color:#daf0ff;font-size:clamp(16px,1.5vw,23px);line-height:1.25;letter-spacing:-.025em}
+.study-insight-metrics span{color:#a6c2d5;font-size:11px;line-height:1.6}
+.study-insight-table{overflow-x:auto;margin-top:21px;border:1px solid #3d5f78}
+.study-insight-table table{border-collapse:collapse;width:100%;min-width:420px;text-align:left}
+.study-insight-table th{background:#1b405a;color:#b6e0fa;font-size:10px;letter-spacing:.06em;padding:13px 10px}
+.study-insight-table td{border-top:1px solid #395b73;background:#112a3e;color:#c6d5df;font-size:12px;line-height:1.65;padding:13px 10px}
+.study-insight-table td:first-child{color:#e4f3fb;font-weight:700}
+.study-insight-caveat{border-left:2px solid #d7aa76;background:#30281f;padding:15px;display:flex;align-items:start;gap:13px;margin-top:21px}
+.study-insight-caveat svg{color:#efcb9d;flex-shrink:0}
+.study-insight-caveat p{color:#e0c7ae;font-size:12px;line-height:1.8;margin:0}
+.legacy-chapter-figure>button{height:400px;background:#e8eef1}
+.legacy-chapter-figure>button img{padding:12px}
+.legacy-chapter-photo-stack .legacy-chapter-figure figcaption strong{letter-spacing:0}
+@media(max-width:1100px){.legacy-chapter-figure>button{height:380px}}
