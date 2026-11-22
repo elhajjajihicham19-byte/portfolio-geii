@@ -461,8 +461,27 @@ function ProjectSelector({selectedId,onSelect}){
   </div>;
 }
 
+/* Conserver la navigation clavier dans la fenêtre active. Le zoom est
+ * prioritaire sur le dossier lorsque les deux sont affichés. */
+function trapDialogTab(event,dialog){
+  if(event.key!=='Tab'||!dialog)return;
+  const candidates=[...dialog.querySelectorAll(
+    'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+  )].filter(el=>!el.closest('[inert]')&&el.getClientRects().length>0);
+  if(!candidates.length){event.preventDefault();dialog.focus({preventScroll:true});return}
+  const first=candidates[0],last=candidates[candidates.length-1];
+  const current=document.activeElement;
+  if(event.shiftKey&&(current===first||current===dialog||!dialog.contains(current))){
+    event.preventDefault();last.focus({preventScroll:true});
+  }else if(!event.shiftKey&&(current===last||current===dialog||!dialog.contains(current))){
+    event.preventDefault();first.focus({preventScroll:true});
+  }
+}
+
 function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
   const dialogRef=useRef(null);
+  const zoomOpenRef=useRef(isZoomOpen);
+  zoomOpenRef.current=isZoomOpen;
   const [readingMode,setReadingMode]=useState(false);
   const savedScrollProgress=useRef(0);
   const switchMode=(next)=>{
@@ -475,7 +494,21 @@ function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
     const el=dialogRef.current;
     if(el)el.scrollTop=savedScrollProgress.current*Math.max(0,el.scrollHeight-el.clientHeight);
   },[readingMode]);
-  useEffect(()=>{dialogRef.current?.focus({preventScroll:true})},[]);
+  useEffect(()=>{
+    const previous=document.activeElement;
+    dialogRef.current?.focus({preventScroll:true});
+    const onTab=event=>{
+      if(zoomOpenRef.current)return;
+      trapDialogTab(event,dialogRef.current);
+    };
+    document.addEventListener('keydown',onTab);
+    return()=>{
+      document.removeEventListener('keydown',onTab);
+      if(previous?.isConnected&&typeof previous.focus==='function'){
+        previous.focus({preventScroll:true});
+      }
+    };
+  },[]);
   useEffect(()=>{
     const handle=e=>{if(e.key==='Escape'&&!isZoomOpen)onClose()};
     window.addEventListener('keydown',handle);
@@ -521,6 +554,7 @@ function App(){
   const [showDocumentCatalogue,setShowDocumentCatalogue]=useState(false);
   const [selectedProjectId,setSelectedProjectId]=useState('pv');
   const lenisRef=useRef(null);
+  const zoomRef=useRef(null);
   const closeDetail=()=>{setProject(null);setZoom(null)};
   useEffect(()=>{
     const lenis=new Lenis({duration:1.2,smoothWheel:true,prevent:node=>Boolean(node?.closest?.('[data-lenis-prevent]'))});lenisRef.current=lenis;let raf;const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);
@@ -537,9 +571,19 @@ function App(){
   },[project,zoom]);
   useEffect(()=>{
     if(!zoom)return;
-    const handle=e=>{if(e.key==='Escape'){e.stopPropagation();setZoom(null)}};
+    const previous=document.activeElement;
+    zoomRef.current?.querySelector('button')?.focus({preventScroll:true});
+    const handle=e=>{
+      if(e.key==='Escape'){e.preventDefault();e.stopPropagation();setZoom(null)}
+      else trapDialogTab(e,zoomRef.current);
+    };
     window.addEventListener('keydown',handle);
-    return()=>window.removeEventListener('keydown',handle);
+    return()=>{
+      window.removeEventListener('keydown',handle);
+      if(previous?.isConnected&&typeof previous.focus==='function'){
+        previous.focus({preventScroll:true});
+      }
+    };
   },[zoom]);
   const openProject=(p)=>{setProject(p);setZoom(null)};
   const selectedProject=academicProjects.find(p=>p.id===selectedProjectId)||tutoredProjects[0];
@@ -645,7 +689,7 @@ function App(){
       <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
     </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
     {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom} isZoomOpen={Boolean(zoom)}/>}
-    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" data-lenis-prevent onWheel={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title} style={zoom.rotation?{transform:`rotate(${zoom.rotation}deg)`}:undefined}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
+    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" ref={zoomRef} tabIndex={-1} data-lenis-prevent onWheel={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title} style={zoom.rotation?{transform:`rotate(${zoom.rotation}deg)`}:undefined}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
   </div></>;
 }
 
