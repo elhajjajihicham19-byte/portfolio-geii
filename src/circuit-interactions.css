@@ -1,0 +1,185 @@
+/* SYSTÈME ÉLECTRIQUE VIVANT — micro-interactions liées au visiteur.
+ * Une seule source de vérité pour le scroll et l'activité des sections.
+ * Les animations restent lentes ; pas d'effets stroboscopiques.
+ */
+:root{
+  --circuit-ice:#98e1ff;
+  --circuit-blue:#48b3f4;
+  --circuit-blue-soft:rgba(47,147,228,.16);
+  --electric-scroll-progress:0;
+  --electric-flow-boost:0;
+}
+.circuit-bus{
+  --bus-progress:0;
+  position:fixed;top:18vh;bottom:20vh;right:clamp(13px,1.75vw,34px);
+  width:20px;z-index:4;pointer-events:none;
+  opacity:.72;transition:opacity .35s;
+}
+.circuit-bus--paused{opacity:0}
+.circuit-bus__spine{
+  position:absolute;top:0;bottom:0;left:8px;width:2px;
+  background:linear-gradient(180deg,rgba(28,86,135,.1),rgba(56,123,166,.48),rgba(28,86,135,.1))
+}
+.circuit-bus__charge{
+  position:absolute;inset:0 0 auto 0;width:2px;height:100%;
+  background:linear-gradient(180deg,#a0e7ff,#3dacf5 55%,rgba(31,106,188,.65));
+  transform:scaleY(var(--bus-progress));transform-origin:top;
+  box-shadow:0 0 11px rgba(77,186,255,.55),0 0 25px rgba(52,150,243,.19);
+  transition:transform .12s ease-out;
+}
+.circuit-bus__terminal{
+  position:absolute;left:-3px;width:8px;height:8px;
+  transform:translateY(-50%);border-radius:50%;
+  border:1px solid #4179a4;background:#0a2134;
+  box-shadow:0 0 0 3px rgba(22,58,86,.58);
+  transition:background .5s,box-shadow .5s,border-color .5s
+}
+.circuit-bus__terminal--active{
+  background:#c7f1ff;border-color:#b5eaff;
+  box-shadow:0 0 0 4px rgba(46,150,230,.17),0 0 13px rgba(90,199,255,.78)
+}
+.circuit-bus__label{
+  position:absolute;top:50%;right:19px;
+  transform:translateY(-50%) rotate(180deg);
+  writing-mode:vertical-rl;white-space:nowrap;
+  color:#7094b1;font-size:8px;font-weight:700;letter-spacing:.2em
+}
+/* Chaque section est traversée par une énergie très diffuse. */
+.site .section{position:relative;isolation:isolate}
+.site .section::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 36% 37% at 6% 20%,rgba(38,126,202,.11),transparent 80%);
+  opacity:0;transition:opacity 1.5s ease-out
+}
+.site .section.is-conducting::before{opacity:.76}
+.site .section>*{position:relative;z-index:1}
+.site .section-heading{isolation:isolate}
+.site .section-heading::before{
+  content:'';display:block;position:relative;flex:0 0 7px;
+  width:7px;height:7px;border-radius:50%;background:#25465e;
+  border:1px solid #467599;box-shadow:0 0 0 3px #17314766;
+  transition:background .5s,box-shadow .6s
+}
+.site .section.is-conducting .section-heading::before{
+  background:#b7edff;box-shadow:0 0 0 3px rgba(51,143,213,.24),0 0 18px rgba(87,191,255,.58)
+}
+.site .section-heading .rule{position:relative;overflow:hidden}
+.site .section-heading .rule::after{
+  content:'';position:absolute;top:0;left:0;height:2px;width:21%;
+  opacity:0;background:linear-gradient(90deg,transparent,#71ceff,transparent);
+  box-shadow:0 0 10px rgba(85,185,255,.52);
+  transform:translateX(-160%);pointer-events:none
+}
+.site .section.is-conducting .section-heading .rule::after{
+  opacity:.67;animation:section-conductor 8.2s linear infinite
+}
+@keyframes section-conductor{
+  from{transform:translateX(-160%)}
+  to{transform:translateX(600%)}
+}
+/* Formation : le passage du courant suit les étapes de la chronologie. */
+.site .timeline-item{transition:border-color .35s,background .35s}
+.site .timeline-item::before{
+  content:'';position:absolute;left:1px;top:38px;width:5px;height:5px;
+  border:1px solid #477693;border-radius:50%;background:#122c40;
+  box-shadow:0 0 0 3px rgba(49,108,153,.12);
+  transition:background .32s,box-shadow .32s
+}
+.site .timeline-item:hover,.site .timeline-item:focus-within{
+  background:linear-gradient(90deg,rgba(24,81,122,.19),transparent 80%);
+  border-bottom-color:#478cb7
+}
+.site .timeline-item:hover::before,.site .timeline-item.current::before{
+  background:#b6eaff;box-shadow:0 0 16px rgba(91,198,255,.68),0 0 0 4px rgba(57,142,209,.21)
+}
+.site .timeline-item:hover .timeline-count{color:#80d4ff}
+/* Compétences : modules « sous tension » au survol, sans mouvement permanent. */
+.site .competency-card{
+  position:relative;overflow:hidden;
+  transition:border-color .4s,box-shadow .4s,transform .4s
+}
+.site .competency-card::before{
+  content:'';position:absolute;inset:0 auto auto 0;height:2px;width:34%;
+  background:linear-gradient(90deg,transparent,#8cd9ff,transparent);
+  opacity:0;transform:translateX(-125%);
+  pointer-events:none;z-index:2
+}
+.site .competency-card:hover,.site .competency-card:focus-within{
+  border-color:#4c9ad1;box-shadow:0 0 36px rgba(37,132,210,.14),inset 0 0 26px rgba(37,132,210,.035);
+  transform:translateY(-3px)
+}
+.site .competency-card:hover::before,.site .competency-card:focus-within::before{
+  opacity:.9;animation:module-conductor 3s linear infinite
+}
+.site .competency-card:hover .competency-mark{color:#5babd8;text-shadow:0 0 18px #48b3f43d}
+@keyframes module-conductor{from{transform:translateX(-125%)}to{transform:translateX(350%)}}
+/* Projets : une impulsion parcourt le bord supérieur et la face de la carte. */
+.site .project{isolation:isolate;transition:border-color .35s}
+.site .project::before{
+  content:'';position:absolute;top:-1px;left:0;width:24%;height:2px;
+  background:linear-gradient(90deg,transparent,#83d8ff,transparent);
+  opacity:0;pointer-events:none;transform:translateX(-120%);
+  filter:drop-shadow(0 0 7px rgba(93,196,255,.7))
+}
+.site .project:hover,.site .project:focus-within{border-top-color:#4a8bbd}
+.site .project:hover::before,.site .project:focus-within::before{
+  opacity:1;animation:project-power-line 3.3s ease-in-out infinite
+}
+@keyframes project-power-line{from{left:0;transform:translateX(-120%)}to{left:100%;transform:translateX(0)}}
+.site .project-visual{transition:border-color .4s,box-shadow .4s}
+.site .project-visual::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 39%,rgba(83,173,245,.09) 51%,transparent 64%);
+  background-size:260% 100%;background-position:100% 50%;opacity:0;
+  transition:opacity .4s
+}
+.site .project:hover .project-visual,
+.site .project:focus-within .project-visual{
+  border-color:#4e9ed0;box-shadow:0 0 38px rgba(24,128,210,.17)
+}
+.site .project:hover .project-visual::after,.site .project:focus-within .project-visual::after{
+  opacity:1;animation:project-electric-scan 5.5s ease-in-out infinite
+}
+@keyframes project-electric-scan{
+  0%,12%{background-position:100% 50%}
+  78%,100%{background-position:0% 50%}
+}
+.site .project-action button svg,.site .primary svg,.site .inline-action svg{
+  transition:transform .3s ease,filter .3s
+}
+.site .project-action button:hover svg,.site .primary:hover svg,.site .inline-action:hover svg{
+  transform:translate(3px,-2px);filter:drop-shadow(0 0 5px rgba(126,216,255,.75))
+}
+/* Stage et documents : micro-activation ponctuelle. */
+.site .experience-company{transition:border-color .35s,padding-left .35s,background .35s}
+.site .experience-company:hover{
+  border-color:#60a8d8;padding-left:10px;
+  background:linear-gradient(90deg,rgba(26,90,133,.17),transparent 60%)
+}
+.site .documents-quick-link,.site .documents-catalogue-link{
+  position:relative;overflow:hidden
+}
+.site .documents-quick-link::before,.site .documents-catalogue-link::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:#79d4ff;opacity:0;box-shadow:0 0 11px #54c4ff;
+  transition:opacity .25s
+}
+.site .documents-quick-link:hover::before,.site .documents-quick-link:focus-visible::before,
+.site .documents-catalogue-link:hover::before,.site .documents-catalogue-link:focus-visible::before{opacity:1}
+/* Halo mobile, strictement en arrière-plan, répondant au curseur. */
+.electric-ambient__cursor{
+  position:fixed;left:var(--electric-pointer-x,50%);top:var(--electric-pointer-y,50%);
+  width:510px;height:510px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(61,155,238,.15),rgba(39,121,203,.045) 43%,transparent 71%);
+  pointer-events:none;opacity:.56;will-change:left,top
+}
+/* Sur les études, le contenu est prioritaire ; les effets du site restent derrière. */
+.detail-overlay,.zoom-overlay{z-index:70}
+@media(max-width:1050px){.circuit-bus{display:none}}
+@media(prefers-reduced-motion:reduce){
+  .circuit-bus__charge,.site .section::before,.site .competency-card,
+  .site .timeline-item,.site .project,.site .project-visual{transition:none!important}
+  .site .section-heading .rule::after,.site .project::before,.site .competency-card::before,
+  .site .project-visual::after{animation:none!important}
+  .electric-ambient__cursor{display:none}
+}
