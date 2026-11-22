@@ -17,7 +17,7 @@ import time
 
 import fitz
 import gdown
-from PIL import Image
+from PIL import Image, ImageChops
 
 BASE = Path("public/assets/studies")
 PLAN = Path("scripts/project_figure_plan.json")
@@ -42,6 +42,20 @@ def render_page(page: fitz.Page, output: Path) -> None:
     zoom = 1.55
     pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom), alpha=False)
     image = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+    # Retire seulement les marges blanches uniformes, jamais le contenu
+    # des plans ni les annotations. Les schémas larges gagnent en lisibilité.
+    baseline = Image.new("RGB", image.size, (255, 255, 255))
+    difference = ImageChops.difference(image, baseline).convert("L")
+    mask = difference.point(lambda value: 255 if value > 32 else 0)
+    bbox = mask.getbbox()
+    if bbox:
+        left, top, right, bottom = bbox
+        if (right-left) > image.width*0.16 and (bottom-top) > image.height*0.12:
+            pad = int(max(image.size)*0.024)
+            crop = (max(0,left-pad), max(0,top-pad),
+                    min(image.width,right+pad), min(image.height,bottom+pad))
+            if (crop[2]-crop[0]) < image.width*0.88 or (crop[3]-crop[1]) < image.height*0.88:
+                image = image.crop(crop)
     if image.width > 1650:
         size = (1650, round(image.height * 1650 / image.width))
         image = image.resize(size, Image.Resampling.LANCZOS)
