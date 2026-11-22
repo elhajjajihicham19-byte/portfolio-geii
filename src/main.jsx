@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail } from 'lucide-react';
 import ArchiveShowcase from './ArchiveShowcase.jsx';
+import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -126,6 +127,20 @@ const projects = [
   },
 ];
 
+
+const importedBMS = ancienPortfolio.find(page => page.source === 'BMS.html');
+const originalBMSPhotos = (importedBMS?.images || []).filter(image => !image.partagee);
+if(originalBMSPhotos.length){
+  projects[0].cover = originalBMSPhotos[0].src;
+  projects[0].evidence = originalBMSPhotos.map((item,index)=>({
+    image:item.src,
+    title:'BMS — document original '+(index+1),
+    desc:'Photographie authentique extraite de l’ancien portfolio Google Sites.',
+    source:'Archive Google Takeout'
+  }));
+  projects[0].note = 'Photographies originales récupérées depuis Google Takeout. Les tests de la carte ne sont pas considérés comme validés : les mesures et le diagnostic technique priment sur les affirmations du texte historique.';
+}
+
 const competencies = [
   {
     id:'concevoir',no:'C1',name:'Concevoir',title:'Concevoir la partie GEII d’un système',description:'Transformer un besoin en solution technique argumentée, documentée et adaptée aux contraintes.',
@@ -175,7 +190,8 @@ function EnergyCore(){
 }
 function Scene(){return <div className="scene" aria-hidden="true"><Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={.3}/><Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/><EnergyCore/></Canvas></div>}
 
-function ProjectVisual({kind}){
+function ProjectVisual({kind,image}){
+  if(image)return <div className="project-visual real-art"><img src={image} alt="Photographie originale du projet" loading="lazy"/></div>;
   if(kind==='cem')return <div className="project-visual real-art"><img src="/assets/cem-schema-reel.webp" alt="Schéma original de redresseur issu du compte rendu CEM" loading="lazy"/></div>;
   if(kind==='dialux')return <div className="project-visual real-art"><img src="/assets/dialux-reel-1.webp" alt="Capture réelle DIALux, répartition des luminaires" loading="lazy"/></div>;
   if(kind==='building')return <div className="project-visual real-art"><img src="/assets/betem-plan-extrait-reel.webp" alt="Extrait de plan électrique réel, projet école à Sète" loading="lazy"/></div>;
@@ -192,7 +208,7 @@ function ProjectDetail({project:p,onClose,onZoom}){
   useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape')onClose()};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose]);
   return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
     <div className="detail-header"><span className="index">DÉCRYPTAGE / PROJET {p.no}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
-    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line"><CheckCircle2 size={15}/>{p.status}</span></div><ProjectVisual kind={p.icon}/></div>
+    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line"><CheckCircle2 size={15}/>{p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover}/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
     <div className="detail-chapters">
       <section><span className="chapter-index">01 / CONTEXTE</span><h3>Pourquoi ce projet ?</h3><p>{p.context}</p></section>
@@ -225,7 +241,7 @@ function App(){
     <main>
       <section className="hero" id="accueil"><Scene/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
 
-      <section id="profil" className="section about"><SectionHeader number="01" title="INFORMATIONS PERSONNELLES"/><div className="about-grid"><div className="reveal"><h2>QUI<br/>SUIS<span>-JE ?</span></h2><div className="identity-block"><span>HICHAM EL HAJJAJI</span><strong>Étudiant en BUT3 GEII</strong><small>IUT Montpellier–Sète · Parcours EME</small></div></div><div className="about-text reveal"><p>Après un baccalauréat général avec les spécialités mathématiques et physique, puis une première année en informatique, j'ai choisi le <strong>BUT Génie Électrique et Informatique Industrielle</strong> pour approfondir les systèmes électriques et leur fonctionnement.</p><p>Ce qui m'intéresse particulièrement : le transport et la distribution de l'énergie, les réseaux HTA/HTB, les postes électriques, les installations basse tension et l'électronique de puissance.</p><p>J'aime relier les principes physiques aux situations réelles : dimensionner, simuler, chercher l'origine d'un défaut et justifier les décisions techniques.</p><div className="profile-facts"><div><MapPin size={16}/><span>Montpellier / Sète, France</span></div><div><GraduationCap size={16}/><span>BUT3 · GEII / EME</span></div><div><BriefcaseBusiness size={16}/><span>Permis B</span></div><div><FileText size={16}/><span>CV PDF : à intégrer</span></div><div><Link2 size={16}/><span>LinkedIn : URL à confirmer</span></div></div><a href="#contact" className="inline-action">ME CONTACTER <ArrowUpRight size={16}/></a></div></div>
+      <section id="profil" className="section about"><SectionHeader number="01" title="INFORMATIONS PERSONNELLES"/><div className="about-grid"><div className="reveal"><h2>QUI<br/>SUIS<span>-JE ?</span></h2><div className="identity-block"><span>HICHAM EL HAJJAJI</span><strong>Étudiant en BUT3 GEII</strong><small>IUT Montpellier–Sète · Parcours EME</small></div></div><div className="about-text reveal"><p>Après un baccalauréat général avec les spécialités mathématiques et physique, puis une première année en informatique, j'ai choisi le <strong>BUT Génie Électrique et Informatique Industrielle</strong> pour approfondir les systèmes électriques et leur fonctionnement.</p><p>Ce qui m'intéresse particulièrement : le transport et la distribution de l'énergie, les réseaux HTA/HTB, les postes électriques, les installations basse tension et l'électronique de puissance.</p><p>J'aime relier les principes physiques aux situations réelles : dimensionner, simuler, chercher l'origine d'un défaut et justifier les décisions techniques.</p><div className="profile-facts"><div><MapPin size={16}/><span>Montpellier / Sète, France</span></div><div><GraduationCap size={16}/><span>BUT3 · GEII / EME</span></div><div><BriefcaseBusiness size={16}/><span>Permis B</span></div><div><FileText size={16}/><a href="https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view" target="_blank" rel="noopener noreferrer">CV original sur Google Drive ↗</a></div><div><Link2 size={16}/><a href="https://www.linkedin.com/in/hicham-el-hajjaji" target="_blank" rel="noopener noreferrer">Mon profil LinkedIn ↗</a></div></div><a href="#contact" className="inline-action">ME CONTACTER <ArrowUpRight size={16}/></a></div></div>
       </section>
 
       <section id="formation" className="section formation"><SectionHeader number="02" title="MA FORMATION" aside="DU BAC À L'INGÉNIERIE"/><div className="formation-intro reveal"><h2>MON <span>PARCOURS.</span></h2><p>Une formation qui associe bases scientifiques, conception, travaux pratiques et projets appliqués à l'énergie.</p></div><div className="timeline reveal">
@@ -238,7 +254,7 @@ function App(){
 
       <section id="competences" className="section competence-section"><SectionHeader number="03" title="RÉFÉRENTIEL GEII" aside="4 COMPÉTENCES · PARCOURS EME"/><div className="competence-intro reveal"><h2>CE QUE JE <span>DÉVELOPPE.</span></h2><p>Les quatre compétences du parcours sont reliées à des situations de projet, à des preuves et à un retour critique. Les apprentissages critiques listés ci-dessous sont ceux du niveau BUT3.</p></div><div className="competency-grid">{competencies.map((c,i)=><article className="competency-card reveal" key={c.id}><div className="competency-index"><span>{c.no} / 04</span><span className="competency-mark">{String(i+1).padStart(2,'0')}</span></div><h3>{c.name}</h3><p className="competency-title">{c.title}</p><p>{c.description}</p><div className="competency-line">APPRENTISSAGES CRITIQUES BUT3</div><ul>{c.critical.map(x=><li key={x}>{x}</li>)}</ul><div className="competency-line">PREUVES & APPLICATIONS</div><p className="competency-evidence">{c.evidence}</p><div className="competency-projects">{c.projects.map(id=>{let p=projects.find(x=>x.id===id);return <button key={id} type="button" onClick={()=>openProject(p)}>{p.name}<ArrowUpRight size={13}/></button>})}</div><div className="self-review"><span>MON REGARD CRITIQUE</span><p>{c.review}</p></div></article>)}</div><p className="competence-source">Référence : Programme national du BUT GEII, parcours EME, niveaux et apprentissages critiques. <a href={REFERENTIEL} target="_blank" rel="noopener noreferrer">Consulter le document officiel <ExternalLink size={13}/></a></p></section>
 
-      <section id="projets" className="section projects"><SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside="5 ÉTUDES COMMENTÉES"/><div className="projects-intro reveal"><h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2><p>Ouvrir chaque projet pour voir la méthode, les résultats, les preuves originales et l'autoévaluation.</p></div><div className="projects-list">{projects.map(p=><article className="project reveal" key={p.id}><div className="project-meta"><span>{p.no} / 05</span><span>{p.field}</span></div><ProjectVisual kind={p.icon}/><div className="project-info"><div><p className="project-subtitle">{p.period}</p><h3>{p.name}</h3><p className="project-strap">{p.short}</p></div><p className="project-summary">{p.description}</p><Chips items={p.chips}/><div className="project-action"><span>{p.status}</span><button type="button" onClick={()=>openProject(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button></div></div></article>)}</div></section>
+      <section id="projets" className="section projects"><SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside="5 ÉTUDES COMMENTÉES"/><div className="projects-intro reveal"><h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2><p>Ouvrir chaque projet pour voir la méthode, les résultats, les preuves originales et l'autoévaluation.</p></div><div className="projects-list">{projects.map(p=><article className="project reveal" key={p.id}><div className="project-meta"><span>{p.no} / 05</span><span>{p.field}</span></div><ProjectVisual kind={p.icon} image={p.cover}/><div className="project-info"><div><p className="project-subtitle">{p.period}</p><h3>{p.name}</h3><p className="project-strap">{p.short}</p></div><p className="project-summary">{p.description}</p><Chips items={p.chips}/><div className="project-action"><span>{p.status}</span><button type="button" onClick={()=>openProject(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button></div></div></article>)}</div></section>
 
       <ArchiveShowcase/>
 
