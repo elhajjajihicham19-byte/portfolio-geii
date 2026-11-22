@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Stars } from '@react-three/drei';
-import { AdditiveBlending } from 'three';
+import { AdditiveBlending, CatmullRomCurve3, Vector3 } from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -277,6 +277,61 @@ function ElectronOrbit({radius=1.5,speed=1,phase=0,tilt=[0,0,0],color='#65ceff',
   </group>;
 }
 
+// Lignes de champ représentées dans toutes les directions de l'espace
+// (répartition sphérique de Fibonacci). Le déplacement des points lumineux
+// est orienté vers le centre, comme pour le champ d'une charge négative.
+// L'ensemble est une interprétation graphique, pas une simulation physique.
+const ELECTRIC_FIELD_PATHS=Array.from({length:22},(_,i)=>{
+  const n=22;
+  const y=1-2*(i+.5)/n;
+  const azimuth=i*Math.PI*(3-Math.sqrt(5));
+  const r=Math.sqrt(1-y*y);
+  const direction=new Vector3(Math.cos(azimuth)*r,y,Math.sin(azimuth)*r);
+  const tangent=new Vector3().crossVectors(
+    direction,Math.abs(y)>.91?new Vector3(1,0,0):new Vector3(0,1,0)
+  ).normalize();
+  const bend=Math.sin(i*1.8)*.13;
+  const curve=new CatmullRomCurve3([
+    direction.clone().multiplyScalar(.58),
+    direction.clone().multiplyScalar(1.03).addScaledVector(tangent,bend*.6),
+    direction.clone().multiplyScalar(1.59).addScaledVector(tangent,bend),
+    direction.clone().multiplyScalar(2.38).addScaledVector(tangent,bend*.65)
+  ]);
+  return {curve,offset:i/22,color:i%3===0?'#8bdfff':'#398be6',pulse:i%2===0};
+});
+
+function ElectricFieldLines({reducedMotion=false}){
+  const pulses=useRef([]);
+  useFrame(({clock})=>{
+    ELECTRIC_FIELD_PATHS.forEach((path,i)=>{
+      if(!path.pulse||!pulses.current[i])return;
+      const progress=reducedMotion?.6:1-((clock.elapsedTime*.105+path.offset)%1);
+      pulses.current[i].position.copy(path.curve.getPointAt(progress));
+    });
+  });
+  return <group>
+    {ELECTRIC_FIELD_PATHS.map((path,i)=><group key={i}>
+      <mesh>
+        <tubeGeometry args={[path.curve,44,.0055,4,false]}/>
+        <meshBasicMaterial color={path.color} transparent opacity={.17}
+          blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+      </mesh>
+      {path.pulse&&<group ref={el=>{pulses.current[i]=el}}>
+        <mesh>
+          <sphereGeometry args={[.026,10,10]}/>
+          <meshBasicMaterial color="#dcf5ff" transparent opacity={.88}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <sphereGeometry args={[.083,10,10]}/>
+          <meshBasicMaterial color="#55b9ff" transparent opacity={.11}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+      </group>}
+    </group>)}
+  </group>;
+}
+
 function ElectronHero(){
   const group=useRef(null);
   const nucleusGlow=useRef(null);
@@ -313,6 +368,7 @@ function ElectronHero(){
         <icosahedronGeometry args={[.54,1]}/>
         <meshBasicMaterial color="#2c69c2" wireframe transparent opacity={.38}/>
       </mesh>
+      <ElectricFieldLines reducedMotion={reducedMotion}/>
       <ElectronOrbit radius={1.33} speed={1.18} phase={0}
         tilt={[.27,.16,.5]} color="#6dd7ff" reducedMotion={reducedMotion}/>
       <ElectronOrbit radius={1.56} speed={.9} phase={2.1}
