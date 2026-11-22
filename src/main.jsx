@@ -77,13 +77,13 @@ const projects = [
     skills:['Concevoir','Vérifier','Installer (pré-étude)'],
     evidence:[],
     docs:[{label:'Document de cadrage photovoltaïque',url:'/documents/Etude-photovoltaique-cadrage.docx',type:'DOCX · document de travail'}],
-    note:'Les valeurs de puissance et de stockage sont des scénarios envisagés, pas des installations réalisées. Le document original est disponible ci-dessous.'
+    note:'Les valeurs de puissance et de stockage sont des scénarios d’étude. Les performances restent à vérifier par simulation.'
   },
   {
     id:'cem', no:'04', name:'Compatibilité électromagnétique', short:'Harmoniques d’un redresseur et stratégies de filtrage', field:'ÉLECTRONIQUE DE PUISSANCE', period:'Travaux pratiques · BUT3',
     description:'Étude par simulation des perturbations harmoniques provoquées par un pont redresseur alimentant une charge capacitive et analyse de techniques de réduction.',
-    status:'Compte rendu technique et simulations disponibles', color:'cyan', icon:'cem', chips:['PSIM','CEM','Redressement','FFT','Filtrage','PFC'],
-    metrics:[['50 Hz','fréquence réseau'],['4 diodes','pont redresseur'],['34 p.','compte rendu fourni']],
+    status:'Simulations PSIM et analyse harmonique', color:'cyan', icon:'cem', chips:['PSIM','CEM','Redressement','FFT','Filtrage','PFC'],
+    metrics:[['50 Hz','fréquence réseau'],['≈ 139 %','THD initial'],['0,58','facteur de puissance initial']],
     context:'Un redresseur à diodes avec filtrage capacitif prélève un courant fortement non sinusoïdal sur le réseau. Cette déformation engendre des composantes harmoniques et modifie le facteur de puissance.',
     role:'Étude des formes d’onde, interprétation des courants de recharge du condensateur et comparaison de solutions de filtrage passif et actif dans le compte rendu de TP.',
     method:[
@@ -107,7 +107,7 @@ const projects = [
   {
     id:'dialux', no:'05', name:'Étude d’éclairage sous DIALux', short:'Dimensionnement, éclairement et uniformité', field:'ÉCLAIRAGE & PERFORMANCE', period:'Travaux pratiques · BUT3',
     description:'Modélisation de locaux, choix des luminaires, calcul d’éclairement et étude de l’uniformité pour comparer plusieurs implantations.',
-    status:'Captures de calcul réelles disponibles', color:'green', icon:'lighting', chips:['DIALux evo','NF EN 12464-1','ISOLUX','Uniformité','Puissance'],
+    status:'Calculs d’éclairement et variantes comparées', color:'green', icon:'lighting', chips:['DIALux evo','NF EN 12464-1','ISOLUX','Uniformité','Puissance'],
     metrics:[['9','luminaires retenus'],['261,9 W','puissance de la variante'],['8 vs 9','solutions étudiées']],
     context:'L’étude concerne une salle d’enseignement et un hall. Le nombre et la position des luminaires doivent répondre à des critères d’éclairement, d’uniformité et de maîtrise de l’énergie.',
     role:'Modélisation des locaux, mise en place de luminaires, réalisation des calculs DIALux et interprétation des résultats des variantes.',
@@ -207,7 +207,7 @@ const documents = [
   {title:'Référentiel officiel BUT GEII — parcours EME',type:'DOCUMENT OFFICIEL',desc:'Compétences, apprentissages critiques et progression du BUT.',url:REFERENTIEL,external:true,icon:GraduationCap},
   {title:'Compte rendu de CEM et harmoniques',type:'PREUVE · PDF 34 PAGES',desc:'Schémas, oscillogrammes, spectres et comparaison de solutions.',url:'/documents/TP-CEM-Hicham-El-Hajjaji.pdf',icon:FileText},
   {title:'Étude photovoltaïque — cadrage',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Hypothèses, méthode de comparaison et étapes du projet.',url:'/documents/Etude-photovoltaique-cadrage.docx',icon:Sun},
-  {title:'Compte rendu DIALux',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Captures originales et analyse de variantes d’éclairage.',url:'/documents/Compte-rendu-DIALux.docx',icon:FileText},
+  {title:'Compte rendu DIALux',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Calculs d’éclairement et analyse de variantes.',url:'/documents/Compte-rendu-DIALux.docx',icon:FileText},
 ];
 
 
@@ -239,8 +239,8 @@ function EnergyCore(){
 function Scene(){return <div className="scene" aria-hidden="true"><Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={.3}/><Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/><EnergyCore/></Canvas></div>}
 
 function ProjectVisual({kind,image}){
-  if(image)return <div className="project-visual real-art"><img src={image} alt="Photographie originale du projet" loading="lazy"/></div>;
-  if(kind==='cem')return <div className="project-visual real-art"><img src="/assets/cem-schema-reel.webp" alt="Schéma original de redresseur issu du compte rendu CEM" loading="lazy"/></div>;
+  if(image)return <div className="project-visual real-art"><img src={image} alt="Photographie ou schéma du projet" loading="lazy"/></div>;
+  if(kind==='cem')return <div className="project-visual real-art"><img src="/assets/cem-schema-reel.webp" alt="Schéma de redresseur étudié en CEM" loading="lazy"/></div>;
   if(kind==='dialux')return <div className="project-visual real-art"><img src="/assets/dialux-reel-1.webp" alt="Capture réelle DIALux, répartition des luminaires" loading="lazy"/></div>;
   if(kind==='building')return <div className="project-visual real-art"><img src="/assets/betem-plan-extrait-reel.webp" alt="Extrait de plan électrique réel, projet école à Sète" loading="lazy"/></div>;
   if(kind==='legacy')return <div className="project-visual original-fallback"><div className="visual-grid"/><FileText size={92} strokeWidth={.75}/><span>PROJET GEII // DOSSIER DOCUMENTÉ</span></div>;
