@@ -305,7 +305,7 @@ function ElectricFieldLines({reducedMotion=false}){
   useFrame(({clock})=>{
     ELECTRIC_FIELD_PATHS.forEach((path,i)=>{
       if(!path.pulse||!pulses.current[i])return;
-      const progress=reducedMotion?.6:1-((clock.elapsedTime*.105+path.offset)%1);
+      const progress=reducedMotion ? 0.6 : 1-((clock.elapsedTime*.105+path.offset)%1);
       pulses.current[i].position.copy(path.curve.getPointAt(progress));
     });
   });
