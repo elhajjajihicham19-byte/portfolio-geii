@@ -1,4 +1,5 @@
 import ancienPortfolio from './ancienPortfolio.json';
+import { documentDisplayName } from './documentLabels.js';
 
 /**
  * Les descriptifs, preuves et documents viennent de l'export de Google Sites.
@@ -88,7 +89,7 @@ const extractImages=page=>{
   }));
 };
 const extractDocs=page=>(page.documents||[]).map(d=>({
-  label:d.titre||'Schéma ou rapport technique',
+  label:documentDisplayName(d.titre,page.titre),
   url:d.url,
   type:'RAPPORT OU SCHÉMA',
 }));
