@@ -1,0 +1,51 @@
+/* Dossier de stage : documents contextualisés et lisibles sans rubrique d'archives */
+.betem-study .bms-study-heading{padding-bottom:50px}
+.betem-stage-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.88fr);gap:32px;align-items:start}
+.betem-stage-layout:not(:has(figure)){display:block}
+.betem-stage-content h4{max-width:890px}
+.betem-stage-content>p{color:#b7cbd9;font-size:15px;line-height:1.95;margin:0 0 18px;max-width:800px}
+.betem-stage-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:28px}
+.betem-stage-facts>div{background:#162e43;border:1px solid #3b6788;display:flex;flex-direction:column;gap:8px;padding:15px}
+.betem-stage-facts b{font-size:clamp(19px,2vw,30px);color:#e3f5ff;letter-spacing:-.055em}
+.betem-stage-facts span{font-size:11px;color:#9bb9d0;line-height:1.6}
+.betem-evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:27px 0 0}
+.betem-evidence{border:1px solid #406582;margin:0;background:#10283b;min-width:0}
+.betem-evidence>button{width:100%;height:295px;padding:13px;background:radial-gradient(ellipse,#32506a,#14293b);position:relative;border:0;cursor:zoom-in}
+.betem-evidence>button img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .3s}
+.betem-evidence>button:hover img{transform:scale(1.04)}
+.betem-evidence>button>span{display:flex;align-items:center;gap:8px;color:#d0eeff;border:1px solid #547a98;background:#0b2238db;position:absolute;bottom:15px;right:15px;font-size:10px;letter-spacing:.12em;padding:9px 12px}
+.betem-evidence>figcaption{display:flex;flex-direction:column;padding:18px 21px;gap:8px}
+.betem-evidence>figcaption strong{color:#d6efff;font-size:12px;letter-spacing:.1em}
+.betem-evidence>figcaption span{color:#a5bdcd;font-size:12px;line-height:1.75}
+.betem-featured-plan>button{background:#e8eef3;height:310px}
+.betem-stage-documents{border-top:1px solid #3b607c;padding-top:24px;margin:30px 0}
+.betem-doc-intro{display:flex;align-items:start;gap:15px;margin-bottom:23px;color:#a8dfff}
+.betem-doc-intro>svg{flex-shrink:0}
+.betem-doc-intro strong{color:#dfedfa;font-size:16px}
+.betem-doc-intro p{color:#afc5d4;line-height:1.8;font-size:13px;margin:10px 0 0}
+.betem-doc-item{display:flex;gap:12px;margin:12px 0}
+.betem-doc-item>a{flex:1;display:flex;gap:13px;align-items:center;border:1px solid #3e6888;padding:14px;background:#17364e;color:#cde8f9;font-size:13px;line-height:1.6}
+.betem-doc-item>a svg:first-child{flex-shrink:0}
+.betem-doc-item>a svg:last-child{margin-left:auto;flex-shrink:0}
+.betem-doc-item>button{background:#1c4e72;color:#c9ecff;border:1px solid #5886a6;font-weight:700;padding:12px;font-size:10px;letter-spacing:.1em;cursor:pointer}
+.betem-doc-item>button:hover{background:#68bbea;color:#0b2432}
+.betem-doc-preview{background:#152d43;padding:12px;border:1px solid #496981;margin:18px 0}
+.betem-doc-preview iframe{width:100%;height:490px;border:0;background:white;display:block}
+.betem-doc-preview p{font-size:11px;color:#9fbcd1;margin:12px 4px;line-height:1.75}
+@media(max-width:1050px){.betem-stage-layout{grid-template-columns:1fr}.betem-stage-facts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.betem-evidence-grid{grid-template-columns:1fr}.betem-stage-facts{grid-template-columns:1fr}}
+
+/* Études de la mission BETEM : mesures et simulations à côté des plans */
+.betem-comparison{margin:28px 0 26px;border-top:1px solid #3d6787;padding:23px 0 10px}
+.betem-comparison h5{color:#a5dffc;font-size:12px;letter-spacing:.13em;line-height:1.5;margin:20px 0 16px}
+.betem-comparison>p{color:#bed2df;font-size:13px;line-height:1.9;margin:0 0 17px}
+.betem-comparison-table{overflow-x:auto;margin:24px 0 32px;border:1px solid #386380}
+.betem-comparison-table table{width:100%;min-width:570px;border-collapse:collapse;text-align:left}
+.betem-comparison-table th{background:#183b55;color:#b9e1f9;padding:14px;font-size:10px;letter-spacing:.08em}
+.betem-comparison-table td{background:#112839;color:#c5d7e4;padding:14px;font-size:12px;line-height:1.7;border-top:1px solid #41617a}
+.betem-comparison-table td:first-child{font-weight:700;color:#edf7fc}
+.betem-comparison-note{background:#20354a;border-left:2px solid #90c7e8;padding:14px 16px;color:#c4dbea!important;font-size:12px!important}
+.betem-stage-layout:not(:has(figure)) .betem-comparison{max-width:1000px}
+.betem-evidence-grid .betem-evidence>button{height:360px;background:#edf0f3}
+.betem-evidence-grid .betem-evidence>button img{padding:12px}
+@media(max-width:760px){.betem-evidence-grid .betem-evidence>button{height:300px}}

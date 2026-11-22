@@ -1,0 +1,40 @@
+name: Vérifier la migration du portfolio
+concurrency:
+  group: portfolio-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [migration-google-takeout-2026]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Installer les dépendances
+        run: npm install
+      - name: Vérifier les alertes de sécurité des dépendances de production
+        run: npm audit --omit=dev --audit-level=high
+      - name: Contrôler les 20 pages, 12 projets et les images
+        run: node scripts/verify_portfolio.mjs
+      - name: Compiler le portfolio React
+        run: npm run build
+      - name: Auditer les ressources, liens internes et accessibilité de base
+        run: node scripts/audit_site.mjs
+      - name: Installer le pilote de test Chrome
+        if: github.event_name == 'push'
+        run: npm install --no-save --ignore-scripts playwright-core@1.56.1
+      - name: Tester le portfolio dans Chrome sur trois résolutions
+        if: github.event_name == 'push'
+        run: node scripts/browser_smoke.mjs
+      - name: Conserver les captures de l'audit navigateur
+        if: always() && github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-chrome-portfolio
+          path: audit-screenshots/
+          if-no-files-found: ignore

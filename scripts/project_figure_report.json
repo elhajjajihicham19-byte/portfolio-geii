@@ -1,0 +1,18 @@
+{
+  "projects": 11,
+  "figures": 50,
+  "per_project": {
+    "geii-capteur-de-temperature": 4,
+    "geii-cblage-domestique": 4,
+    "geii-d-lectronique": 2,
+    "geii-dimensionnement-lectrique": 4,
+    "geii-malaxeur": 4,
+    "geii-moteur-dc-pilot-par-bus-can": 7,
+    "geii-rs510": 4,
+    "geii-retrofit-maquette-knx": 5,
+    "geii-robot-suiveur-de-ligne": 7,
+    "geii-testeur-de-batterie": 1,
+    "betem": 8
+  },
+  "errors": []
+}

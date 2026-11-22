@@ -1,20 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Stars } from '@react-three/drei';
+import { AdditiveBlending } from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail, Maximize2, Minimize2, PanelRightOpen, Mouse } from 'lucide-react';
+import { legacyProjects, originalFor, originalEvidence, originalDocuments } from './legacyProjects.js';
+import { documentDisplayName } from './documentLabels.js';
+import BmsCaseStudy from './BmsCaseStudy.jsx';
+import PvCaseStudy from './PvCaseStudy.jsx';
+import LegacyCaseStudy from './LegacyCaseStudy.jsx';
+import AppliedTechnicalStudy from './AppliedTechnicalStudy.jsx';
+import BetemCaseStudy from './BetemCaseStudy.jsx';
+import EdgeNavigation from './EdgeNavigation.jsx';
+import ElectricAmbient from './ElectricAmbient.jsx';
+import CircuitInteractions from './CircuitInteractions.jsx';
+import StudyContents from './StudyContents.jsx';
+import StudyHighlights from './StudyHighlights.jsx';
+import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
+import './documents-compact.css';
+import './project-selector.css';
+import './portfolio-polish.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const REFERENTIEL = 'https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2023-12/g-nie-lectrique-et-informatique-industrielle-30834.pdf';
-const OLD_SITE = 'https://sites.google.com/view/portfoliohichamelhajjaji/accueil';
 
 const projects = [
   {
-    id:'bms', no:'01', name:'Battery Management System', short:'Conception et diagnostic d’un BMS Li-ion 4S', field:'ÉLECTRONIQUE & STOCKAGE', period:'Projet universitaire · BUT2',
+    id:'bms', no:'01', name:'Battery Management System', short:'Conception et diagnostic d’un BMS Li-ion 4S', field:'ÉLECTRONIQUE & STOCKAGE', period:'Projet tutoré · BUT2',
     description:'Conception d’une carte électronique dédiée à la gestion d’une batterie Li-ion à quatre cellules en série, puis recherche des causes d’un fonctionnement non conforme.',
     status:'Essais non validés — diagnostic documenté', color:'cyan', icon:'bms', chips:['KiCad','Li-ion 4S','ML5243','MOSFET','Diagnostic'],
     metrics:[['4S','cellules en série'],['≈ 15 V','tension du pack mesurée'],['0 V','sortie observée sous charge']],
@@ -30,7 +46,8 @@ const projects = [
     critique:'Le principal apprentissage a été de distinguer une carte conçue d’une carte vérifiée. Une revue de nomenclature et des contrôles hors tension avant les essais auraient dû être systématiques. Une nouvelle série de mesures serait nécessaire après correction du montage.',
     skills:['Concevoir','Vérifier','Maintenir (diagnostic)'],
     evidence:[],
-    note:'Les vrais schémas KiCad, vues PCB et photos du montage de l’ancien portfolio ne sont pas encore récupérables. Le visuel ci-dessous est une illustration explicative, pas un schéma de fabrication.'
+    cover:'/legacy/legacy-1ed60ec4c59c2e.webp',
+    note:'Les schémas KiCad, les photographies du PCB et les mesures sont présentés dans l’étude technique. Les essais de charge et de décharge n’ont pas validé le fonctionnement.'
   },
   {
     id:'betem', no:'02', name:'Études électriques — BETEM', short:'École Jean Macé à Sète · CFO / CFA', field:'BUREAU D’ÉTUDES & DISTRIBUTION', period:'Stage de 10 semaines · avril à juin 2026',
@@ -49,14 +66,14 @@ const projects = [
     results:'Cette expérience m’a permis de relier les exigences techniques et réglementaires aux livrables d’un bureau d’études. J’ai mieux compris l’articulation entre notes de calcul, plans, pièces écrites et coordination des intervenants.',
     critique:'Un plan ne suffit pas à lui seul à prouver la qualité d’une étude. Les vérifications croisées entre documents et une gestion rigoureuse des indices constituent des points de vigilance. Je souhaite approfondir la sélectivité, les courants de court-circuit et l’exploitation des réseaux HTA/BT.',
     skills:['Concevoir','Vérifier','Installer (études préparatoires)'],
-    evidence:[{image:'/assets/betem-plan-extrait-reel.webp',title:'Extrait authentique du plan d’implantation',desc:'Plan d’études CFO/CFA fourni pendant le stage — extrait de travail, à valider avant toute diffusion publique',source:'Document de travail BETEM'}],
-    note:'Le plan est un véritable extrait du dossier d’études. Les pièces contractuelles et plans complets ne sont pas distribués dans le site afin d’éviter une diffusion non autorisée de documents professionnels.'
+    evidence:[{image:'/assets/betem-plan-extrait-reel.webp',title:'Extrait authentique du plan d’implantation',desc:'Plan d’études CFO/CFA du stage BETEM — diffusion autorisée',source:'Document de travail BETEM'}],
+    note:'Les documents et extraits de plans présentés ont été validés pour publication par BETEM.'
   },
   {
-    id:'pv', no:'03', name:'Étude photovoltaïque', short:'Autoconsommation, surplus et stockage', field:'TRANSITION ÉNERGÉTIQUE', period:'Projet tutoré · BUT3',
-    description:'Étude comparative d’une installation photovoltaïque résidentielle selon la puissance du champ, le profil de consommation, l’architecture de conversion et le stockage.',
-    status:'Étude en cours — hypothèses à confirmer', color:'violet', icon:'solar', chips:['SAM','PVGIS','3 / 6 kWc','Micro-onduleurs','Batterie'],
-    metrics:[['3 / 6 kWc','variantes à étudier'],['10 kWh','batterie envisagée'],['Été / hiver','profils de charge']],
+    id:'pv', no:'03', name:'Étude photovoltaïque', short:'Simulation Sunny Design 6 kWc et comparaison avec le stockage', field:'TRANSITION ÉNERGÉTIQUE', period:'Projet tutoré · BUT3',
+    description:'Simulation d’un champ photovoltaïque résidentiel de 6 kWc sous Sunny Design : production, autoconsommation, injection réseau et dimensionnement de l’onduleur ; comparaison avec batterie à poursuivre.',
+    status:'Scénario 6 kWc simulé · Batterie et autres variantes à comparer', color:'violet', icon:'solar', chips:['Sunny Design','6 kWc','9 711 kWh/an','Autoconsommation','Stockage à étudier'],
+    metrics:[['9 711 kWh','production annuelle simulée'],['15,2 %','taux d’autoconsommation'],['40,9 %','taux d’autonomie']],
     context:'Pour un même logement, l’objectif est de comparer la vente du surplus et le stockage sur batterie à partir de profils de consommation identiques et d’hypothèses explicites.',
     role:'Construction de la méthode d’étude : définition du logement de référence, bilan d’énergie par usage, comparaison des profils saisonniers et scénarios à simuler.',
     method:[
@@ -66,18 +83,18 @@ const projects = [
       'Comparaison sous SAM de scénarios autoconsommation / revente / batterie.',
       'Étude des différences entre onduleur centralisé et micro-onduleurs.'
     ],
-    results:'Le document de cadrage et la méthode de comparaison sont établis. Les performances énergétiques et économiques définitives restent à calculer ; aucun gain de stockage ou de rentabilité n’est annoncé à ce stade.',
+    results:'Pour 12 panneaux totalisant 6 kWc et un onduleur de 5 kW, Sunny Design estime 9 711 kWh/an, 1 474 kWh autoconsommés, 8 237 kWh injectés et 2 126 kWh soutirés. Le profil de référence consomme 3 600 kWh/an : 15,2 % d’autoconsommation, 40,9 % d’autonomie. Les variantes batterie et 3 kWc restent à simuler.',
     critique:'La qualité des conclusions dépendra surtout des données de consommation et du réalisme des hypothèses. Il faudra distinguer les résultats simulés des mesures et effectuer une étude de sensibilité sur les prix, les rendements et les profils de charge.',
     skills:['Concevoir','Vérifier','Installer (pré-étude)'],
     evidence:[],
     docs:[{label:'Document de cadrage photovoltaïque',url:'/documents/Etude-photovoltaique-cadrage.docx',type:'DOCX · document de travail'}],
-    note:'Les valeurs de puissance et de stockage sont des scénarios envisagés, pas des installations réalisées. Le document original est disponible ci-dessous.'
+    note:'Les résultats chiffrés décrivent une configuration Sunny Design 6 kWc sans batterie à Laroque ; ce sont des estimations logicielles, non des mesures ni un retour sur investissement démontré.'
   },
   {
-    id:'cem', no:'04', name:'Compatibilité électromagnétique', short:'Harmoniques d’un redresseur et stratégies de filtrage', field:'ÉLECTRONIQUE DE PUISSANCE', period:'Travaux pratiques · BUT3',
-    description:'Étude par simulation des perturbations harmoniques provoquées par un pont redresseur alimentant une charge capacitive et analyse de techniques de réduction.',
-    status:'Compte rendu technique et simulations disponibles', color:'cyan', icon:'cem', chips:['PSIM','CEM','Redressement','FFT','Filtrage','PFC'],
-    metrics:[['50 Hz','fréquence réseau'],['4 diodes','pont redresseur'],['34 p.','compte rendu fourni']],
+    id:'cem', no:'04', name:'Compatibilité électromagnétique', short:'Harmoniques, filtre LC accordé à 150 Hz et PFC Boost', field:'ÉLECTRONIQUE DE PUISSANCE', period:'Travaux pratiques · BUT3',
+    description:'Comparaison sous PSIM du redresseur capacitif, de l’inductance série, d’un filtre LC accordé sur 150 Hz et d’un PFC Boost à courant sinusoïdal.',
+    status:'Simulations du filtre LC et du PFC analysées', color:'cyan', icon:'cem', chips:['PSIM','CEM','FFT','Filtre LC 150 Hz','PFC Boost','Harmoniques'],
+    metrics:[['139 → 3 %','THD initial → PFC'],['0,58 → ≈ 1','facteur de puissance'],['150 Hz','filtre accordé H3']],
     context:'Un redresseur à diodes avec filtrage capacitif prélève un courant fortement non sinusoïdal sur le réseau. Cette déformation engendre des composantes harmoniques et modifie le facteur de puissance.',
     role:'Étude des formes d’onde, interprétation des courants de recharge du condensateur et comparaison de solutions de filtrage passif et actif dans le compte rendu de TP.',
     method:[
@@ -101,7 +118,7 @@ const projects = [
   {
     id:'dialux', no:'05', name:'Étude d’éclairage sous DIALux', short:'Dimensionnement, éclairement et uniformité', field:'ÉCLAIRAGE & PERFORMANCE', period:'Travaux pratiques · BUT3',
     description:'Modélisation de locaux, choix des luminaires, calcul d’éclairement et étude de l’uniformité pour comparer plusieurs implantations.',
-    status:'Captures de calcul réelles disponibles', color:'green', icon:'lighting', chips:['DIALux evo','NF EN 12464-1','ISOLUX','Uniformité','Puissance'],
+    status:'Calculs d’éclairement et variantes comparées', color:'green', icon:'lighting', chips:['DIALux evo','NF EN 12464-1','ISOLUX','Uniformité','Puissance'],
     metrics:[['9','luminaires retenus'],['261,9 W','puissance de la variante'],['8 vs 9','solutions étudiées']],
     context:'L’étude concerne une salle d’enseignement et un hall. Le nombre et la position des luminaires doivent répondre à des critères d’éclairement, d’uniformité et de maîtrise de l’énergie.',
     role:'Modélisation des locaux, mise en place de luminaires, réalisation des calculs DIALux et interprétation des résultats des variantes.',
@@ -124,6 +141,45 @@ const projects = [
     docs:[{label:'Compte rendu DIALux (document de travail)',url:'/documents/Compte-rendu-DIALux.docx',type:'DOCX · version de travail'}]
   },
 ];
+
+
+
+/* Tous les projets sont intégrés à la même galerie : 5 études commentées
+   + 10 dossiers historiques complets, avec des preuves et sources originales. */
+const originalBMS = originalFor('BMS');
+const originalBETEM = originalFor('Stage chez BETEM');
+for(const [project,archive] of [[projects[0],originalBMS],[projects[1],originalBETEM]]){
+  if(!archive)continue;
+  const seen=new Set((project.evidence||[]).map(x=>x.image));
+  project.evidence=[...(project.evidence||[]),...originalEvidence(archive).filter(x=>!seen.has(x.image))];
+  project.docs=[...(project.docs||[]),...originalDocuments(archive)];
+  if(project.id==='bms'){
+    project.cover=project.evidence[0]?.image||null;
+    project.note="Les photographies, schémas et mesures proviennent des travaux du projet. Les essais n'ont pas validé la charge ni la décharge du BMS ; le diagnostic technique est détaillé dans le dossier.";
+  } else {
+    project.note="Les plans, pièces techniques et photographies présentés correspondent aux travaux de mon stage. Leur diffusion dans ce portfolio a été validée par BETEM.";
+  }
+}
+projects.push(...legacyProjects);
+// Classement pédagogique : projets tutorés d'abord, puis SAE/TP,
+// avec les années affichées de BUT3 vers BUT1 dans chaque catégorie.
+for(const [id,year,category,nature] of [
+  ['pv',3,'tutored','PROJET TUTORÉ'],
+  ['bms',2,'tutored','PROJET TUTORÉ'],
+  ['cem',3,'applied','TRAVAUX PRATIQUES'],
+  ['dialux',3,'applied','TRAVAUX PRATIQUES']
+]){
+  const p=projects.find(item=>item.id===id);
+  if(p){p.year=year;p.category=category;p.nature=nature}
+}
+const academicProjects=projects.filter(p=>p.id!=='betem');
+const sortByYear=(a,b)=>b.year-a.year||a.name.localeCompare(b.name,'fr');
+const tutoredProjects=academicProjects.filter(p=>p.category==='tutored').sort(sortByYear);
+const appliedProjects=academicProjects.filter(p=>p.category!=='tutored').sort(sortByYear);
+[...tutoredProjects,...appliedProjects].forEach((p,i)=>{p.no=String(i+1).padStart(2,'0')});
+const betemExperience=projects.find(p=>p.id==='betem');
+betemExperience.no='ST';
+
 
 const competencies = [
   {
@@ -152,84 +208,418 @@ const competencies = [
   }
 ];
 
+/* Les études historiques constituent des preuves complémentaires dans le parcours. */
+for(const skill of competencies){
+  const linked=legacyProjects.filter(p=>p.skills.includes(skill.name)).map(p=>p.id);
+  skill.projects=[...new Set([...skill.projects,...linked])];
+}
+
 const documents = [
-  {title:'Référentiel officiel BUT GEII — parcours EME',type:'DOCUMENT OFFICIEL',desc:'Compétences, apprentissages critiques et progression du BUT.',url:REFERENTIEL,external:true,icon:GraduationCap},
-  {title:'Compte rendu de CEM et harmoniques',type:'PREUVE · PDF 34 PAGES',desc:'Schémas, oscillogrammes, spectres et comparaison de solutions.',url:'/documents/TP-CEM-Hicham-El-Hajjaji.pdf',icon:FileText},
-  {title:'Étude photovoltaïque — cadrage',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Hypothèses, méthode de comparaison et étapes du projet.',url:'/documents/Etude-photovoltaique-cadrage.docx',icon:Sun},
-  {title:'Compte rendu DIALux',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Captures originales et analyse de variantes d’éclairage.',url:'/documents/Compte-rendu-DIALux.docx',icon:FileText},
+  {title:'Référentiel de formation',type:'DOCUMENT OFFICIEL',desc:'Compétences, apprentissages critiques et progression du BUT.',url:REFERENTIEL,external:true,icon:GraduationCap},
+  {title:'Rapport de travaux pratiques',type:'PREUVE · PDF 34 PAGES',desc:'Schémas, oscillogrammes, spectres et comparaison de solutions.',url:'/documents/TP-CEM-Hicham-El-Hajjaji.pdf',icon:FileText},
+  {title:'Cahier des charges',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Hypothèses, méthode de comparaison et étapes du projet.',url:'/documents/Etude-photovoltaique-cadrage.docx',icon:Sun},
+  {title:'Étude d’éclairage',type:'DOCUMENT DE TRAVAIL · DOCX',desc:'Calculs d’éclairement et analyse de variantes.',url:'/documents/Compte-rendu-DIALux.docx',icon:FileText},
 ];
 
-function EnergyCore(){
-  const group=useRef(null);const torus=useRef(null);
-  useFrame(({clock,pointer})=>{
-    if(!group.current||!torus.current)return;
-    const t=clock.elapsedTime;group.current.rotation.y=t*.12+pointer.x*.18;group.current.rotation.x=pointer.y*.12;torus.current.rotation.z=t*.15;
-  });
-  return <group ref={group} position={[1.7,0,0]}><Float speed={1.3} floatIntensity={.45} rotationIntensity={.25}>
-      <mesh ref={torus}><torusKnotGeometry args={[1.38,.012,240,14,2,5]}/><meshBasicMaterial color="#46b9ff" transparent opacity={.8}/></mesh>
-      {[0,1,2,3].map(i=><mesh key={i} rotation={[i*.55,i*.8,i*.35]}><torusGeometry args={[1.45+i*.18,.006,5,170]}/><meshBasicMaterial color={i%2?'#3c6dff':'#62d6ff'} transparent opacity={.35}/></mesh>)}
-      <mesh><icosahedronGeometry args={[.52,1]}/><meshBasicMaterial color="#2359af" wireframe transparent opacity={.48}/></mesh>
-      <pointLight color="#2e96ff" intensity={8} distance={8}/>
-    </Float></group>;
-}
-function Scene(){return <div className="scene" aria-hidden="true"><Canvas camera={{position:[0,0,6],fov:48}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={.3}/><Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade speed={.4}/><EnergyCore/></Canvas></div>}
 
-function ProjectVisual({kind}){
-  if(kind==='cem')return <div className="project-visual real-art"><img src="/assets/cem-schema-reel.webp" alt="Schéma original de redresseur issu du compte rendu CEM" loading="lazy"/></div>;
-  if(kind==='dialux')return <div className="project-visual real-art"><img src="/assets/dialux-reel-1.webp" alt="Capture réelle DIALux, répartition des luminaires" loading="lazy"/></div>;
-  if(kind==='building')return <div className="project-visual real-art"><img src="/assets/betem-plan-extrait-reel.webp" alt="Extrait de plan électrique réel, projet école à Sète" loading="lazy"/></div>;
-  if(kind==='solar')return <div className="project-visual solar-art"><div className="visual-grid"/><div className="sun"/><div className="panel-grid">{Array.from({length:18},(_,i)=><span key={i}/>)}</div><span className="solar-label">PV // ÉTUDE ÉNERGÉTIQUE</span></div>;
-  return <div className="project-visual bms-art"><div className="visual-grid"/><div className="board"><div className="board-title">BMS // 4S</div>{[1,2,3,4].map(i=><div className="cell" key={i}>CELL 0{i}<span>3,7 V</span></div>)}<div className="chip">ML5243</div></div><span className="visual-disclaimer">ILLUSTRATION — NON CONTRACTUELLE</span></div>;
+/* Bibliothèque documentaire complète des pièces jointes de l'ancien portfolio.
+   Les URL sont celles du Drive d'origine ; leur accessibilité publique dépend du partage. */
+documents.push(...ancienPortfolio.flatMap(page=>(page.documents||[]).map(doc=>({
+  title:documentDisplayName(doc.titre,page.titre),
+  type:page.titre.toUpperCase(),
+  desc:'Pièce de projet : rapport, schéma, mesure ou document technique.',
+  url:doc.url,
+  external:true,
+  icon:FileText
+}))));
+
+
+const highlightedDocuments=[
+  documents[0],
+  documents[1],
+  documents.find(doc=>doc.type==='STAGE CHEZ BETEM'&&doc.title==='Rapport de stage'),
+  documents[2]
+].filter(Boolean);
+const remainingDocuments=documents.filter(doc=>!highlightedDocuments.includes(doc));
+
+// Représentation artistique d'un électron : langage visuel bleu électrique,
+// trajectoires orbitales et noyau lumineux (non une représentation quantique).
+function EnergyCore({reducedMotion=false}){
+  const group=useRef(null);
+  const torus=useRef(null);
+  const halo=useRef(null);
+  useFrame(({clock,pointer})=>{
+    if(!group.current||!torus.current||reducedMotion)return;
+    const t=clock.elapsedTime;
+    group.current.rotation.y=t*.12+pointer.x*.18;
+    group.current.rotation.x=pointer.y*.12;
+    torus.current.rotation.z=t*.15;
+    // Respiration lumineuse lente et discrète : aucun clignotement.
+    if(halo.current)halo.current.opacity=.10+Math.sin(t*.68)*.022;
+  });
+  return <group ref={group} position={[1.7,0,0]}>
+    <Float speed={reducedMotion?0:1.3} floatIntensity={reducedMotion?0:.45} rotationIntensity={reducedMotion?0:.25}>
+      <group ref={torus}>
+        {/* Lueur proche de la courbe : transparence additive, sans bloom coûteux. */}
+        <mesh>
+          <torusKnotGeometry args={[1.38,.049,240,12,2,5]}/>
+          <meshBasicMaterial ref={halo} color="#4cbcff" transparent opacity={.10}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusKnotGeometry args={[1.38,.025,240,12,2,5]}/>
+          <meshBasicMaterial color="#65ceff" transparent opacity={.19}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusKnotGeometry args={[1.38,.012,240,14,2,5]}/>
+          <meshBasicMaterial color="#74d8ff" transparent opacity={.88}/>
+        </mesh>
+      </group>
+      {[0,1,2,3].map(i=><group key={i} rotation={[i*.55,i*.8,i*.35]}>
+        <mesh>
+          <torusGeometry args={[1.45+i*.18,.019,5,170]}/>
+          <meshBasicMaterial color={i%2?'#417fff':'#65ceff'} transparent opacity={.085}
+            blending={AdditiveBlending} depthWrite={false} toneMapped={false}/>
+        </mesh>
+        <mesh>
+          <torusGeometry args={[1.45+i*.18,.006,5,170]}/>
+          <meshBasicMaterial color={i%2?'#3c6dff':'#62d6ff'} transparent opacity={.35}/>
+        </mesh>
+      </group>)}
+      <mesh>
+        <icosahedronGeometry args={[.52,1]}/>
+        <meshBasicMaterial color="#2359af" wireframe transparent opacity={.48}/>
+      </mesh>
+      <pointLight color="#2e96ff" intensity={8} distance={8}/>
+    </Float>
+  </group>;
+}
+function Scene({paused=false}){
+  const sceneRef=useRef(null);
+  const [inView,setInView]=useState(true);
+  const [tabVisible,setTabVisible]=useState(true);
+  const [reducedMotion,setReducedMotion]=useState(false);
+
+  useEffect(()=>{
+    const query=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync=()=>setReducedMotion(query.matches);
+    sync();
+    query.addEventListener?.('change',sync);
+    return()=>query.removeEventListener?.('change',sync);
+  },[]);
+  useEffect(()=>{
+    const node=sceneRef.current;
+    if(!node||typeof IntersectionObserver==='undefined')return;
+    const observer=new IntersectionObserver(([entry])=>setInView(entry.isIntersecting),{
+      rootMargin:'160px 0px'
+    });
+    observer.observe(node);
+    return()=>observer.disconnect();
+  },[]);
+  useEffect(()=>{
+    const sync=()=>setTabVisible(document.visibilityState!=='hidden');
+    sync();
+    document.addEventListener('visibilitychange',sync);
+    return()=>document.removeEventListener('visibilitychange',sync);
+  },[]);
+
+  const playing=inView&&tabVisible&&!paused&&!reducedMotion;
+  return <div ref={sceneRef} className="scene" aria-hidden="true">
+    <Canvas frameloop={playing?'always':'demand'} camera={{position:[0,0,6],fov:48}}
+      dpr={[1,1.5]} gl={{alpha:true,antialias:true}}>
+      <ambientLight intensity={.3}/>
+      <Stars radius={85} depth={30} count={900} factor={2} saturation={0} fade
+        speed={reducedMotion?0:.4}/>
+      <EnergyCore reducedMotion={reducedMotion}/>
+    </Canvas>
+  </div>;
+}
+
+function ProjectVisual({kind,image,alt='Illustration technique du projet',rotation=0,priority=false}){
+  const [imageFailed,setImageFailed]=useState(false);
+  const nativeIllustrations={
+    cem:'/assets/cem-schema-reel.webp',
+    dialux:'/assets/dialux-reel-1.webp',
+    building:'/assets/betem-plan-extrait-reel.webp'
+  };
+  const src=image||nativeIllustrations[kind]||null;
+  useEffect(()=>{setImageFailed(false)},[src]);
+
+  if(src&&!imageFailed){
+    return <div className={'project-visual real-art'+(src.startsWith('/assets/studies/')?' project-visual--document':'')}>
+      <img src={src} alt="" aria-hidden="true" className="project-visual__backdrop"
+        loading={priority?'eager':'lazy'}/>
+      <img src={src} alt={alt} className="project-visual__foreground"
+        loading={priority?'eager':'lazy'}
+        style={rotation?{transform:`rotate(${rotation}deg)`}:undefined}
+        onError={()=>setImageFailed(true)}/>
+    </div>;
+  }
+  if(kind==='legacy')return <div className="project-visual original-fallback"><div className="visual-grid"/><FileText size={92} strokeWidth={.75}/><span>SCHÉMAS ET ÉTUDE TECHNIQUE</span></div>;
+  if(kind==='solar')return <div className="project-visual solar-art"><div className="visual-grid"/><div className="sun"/><div className="panel-grid">{Array.from({length:12},(_,i)=><span key={i}/>)}</div><span className="solar-label">PV // 6 kWc · 12 MODULES</span></div>;
+  return <div className="project-visual bms-art"><div className="visual-grid"/><div className="board"><div className="board-title">BMS // 4S</div>{[1,2,3,4].map(i=><div className="cell" key={i}>CELL 0{i}<span>3,7 V</span></div>)}<div className="chip">ML5243</div></div><span className="visual-disclaimer">ILLUSTRATION SCHÉMATIQUE</span></div>;
 }
 function SectionHeader({number,title,aside}){return <div className="section-heading reveal"><span className="index">{number} / {title}</span><span className="rule"/>{aside&&<span className="heading-aside">{aside}</span>}</div>}
 function Chips({items}){return <div className="chips">{items.map(x=><span key={x}>{x}</span>)}</div>}
 function DocumentLink({url,label,external=false}){return <a className="document-link" href={url} target="_blank" rel="noopener noreferrer">{label}{external?<ExternalLink size={15}/>:<Download size={15}/>}</a>}
 function EvidenceGrid({items,onZoom}){return <div className="evidence-grid">{items.map((ev,i)=><button key={i} className="evidence-item" type="button" onClick={()=>onZoom(ev)} title="Agrandir la preuve"><div className="evidence-image"><img src={ev.image} alt={ev.title} loading="lazy"/></div><div className="evidence-info"><span>{String(i+1).padStart(2,'0')} / PREUVE AUTHENTIQUE</span><b>{ev.title}</b><small>{ev.desc}</small></div><ArrowUpRight size={16}/></button>)}</div>}
 
-function ProjectDetail({project:p,onClose,onZoom}){
+function ProjectCard({project:p,onOpen,featured=false}){
+  return <article className={'project project--switching'+(featured?' project--featured':'')} key={p.id}>
+    <div className="project-meta"><span>{p.no} / {String(academicProjects.length).padStart(2,'0')}</span><span>{p.field}</span></div>
+    <ProjectVisual kind={p.icon} image={p.cover} alt={'Photographie ou schéma : '+p.name} rotation={p.coverRotation||0}/>
+    <div className="project-info">
+      <div>
+        <p className="project-subtitle">{p.period}</p>
+        <h3>{p.name}</h3>
+        <p className="project-strap">{p.short}</p>
+        <span className={'project-nature'+(featured?' project-nature--featured':'')}>{p.nature||'RÉALISATION UNIVERSITAIRE'}</span>
+      </div>
+      <p className="project-summary">{p.description}</p>
+      <Chips items={p.chips}/>
+      <div className="project-action"><span>{p.status}</span>
+        <button type="button" onClick={()=>onOpen(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button>
+      </div>
+    </div>
+  </article>;
+}
+
+function ProjectSelector({selectedId,onSelect}){
+  const [open,setOpen]=useState(false);
+  const selectorRef=useRef(null);
+  const choiceCount=academicProjects.length-1;
+
+  useEffect(()=>{
+    if(!open)return;
+    const closeOutside=e=>{
+      if(selectorRef.current&&!selectorRef.current.contains(e.target))setOpen(false);
+    };
+    const closeEscape=e=>{
+      if(e.key==='Escape'){
+        setOpen(false);
+        selectorRef.current?.querySelector('.project-selector__trigger')?.focus();
+      }
+    };
+    document.addEventListener('pointerdown',closeOutside);
+    document.addEventListener('keydown',closeEscape);
+    return()=>{
+      document.removeEventListener('pointerdown',closeOutside);
+      document.removeEventListener('keydown',closeEscape);
+    };
+  },[open]);
+
+  const groups=[
+    {title:'PROJETS TUTORÉS',items:tutoredProjects},
+    {title:'SAE & RÉALISATIONS PRATIQUES',items:appliedProjects}
+  ];
+  return <div className={'project-selector'+(open?' project-selector--open':'')}
+      ref={selectorRef} data-lenis-prevent={open||undefined}>
+    <button type="button" className="project-selector__trigger"
+      aria-expanded={open} aria-controls="project-selector-list"
+      onClick={()=>setOpen(value=>!value)}>
+      <span className="project-selector__trigger-icon"><Layers size={20}/></span>
+      <span className="project-selector__trigger-text">
+        <strong>EXPLORER LES AUTRES PROJETS</strong>
+        <small>{choiceCount} autres réalisations · Projets tutorés et SAE, du BUT3 au BUT1</small>
+      </span>
+      <span className="project-selector__trigger-count">{String(choiceCount).padStart(2,'0')}</span>
+      <ChevronRight size={21} className="project-selector__chevron"/>
+    </button>
+    {open&&<div id="project-selector-list" className="project-selector__list"
+      onWheel={e=>e.stopPropagation()}>
+      {groups.map(group=><div className="project-selector__group" key={group.title}>
+        <div className="project-selector__group-name">
+          <span>{group.title}</span><span>{group.items.length} DOSSIERS</span>
+        </div>
+        {[3,2,1].map(year=>{
+          const entries=group.items.filter(p=>p.year===year&&p.id!==selectedId);
+          if(!entries.length)return null;
+          return <div className="project-selector__year" key={year}>
+            <span className="project-selector__year-label">BUT{year}</span>
+            <div className="project-selector__choices">{entries.map(p=>
+              <button key={p.id} type="button" className="project-selector__choice"
+                onClick={()=>{setOpen(false);onSelect(p)}}>
+                <span className="project-selector__thumbnail">
+                  {p.cover||['cem','dialux'].includes(p.icon)?
+                    <img src={p.cover||({cem:'/assets/cem-schema-reel.webp',dialux:'/assets/dialux-reel-1.webp'}[p.icon])}
+                      alt="" loading="lazy" style={p.coverRotation?{transform:`rotate(${p.coverRotation}deg)`}:undefined}/>:
+                    <span aria-hidden="true">{p.icon==='solar'?<Sun size={25}/>:<CircuitBoard size={24}/>}</span>}
+                </span>
+                <span className="project-selector__choice-text">
+                  <span className="project-selector__choice-meta">BUT{p.year} <span>·</span> {p.field}</span>
+                  <strong>{p.name}</strong>
+                  <small>{p.chips?.slice(0,2).join(' · ')||p.short}</small>
+                </span>
+                <ArrowUpRight size={17}/>
+              </button>
+            )}</div>
+          </div>;
+        })}
+      </div>)}
+    </div>}
+  </div>;
+}
+
+/* Conserver la navigation clavier dans la fenêtre active. Le zoom est
+ * prioritaire sur le dossier lorsque les deux sont affichés. */
+function trapDialogTab(event,dialog){
+  if(event.key!=='Tab'||!dialog)return;
+  const candidates=[...dialog.querySelectorAll(
+    'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+  )].filter(el=>!el.closest('[inert]')&&el.getClientRects().length>0);
+  if(!candidates.length){event.preventDefault();dialog.focus({preventScroll:true});return}
+  const first=candidates[0],last=candidates[candidates.length-1];
+  const current=document.activeElement;
+  if(event.shiftKey&&(current===first||current===dialog||!dialog.contains(current))){
+    event.preventDefault();last.focus({preventScroll:true});
+  }else if(!event.shiftKey&&(current===last||current===dialog||!dialog.contains(current))){
+    event.preventDefault();first.focus({preventScroll:true});
+  }
+}
+
+function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
   const dialogRef=useRef(null);
-  useEffect(()=>{dialogRef.current?.focus();const handle=e=>{if(e.key==='Escape')onClose()};window.addEventListener('keydown',handle);return()=>window.removeEventListener('keydown',handle)},[onClose]);
-  return <div className="detail-overlay" onClick={onClose}><article className="detail-panel" role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()}>
-    <div className="detail-header"><span className="index">DÉCRYPTAGE / PROJET {p.no}</span><button type="button" onClick={onClose} className="detail-close"><X size={20}/> FERMER</button></div>
-    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line"><CheckCircle2 size={15}/>{p.status}</span></div><ProjectVisual kind={p.icon}/></div>
+  const zoomOpenRef=useRef(isZoomOpen);
+  zoomOpenRef.current=isZoomOpen;
+  const [readingMode,setReadingMode]=useState(false);
+  const savedScrollProgress=useRef(0);
+  const switchMode=(next)=>{
+    if(next===readingMode)return;
+    const el=dialogRef.current;
+    if(el)savedScrollProgress.current=el.scrollTop/Math.max(1,el.scrollHeight-el.clientHeight);
+    setReadingMode(next);
+  };
+  useLayoutEffect(()=>{
+    const el=dialogRef.current;
+    if(el)el.scrollTop=savedScrollProgress.current*Math.max(0,el.scrollHeight-el.clientHeight);
+  },[readingMode]);
+  useEffect(()=>{
+    const previous=document.activeElement;
+    dialogRef.current?.focus({preventScroll:true});
+    const onTab=event=>{
+      if(zoomOpenRef.current)return;
+      trapDialogTab(event,dialogRef.current);
+    };
+    document.addEventListener('keydown',onTab);
+    return()=>{
+      document.removeEventListener('keydown',onTab);
+      if(previous?.isConnected&&typeof previous.focus==='function'){
+        previous.focus({preventScroll:true});
+      }
+    };
+  },[]);
+  useEffect(()=>{
+    const handle=e=>{if(e.key==='Escape'&&!isZoomOpen)onClose()};
+    window.addEventListener('keydown',handle);
+    return()=>window.removeEventListener('keydown',handle);
+  },[onClose,isZoomOpen]);
+  return <div className={'detail-overlay'+(readingMode?' detail-overlay--reader':'')} onClick={onClose}>
+   <article className={'detail-panel'+(readingMode?' detail-panel--reader':'')} data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="project-title" tabIndex={-1} ref={dialogRef} onClick={e=>e.stopPropagation()} onWheel={e=>e.stopPropagation()}>
+    <div className="detail-header">
+     <span className="index">{p.id==='betem'?'DOSSIER DE STAGE / BETEM':`DÉCRYPTAGE / PROJET ${p.no}`}</span>
+     <div className="detail-header-actions">
+      <div className="detail-view-switch" role="group" aria-label="Mode de consultation de l’étude">
+       <button type="button" aria-pressed={!readingMode} onClick={()=>switchMode(false)} title="Consultation classique en panneau latéral"><PanelRightOpen size={17}/> CLASSIQUE</button>
+       <button type="button" aria-pressed={readingMode} onClick={()=>switchMode(true)} title="Lecture plein écran avec illustrations agrandies">{readingMode?<Minimize2 size={17}/>:<Maximize2 size={17}/>} PLEIN ÉCRAN</button>
+      </div>
+      <button type="button" onClick={onClose} className="detail-close"><X size={19}/> FERMER</button>
+     </div>
+    </div>
+    <div className="detail-reading-hint"><Mouse size={14}/> DÉFILEMENT À LA MOLETTE <span>·</span> CLIQUE SUR LES SCHÉMAS POUR LES AGRANDIR</div>
+    <StudyContents panelRef={dialogRef} projectId={p.id} readingMode={readingMode}/>
+    <div className="detail-content">
+    <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{['bms','pv'].includes(p.id)?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover} alt={'Photographie ou schéma : '+p.name} rotation={p.coverRotation||0} priority/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
-    <div className="detail-chapters">
+    <StudyHighlights project={p} onZoom={onZoom}/>
+    {p.id==='bms'&&<BmsCaseStudy onZoom={onZoom}/>}
+    {p.id==='pv'&&<PvCaseStudy/>}
+    {p.legacyOnly&&<LegacyCaseStudy project={p} onZoom={onZoom}/>}
+    {['cem','dialux'].includes(p.id)&&<AppliedTechnicalStudy project={p} onZoom={onZoom}/>}
+    {p.id==='betem'&&<BetemCaseStudy project={p} onZoom={onZoom}/>}
+    {!p.legacyOnly&&!['bms','pv','cem','dialux','betem'].includes(p.id)&&<div className="detail-chapters">
       <section><span className="chapter-index">01 / CONTEXTE</span><h3>Pourquoi ce projet ?</h3><p>{p.context}</p></section>
       <section><span className="chapter-index">02 / MON RÔLE</span><h3>Ce que j'ai réalisé</h3><p>{p.role}</p></section>
-      <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((s,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{s}</span></li>)}</ol></section>
+      <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((step,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{step}</span></li>)}</ol></section>
       <section><span className="chapter-index">04 / RÉSULTATS</span><h3>Ce que montrent les résultats</h3><p>{p.results}</p></section>
       <section className="critical-section"><span className="chapter-index">05 / PRISE DE RECUL</span><h3>Mon autoévaluation</h3><p>{p.critique}</p></section>
-    </div>
-    <div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
-      {p.note&&<p className="source-note"><ShieldCheck size={17}/>{p.note}</p>}
-      {p.docs?.length>0&&<div className="download-list">{p.docs.map(d=><div key={d.url}><span>{d.type}</span><DocumentLink url={d.url} label={d.label}/></div>)}</div>}
-    </div>
+    </div>}
     <div className="detail-footer"><div><span>COMPÉTENCES ASSOCIÉES</span><Chips items={p.skills}/></div><button type="button" onClick={onClose} className="secondary-button"><ArrowLeft size={16}/> RETOUR AU PORTFOLIO</button></div>
+    </div>
   </article></div>;
 }
 
 function App(){
   const [project,setProject]=useState(null);const [zoom,setZoom]=useState(null);
+  const [showDocumentCatalogue,setShowDocumentCatalogue]=useState(false);
+  const [selectedProjectId,setSelectedProjectId]=useState('pv');
+  const lenisRef=useRef(null);
+  const zoomRef=useRef(null);
   const closeDetail=()=>{setProject(null);setZoom(null)};
   useEffect(()=>{
-    const lenis=new Lenis({duration:1.2,smoothWheel:true});let raf;const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lenis=new Lenis({duration:reduce?.1:1.2,smoothWheel:!reduce,
+      prevent:node=>Boolean(node?.closest?.('[data-lenis-prevent]'))});
+    lenisRef.current=lenis;
+    let raf;
+    const tick=t=>{lenis.raf(t);raf=requestAnimationFrame(tick)};
+    raf=requestAnimationFrame(tick);
     lenis.on('scroll',ScrollTrigger.update);
-    const anims=gsap.utils.toArray('.reveal').map(el=>gsap.fromTo(el,{opacity:0,y:35},{opacity:1,y:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}}));
-    return()=>{cancelAnimationFrame(raf);lenis.destroy();anims.forEach(a=>a.kill());ScrollTrigger.getAll().forEach(t=>t.kill())};
+    const anims=reduce?[]:gsap.utils.toArray('.reveal').map(el=>
+      gsap.fromTo(el,{opacity:0,y:35},{opacity:1,y:0,duration:.85,ease:'power3.out',
+        scrollTrigger:{trigger:el,start:'top 90%',once:true}})
+    );
+    return()=>{cancelAnimationFrame(raf);lenis.destroy();lenisRef.current=null;anims.forEach(a=>a.kill());ScrollTrigger.getAll().forEach(t=>t.kill())};
   },[]);
-  useEffect(()=>{document.body.style.overflow=(project||zoom)?'hidden':'';return()=>{document.body.style.overflow=''}},[project,zoom]);
+  useEffect(()=>{
+    const hasDialog=Boolean(project||zoom);
+    document.body.style.overflow=hasDialog?'hidden':'';
+    if(hasDialog)lenisRef.current?.stop();
+    else lenisRef.current?.start();
+    return()=>{document.body.style.overflow=''};
+  },[project,zoom]);
+  useEffect(()=>{
+    if(!zoom)return;
+    const previous=document.activeElement;
+    zoomRef.current?.querySelector('button')?.focus({preventScroll:true});
+    const handle=e=>{
+      if(e.key==='Escape'){e.preventDefault();e.stopPropagation();setZoom(null)}
+      else trapDialogTab(e,zoomRef.current);
+    };
+    window.addEventListener('keydown',handle);
+    return()=>{
+      window.removeEventListener('keydown',handle);
+      if(previous?.isConnected&&typeof previous.focus==='function'){
+        previous.focus({preventScroll:true});
+      }
+    };
+  },[zoom]);
   const openProject=(p)=>{setProject(p);setZoom(null)};
-  return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><div className="grain" aria-hidden="true"/>
-    <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
-    <main>
-      <section className="hero" id="accueil"><Scene/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
+  const selectedProject=academicProjects.find(p=>p.id===selectedProjectId)||tutoredProjects[0];
+  const selectProject=p=>{
+    setSelectedProjectId(p.id);
+    requestAnimationFrame(()=>{
+      const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      lenisRef.current?.scrollTo('#project-featured',{offset:-80,duration:.85,immediate:reduced});
+    });
+  };
+  return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><ElectricAmbient paused={Boolean(project||zoom)}/><CircuitInteractions paused={Boolean(project||zoom)}/><div className="grain" aria-hidden="true"/>{!project&&!zoom&&<EdgeNavigation/>}
+    <header className="topbar" inert={Boolean(project||zoom)}><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
+    <main inert={Boolean(project||zoom)}>
+      <section className="hero" id="accueil"><Scene paused={Boolean(project||zoom)}/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><div className="hero-actions">
+      <a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a>
+      <a className="hero-quicklink" href="https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view" target="_blank" rel="noopener noreferrer"><FileText size={16}/> MON CV <ArrowUpRight size={14}/></a>
+      <a className="hero-quicklink" href="https://www.linkedin.com/in/hicham-el-hajjaji" target="_blank" rel="noopener noreferrer"><Link2 size={16}/> LINKEDIN <ArrowUpRight size={14}/></a>
+    </div>
+    <div className="hero-specialties">RÉSEAUX HTA/HTB <span>·</span> CONCEPTION BT <span>·</span> ÉLECTRONIQUE DE PUISSANCE</div>
+    </div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
 
-      <section id="profil" className="section about"><SectionHeader number="01" title="INFORMATIONS PERSONNELLES"/><div className="about-grid"><div className="reveal"><h2>QUI<br/>SUIS<span>-JE ?</span></h2><div className="identity-block"><span>HICHAM EL HAJJAJI</span><strong>Étudiant en BUT3 GEII</strong><small>IUT Montpellier–Sète · Parcours EME</small></div></div><div className="about-text reveal"><p>Après un baccalauréat général avec les spécialités mathématiques et physique, puis une première année en informatique, j'ai choisi le <strong>BUT Génie Électrique et Informatique Industrielle</strong> pour approfondir les systèmes électriques et leur fonctionnement.</p><p>Ce qui m'intéresse particulièrement : le transport et la distribution de l'énergie, les réseaux HTA/HTB, les postes électriques, les installations basse tension et l'électronique de puissance.</p><p>J'aime relier les principes physiques aux situations réelles : dimensionner, simuler, chercher l'origine d'un défaut et justifier les décisions techniques.</p><div className="profile-facts"><div><MapPin size={16}/><span>Montpellier / Sète, France</span></div><div><GraduationCap size={16}/><span>BUT3 · GEII / EME</span></div><div><BriefcaseBusiness size={16}/><span>Permis B</span></div><div><FileText size={16}/><span>CV PDF : à intégrer</span></div><div><Link2 size={16}/><span>LinkedIn : URL à confirmer</span></div></div><a href="#contact" className="inline-action">ME CONTACTER <ArrowUpRight size={16}/></a></div></div>
+      <section id="profil" className="section about"><SectionHeader number="01" title="INFORMATIONS PERSONNELLES"/><div className="about-grid"><div className="reveal"><h2>QUI<br/>SUIS<span>-JE ?</span></h2><div className="identity-block"><span>HICHAM EL HAJJAJI</span><strong>Étudiant en BUT3 GEII</strong><small>IUT Montpellier–Sète · Parcours EME</small></div></div><div className="about-text reveal"><p>Après un baccalauréat général avec les spécialités mathématiques et physique, puis une première année en informatique, j'ai choisi le <strong>BUT Génie Électrique et Informatique Industrielle</strong> pour approfondir les systèmes électriques et leur fonctionnement.</p><p>Ce qui m'intéresse particulièrement : le transport et la distribution de l'énergie, les réseaux HTA/HTB, les postes électriques, les installations basse tension et l'électronique de puissance.</p><p>J'aime relier les principes physiques aux situations réelles : dimensionner, simuler, chercher l'origine d'un défaut et justifier les décisions techniques.</p><div className="profile-facts"><div><MapPin size={16}/><span>Montpellier / Sète, France</span></div><div><GraduationCap size={16}/><span>BUT3 · GEII / EME</span></div><div><BriefcaseBusiness size={16}/><span>Permis B</span></div><div><FileText size={16}/><a href="https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view" target="_blank" rel="noopener noreferrer">CV original sur Google Drive ↗</a></div><div><Link2 size={16}/><a href="https://www.linkedin.com/in/hicham-el-hajjaji" target="_blank" rel="noopener noreferrer">Mon profil LinkedIn ↗</a></div></div><a href="#contact" className="inline-action">ME CONTACTER <ArrowUpRight size={16}/></a></div></div>
       </section>
 
       <section id="formation" className="section formation"><SectionHeader number="02" title="MA FORMATION" aside="DU BAC À L'INGÉNIERIE"/><div className="formation-intro reveal"><h2>MON <span>PARCOURS.</span></h2><p>Une formation qui associe bases scientifiques, conception, travaux pratiques et projets appliqués à l'énergie.</p></div><div className="timeline reveal">
-        <div className="timeline-item"><span className="timeline-count">01</span><div className="timeline-year">AVANT LE BUT</div><div><h3>Baccalauréat général</h3><p>Spécialités mathématiques et physique. Acquisition de bases scientifiques pour comprendre les phénomènes électriques et mécaniques.</p></div></div>
-        <div className="timeline-item"><span className="timeline-count">02</span><div className="timeline-year">APRÈS LE BAC</div><div><h3>Première année d'informatique</h3><p>Initiation à la programmation, à la logique et aux méthodes d'analyse, avant une réorientation vers les applications électriques.</p></div></div>
+        <div className="timeline-item"><span className="timeline-count">01</span><div className="timeline-year">AVANT LE BUT</div><div><h3>Baccalauréat général</h3><p>Obtention du baccalauréat en 2021, spécialités mathématiques et physique. Acquisition de bases scientifiques pour comprendre les phénomènes électriques et mécaniques.</p></div></div>
+        <div className="timeline-item"><span className="timeline-count">02</span><div className="timeline-year">APRÈS LE BAC</div><div><h3>Première année d'informatique</h3><p>Première année de licence informatique, avant ma réorientation en 2024 vers le BUT GEII. J'y ai développé des bases en programmation et en logique, utiles pour les systèmes techniques.</p></div></div>
         <div className="timeline-item current"><span className="timeline-count">03</span><div className="timeline-year">2024—2027 · EN COURS</div><div><h3>BUT Génie électrique et informatique industrielle</h3><p><strong>Parcours Électricité et maîtrise de l'énergie.</strong> Électrotechnique, conversion d'énergie, électronique, automatismes, modélisation, contrôle-commande et réseaux électriques.</p><Chips items={['Électrotechnique','Électronique de puissance','Installations BT','Énergies renouvelables','Mesures & essais']}/></div></div>
         <div className="timeline-item future"><span className="timeline-count">04</span><div className="timeline-year">APRÈS LE BUT · OBJECTIF</div><div><h3>Poursuite en école d'ingénieurs</h3><p>Objectif : approfondir le génie électrique, de préférence en apprentissage, puis travailler dans les réseaux électriques et les installations de transport et distribution HTA/HTB.</p></div></div>
       </div><div className="formation-footer reveal"><div><strong>POURQUOI LE PARCOURS EME ?</strong><p>Pour étudier la production, la conversion, le transport et l'utilisation de l'énergie électrique, de la théorie aux applications industrielles.</p></div><DocumentLink url={REFERENTIEL} label="CONSULTER LE RÉFÉRENTIEL NATIONAL" external/></div>
@@ -237,16 +627,79 @@ function App(){
 
       <section id="competences" className="section competence-section"><SectionHeader number="03" title="RÉFÉRENTIEL GEII" aside="4 COMPÉTENCES · PARCOURS EME"/><div className="competence-intro reveal"><h2>CE QUE JE <span>DÉVELOPPE.</span></h2><p>Les quatre compétences du parcours sont reliées à des situations de projet, à des preuves et à un retour critique. Les apprentissages critiques listés ci-dessous sont ceux du niveau BUT3.</p></div><div className="competency-grid">{competencies.map((c,i)=><article className="competency-card reveal" key={c.id}><div className="competency-index"><span>{c.no} / 04</span><span className="competency-mark">{String(i+1).padStart(2,'0')}</span></div><h3>{c.name}</h3><p className="competency-title">{c.title}</p><p>{c.description}</p><div className="competency-line">APPRENTISSAGES CRITIQUES BUT3</div><ul>{c.critical.map(x=><li key={x}>{x}</li>)}</ul><div className="competency-line">PREUVES & APPLICATIONS</div><p className="competency-evidence">{c.evidence}</p><div className="competency-projects">{c.projects.map(id=>{let p=projects.find(x=>x.id===id);return <button key={id} type="button" onClick={()=>openProject(p)}>{p.name}<ArrowUpRight size={13}/></button>})}</div><div className="self-review"><span>MON REGARD CRITIQUE</span><p>{c.review}</p></div></article>)}</div><p className="competence-source">Référence : Programme national du BUT GEII, parcours EME, niveaux et apprentissages critiques. <a href={REFERENTIEL} target="_blank" rel="noopener noreferrer">Consulter le document officiel <ExternalLink size={13}/></a></p></section>
 
-      <section id="projets" className="section projects"><SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside="5 ÉTUDES COMMENTÉES"/><div className="projects-intro reveal"><h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2><p>Ouvrir chaque projet pour voir la méthode, les résultats, les preuves originales et l'autoévaluation.</p></div><div className="projects-list">{projects.map(p=><article className="project reveal" key={p.id}><div className="project-meta"><span>{p.no} / 05</span><span>{p.field}</span></div><ProjectVisual kind={p.icon}/><div className="project-info"><div><p className="project-subtitle">{p.period}</p><h3>{p.name}</h3><p className="project-strap">{p.short}</p></div><p className="project-summary">{p.description}</p><Chips items={p.chips}/><div className="project-action"><span>{p.status}</span><button type="button" onClick={()=>openProject(p)}>ÉTUDE COMPLÈTE <ArrowUpRight size={16}/></button></div></div></article>)}</div></section>
 
-      <section id="experience" className="section experience"><SectionHeader number="05" title="EXPÉRIENCE PROFESSIONNELLE"/><div className="experience-grid"><div className="reveal"><span className="superline">STAGE · AVRIL — JUIN 2026</span><h2>DU COURS<br/>AU <span>BUREAU D'ÉTUDES.</span></h2><p className="experience-lead">10 semaines dans l'environnement d'un bureau d'études électriques à Montpellier, avec une immersion sur des projets de bâtiments.</p><button className="primary as-button" type="button" onClick={()=>openProject(projects[1])}>EXPLORER LE STAGE <ArrowUpRight size={17}/></button></div><div className="experience-details reveal"><div className="experience-company"><span>ENTREPRISE</span><strong>BETEM — Montpellier</strong></div><div className="experience-company"><span>DOMAINE</span><strong>Études CFO / CFA et basse tension</strong></div><div className="experience-company"><span>LOGICIELS UTILISÉS</span><strong>AutoCAD, Revit, Caneco BT, DIALux evo</strong></div><div className="experience-company"><span>COMPÉTENCES MOBILISÉES</span><strong>Concevoir · Vérifier · Préparer l'installation</strong></div><div className="experience-acquired"><b>CE QUE CETTE EXPÉRIENCE M'A APPORTÉ</b><p>Une meilleure compréhension de la production des plans et pièces écrites, de la cohérence entre les livrables, du rôle de chaque intervenant et des contraintes concrètes d'un projet.</p></div></div></div></section>
+      <section id="projets" className="section projects">
+        <SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside={`${academicProjects.length} ÉTUDES UNIVERSITAIRES`}/>
+        <div className="projects-intro reveal">
+          <h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2>
+          <p>Une réalisation à découvrir à la fois. Parcourez les projets tutorés et les SAE depuis la liste, classés de la troisième à la première année.</p>
+        </div>
+        <div id="project-featured" className="project-selected">
+          <div className="project-selected__heading">
+            <div>
+              <span>PROJET EN VEDETTE / BUT{selectedProject.year}</span>
+              <h3>{selectedProject.category==='tutored'?'PROJET TUTORÉ':'SAE & RÉALISATION PRATIQUE'}</h3>
+            </div>
+            <span className="project-selected__counter">01 PROJET AFFICHÉ · {academicProjects.length} DISPONIBLES</span>
+          </div>
+          <ProjectCard key={selectedProject.id} project={selectedProject}
+            featured={['pv','bms'].includes(selectedProject.id)}
+            onOpen={openProject}/>
+        </div>
+        <ProjectSelector selectedId={selectedProject.id} onSelect={selectProject}/>
+      </section>
 
-      <section id="documents" className="section documents"><SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="SOURCES AUTHENTIQUES"/><div className="documents-heading reveal"><h2>DES TRACES <span>CONCRÈTES.</span></h2><p>Les documents disponibles complètent le récit des projets. Les pièces non retrouvées ne sont pas remplacées par de faux justificatifs.</p></div><div className="documents-grid reveal">{documents.map((d,i)=><a key={d.title} href={d.url} target="_blank" rel="noopener noreferrer" className="doc-card"><div className="doc-num">{String(i+1).padStart(2,'0')} / ARCHIVE</div><d.icon size={30}/><div><span className="doc-type">{d.type}</span><h3>{d.title}</h3><p>{d.desc}</p></div><span className="doc-open">{d.external?'OUVRIR LA SOURCE':'TÉLÉCHARGER'} <ArrowUpRight size={15}/></span></a>)}</div><div className="proof-caveat reveal"><AlertCircle size={20}/><p><strong>Documents encore à intégrer :</strong> schéma électronique original KiCad, vues de PCB et photographies du prototype BMS, ainsi que ton CV et l'URL exacte de ton profil LinkedIn. Les documents contractuels complets du stage restent exclus tant que leur publication n'est pas autorisée.</p></div></section>
+      <section id="experience" className="section experience"><SectionHeader number="05" title="EXPÉRIENCE PROFESSIONNELLE"/><div className="experience-grid"><div className="reveal"><span className="superline">STAGE · AVRIL — JUIN 2026</span><h2>DU COURS<br/>AU <span>BUREAU D'ÉTUDES.</span></h2><p className="experience-lead">10 semaines dans l'environnement d'un bureau d'études électriques à Montpellier, avec une immersion sur des projets de bâtiments.</p><button className="primary as-button" type="button" onClick={()=>openProject(betemExperience)}>EXPLORER LE STAGE <ArrowUpRight size={17}/></button></div><div className="experience-details reveal"><div className="experience-company"><span>ENTREPRISE</span><strong>BETEM — Montpellier</strong></div><div className="experience-company"><span>DOMAINE</span><strong>Études CFO / CFA et basse tension</strong></div><div className="experience-company"><span>LOGICIELS UTILISÉS</span><strong>AutoCAD, Revit, Caneco BT, DIALux evo</strong></div><div className="experience-company"><span>COMPÉTENCES MOBILISÉES</span><strong>Concevoir · Vérifier · Préparer l'installation</strong></div><div className="experience-acquired"><b>CE QUE CETTE EXPÉRIENCE M'A APPORTÉ</b><p>Une meilleure compréhension de la production des plans et pièces écrites, de la cohérence entre les livrables, du rôle de chaque intervenant et des contraintes concrètes d'un projet.</p></div></div></div>
+        <div className="experience-proof-band reveal">
+          <div className="experience-proof-preview">
+            <img src="/assets/betem-plan-extrait-reel.webp" alt="Extrait authentique de plan d'implantation électrique réalisé pendant le stage BETEM" loading="lazy"/>
+            <span>BETEM / PLAN CFO-CFA</span>
+          </div>
+          <div className="experience-proof-content">
+            <span className="project-subtitle">DOCUMENTATION PROFESSIONNELLE</span>
+            <h3>DES LIVRABLES CONCRETS.</h3>
+            <p>Implantations, bilans de puissance, schémas, études d'éclairage et pièces écrites : le dossier rassemble les travaux réalisés en bureau d'études.</p>
+            <div className="experience-proof-links">
+              {betemExperience.docs?.map(doc=><DocumentLink key={doc.url} url={doc.url} label={doc.label} external/>)}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span><a href={OLD_SITE} target="_blank" rel="noopener noreferrer">ANCIEN PORTFOLIO ↗</a></div></section>
-    </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
-    {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom}/>}
-    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
+      <section id="documents" className="section documents">
+        <SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="DOSSIERS TECHNIQUES"/>
+        <div className="documents-heading reveal">
+          <h2>DES TRACES <span>CONCRÈTES.</span></h2>
+          <p>Accès aux rapports, schémas et pièces de conception. Les documents sont également accessibles depuis leurs études respectives.</p>
+        </div>
+        <div className="documents-quick-list">
+          {highlightedDocuments.map((doc,i)=><a className="documents-quick-link" href={doc.url}
+            target="_blank" rel="noopener noreferrer" key={doc.url+'-'+i}>
+            <doc.icon size={19}/>
+            <span><small>{doc.type}</small><strong>{doc.title}</strong></span>
+            <ArrowUpRight size={17}/>
+          </a>)}
+        </div>
+        <button className="documents-expand" type="button"
+          onClick={()=>setShowDocumentCatalogue(open=>!open)}
+          aria-expanded={showDocumentCatalogue} aria-controls="document-catalogue">
+          <FileText size={17}/>
+          <span>{showDocumentCatalogue?'MASQUER LES DOCUMENTS COMPLÉMENTAIRES':`PARCOURIR LES ${remainingDocuments.length} AUTRES DOCUMENTS`}</span>
+          <ChevronRight size={18} className={showDocumentCatalogue?'documents-expand__chevron documents-expand__chevron--open':'documents-expand__chevron'}/>
+        </button>
+        <div id="document-catalogue" className="documents-catalogue" hidden={!showDocumentCatalogue}>
+          {remainingDocuments.map((doc,i)=><a key={doc.url+'-'+i}
+            href={doc.url} target="_blank" rel="noopener noreferrer" className="documents-catalogue-link">
+            <div><span>{doc.type}</span><strong>{doc.title}</strong></div>
+            <ArrowUpRight size={16}/>
+          </a>)}
+        </div>
+      </section>
+
+      <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
+    </main><footer inert={Boolean(project||zoom)}><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
+    {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom} isZoomOpen={Boolean(zoom)}/>}
+    {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" ref={zoomRef} tabIndex={-1} data-lenis-prevent onWheel={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title} style={zoom.rotation?{transform:`rotate(${zoom.rotation}deg)`}:undefined}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
   </div></>;
 }
 

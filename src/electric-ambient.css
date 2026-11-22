@@ -1,0 +1,70 @@
+/* Fond technique fixe : impulsions électriques lentes, sans clignotement. */
+.site{isolation:isolate;background:#06101c}
+.electric-ambient{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(120deg,#08111c 4%,#071728 56%,#07111c 100%)
+}
+.site>main,.site>footer{position:relative;z-index:1}
+.electric-ambient__wires{position:absolute;inset:0;width:100%;height:100%;opacity:.86}
+.electric-ambient__wire path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.electric-ambient__track{stroke-width:1.5;opacity:.64}
+.electric-ambient__pulse{
+  stroke:#7dd4ff;stroke-width:2.1;opacity:calc(.43 + var(--electric-flow-boost,0));transition:opacity .45s ease-out;
+  stroke-dasharray:85 1700;stroke-dashoffset:1800;
+  filter:drop-shadow(0 0 6px rgba(54,164,255,.38));
+  animation:electric-current var(--pulse-duration,28s) linear infinite;
+  animation-delay:var(--pulse-delay,0s)
+}
+.electric-ambient__node{
+  fill:#80d7ff;opacity:.18;
+  filter:drop-shadow(0 0 5px rgba(100,198,255,.35));
+  animation:electric-node 11s ease-in-out infinite
+}
+.electric-ambient__glow{position:absolute;border-radius:50%;filter:blur(46px);opacity:.38;will-change:transform}
+.electric-ambient__glow--left{
+  left:-17vw;top:3vh;width:min(60vw,880px);height:65vh;
+  background:radial-gradient(ellipse,rgba(30,112,185,.23),transparent 70%);
+  animation:electric-drift-left 40s ease-in-out infinite alternate
+}
+.electric-ambient__glow--right{
+  right:-18vw;bottom:-13vh;width:min(65vw,940px);height:73vh;
+  background:radial-gradient(ellipse,rgba(30,127,206,.23),transparent 70%);
+  animation:electric-drift-right 48s ease-in-out infinite alternate
+}
+.electric-ambient__mesh{
+  position:absolute;inset:0;opacity:.09;
+  background-image:linear-gradient(#75c4ff25 1px,transparent 1px),linear-gradient(90deg,#75c4ff25 1px,transparent 1px);
+  background-size:90px 90px;
+  mask-image:linear-gradient(120deg,transparent 4%,#000 48%,transparent 95%)
+}
+@keyframes electric-current{from{stroke-dashoffset:1800}to{stroke-dashoffset:-1800}}
+@keyframes electric-node{0%,100%{opacity:.13}55%{opacity:.38}}
+@keyframes electric-drift-left{from{transform:translate3d(0,0,0)}to{transform:translate3d(12vw,7vh,0)}}
+@keyframes electric-drift-right{from{transform:translate3d(0,0,0)}to{transform:translate3d(-11vw,-10vh,0)}}
+
+/* Les sections deviennent légèrement translucides pour laisser voir l'ambiance
+   sous le contenu, sans sacrifier le contraste des textes et tableaux. */
+.site .hero{background:radial-gradient(ellipse at 75% 43%,rgba(17,45,76,.86) 0%,rgba(10,24,42,.86) 42%,rgba(6,12,20,.86) 78%)}
+.site .about{background:rgba(12,18,28,.88)}
+.site .formation{background:linear-gradient(130deg,rgba(12,22,34,.88),rgba(10,18,29,.86),rgba(10,27,44,.86))}
+.site .competence-section{background:rgba(8,16,27,.9)}
+.site .projects{background:rgba(8,14,23,.87)}
+.site .experience{background:rgba(11,21,33,.88)}
+.site .documents{background:rgba(8,15,25,.86)}
+.site .contact{background:rgba(14,30,49,.88)}
+.site>footer{background:rgba(6,13,22,.91)}
+/* Les fiches d'études conservent leur fond opaque et restent parfaitement lisibles. */
+.detail-overlay,.zoom-overlay{isolation:isolate}
+@media(max-width:950px){.electric-ambient{display:none}}
+@media(prefers-reduced-motion:reduce){
+  .electric-ambient__pulse,.electric-ambient__node,.electric-ambient__glow{animation:none!important}
+  .electric-ambient__pulse{opacity:.22;stroke-dashoffset:0;transition:none}
+}
+
+/* Les couches décoratives n'occupent plus le GPU derrière un dossier ouvert. */
+.electric-ambient--paused .electric-ambient__pulse,
+.electric-ambient--paused .electric-ambient__node,
+.electric-ambient--paused .electric-ambient__glow{
+ animation-play-state:paused!important
+}
+.electric-ambient--paused .electric-ambient__cursor{display:none}

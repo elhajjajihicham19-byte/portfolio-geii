@@ -1,0 +1,424 @@
+{
+  "geii-capteur-de-temperature": [
+    {
+      "image": "/assets/studies/geii-capteur-de-temperature/01-page-004.webp",
+      "title": "Architecture fonctionnelle du thermomètre",
+      "desc": "Thermomètre numérique — rapport de projet — page 4",
+      "source": "Étude technique GEII — Thermomètre numérique — rapport de projet",
+      "page": 4,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-capteur-de-temperature/01-page-005.webp",
+      "title": "Conditionnement analogique du LM335",
+      "desc": "Thermomètre numérique — rapport de projet — page 5",
+      "source": "Étude technique GEII — Thermomètre numérique — rapport de projet",
+      "page": 5,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-capteur-de-temperature/01-page-011.webp",
+      "title": "Programmation et affichage sur LCD",
+      "desc": "Thermomètre numérique — rapport de projet — page 11",
+      "source": "Étude technique GEII — Thermomètre numérique — rapport de projet",
+      "page": 11,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-capteur-de-temperature/01-page-012.webp",
+      "title": "Routage de la carte et relevés de tension",
+      "desc": "Thermomètre numérique — rapport de projet — page 12",
+      "source": "Étude technique GEII — Thermomètre numérique — rapport de projet",
+      "page": 12,
+      "chapter": 3
+    }
+  ],
+  "geii-cblage-domestique": [
+    {
+      "image": "/assets/studies/geii-cblage-domestique/01-page-002.webp",
+      "title": "Schéma des circuits du garage et du couloir",
+      "desc": "Câblage domestique — cahier de recette — page 2",
+      "source": "Étude technique GEII — Câblage domestique — cahier de recette",
+      "page": 2,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-cblage-domestique/01-page-003.webp",
+      "title": "Dimensionnement et protection des circuits",
+      "desc": "Câblage domestique — cahier de recette — page 3",
+      "source": "Étude technique GEII — Câblage domestique — cahier de recette",
+      "page": 3,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-cblage-domestique/01-page-004.webp",
+      "title": "Vérifications électriques du garage",
+      "desc": "Câblage domestique — cahier de recette — page 4",
+      "source": "Étude technique GEII — Câblage domestique — cahier de recette",
+      "page": 4,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/geii-cblage-domestique/01-page-005.webp",
+      "title": "Essais de fonctionnement du couloir",
+      "desc": "Câblage domestique — cahier de recette — page 5",
+      "source": "Étude technique GEII — Câblage domestique — cahier de recette",
+      "page": 5,
+      "chapter": 3
+    }
+  ],
+  "geii-d-lectronique": [
+    {
+      "image": "/assets/studies/geii-d-lectronique/01-page-001.webp",
+      "title": "Compteur CD4017 et schéma de test",
+      "desc": "Dé électronique — fiche de mesures — page 1",
+      "source": "Étude technique GEII — Dé électronique — fiche de mesures",
+      "page": 1,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-d-lectronique/01-page-002.webp",
+      "title": "Oscillogrammes des sorties Q0 à Q6",
+      "desc": "Dé électronique — fiche de mesures — page 2",
+      "source": "Étude technique GEII — Dé électronique — fiche de mesures",
+      "page": 2,
+      "chapter": 3
+    }
+  ],
+  "geii-dimensionnement-lectrique": [
+    {
+      "image": "/assets/studies/geii-dimensionnement-lectrique/01-page-001.webp",
+      "title": "Schéma électrique général de l’habitation",
+      "desc": "Schémas électriques de la maison — page 1",
+      "source": "Étude technique GEII — Schémas électriques de la maison",
+      "page": 1,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-dimensionnement-lectrique/01-page-002.webp",
+      "title": "Première rangée du tableau",
+      "desc": "Schémas électriques de la maison — page 2",
+      "source": "Étude technique GEII — Schémas électriques de la maison",
+      "page": 2,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-dimensionnement-lectrique/01-page-003.webp",
+      "title": "Deuxième rangée du tableau",
+      "desc": "Schémas électriques de la maison — page 3",
+      "source": "Étude technique GEII — Schémas électriques de la maison",
+      "page": 3,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-dimensionnement-lectrique/01-page-004.webp",
+      "title": "Troisième rangée et détails des protections",
+      "desc": "Schémas électriques de la maison — page 4",
+      "source": "Étude technique GEII — Schémas électriques de la maison",
+      "page": 4,
+      "chapter": 3
+    }
+  ],
+  "geii-malaxeur": [
+    {
+      "image": "/assets/studies/geii-malaxeur/01-page-002.webp",
+      "title": "Séquence PH0 à PH7 et contrôles de sécurité",
+      "desc": "Malaxeur — cahier de recette — page 2",
+      "source": "Étude technique GEII — Malaxeur — cahier de recette",
+      "page": 2,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-malaxeur/01-page-003.webp",
+      "title": "Mesures des rampes et contrôle de température",
+      "desc": "Malaxeur — cahier de recette — page 3",
+      "source": "Étude technique GEII — Malaxeur — cahier de recette",
+      "page": 3,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/geii-malaxeur/01-page-004.webp",
+      "title": "Bilan des fonctions validées et non validées",
+      "desc": "Malaxeur — cahier de recette — page 4",
+      "source": "Étude technique GEII — Malaxeur — cahier de recette",
+      "page": 4,
+      "chapter": 4
+    },
+    {
+      "image": "/assets/studies/geii-malaxeur/02-page-001.webp",
+      "title": "Comparaison des montages PT100 à deux et quatre fils",
+      "desc": "Malaxeur — fiche de mesures PT100 — page 1",
+      "source": "Étude technique GEII — Malaxeur — fiche de mesures PT100",
+      "page": 1,
+      "chapter": 3
+    }
+  ],
+  "geii-moteur-dc-pilot-par-bus-can": [
+    {
+      "image": "/assets/studies/geii-moteur-dc-pilot-par-bus-can/01-page-003.webp",
+      "title": "Architecture du shield moteur CAN",
+      "desc": "Moteur CAN — dossier de fabrication — page 3",
+      "source": "Étude technique GEII — Moteur CAN — dossier de fabrication",
+      "page": 3,
+      "chapter": 0
+    },
+    {
+      "image": "/assets/studies/geii-moteur-dc-pilot-par-bus-can/01-page-008.webp",
+      "title": "Pont en H et mesure de courant",
+      "desc": "Moteur CAN — dossier de fabrication — page 8",
+      "source": "Étude technique GEII — Moteur CAN — dossier de fabrication",
+      "page": 8,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-moteur-dc-pilot-par-bus-can/01-page-010.webp",
+      "title": "Conception du circuit de puissance",
+      "desc": "Moteur CAN — dossier de fabrication — page 10",
+      "source": "Étude technique GEII — Moteur CAN — dossier de fabrication",
+      "page": 10,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-moteur-dc-pilot-par-bus-can/01-page-013.webp",
+      "title": "Schéma et implantation du shield",
+      "desc": "Moteur CAN — dossier de fabrication — page 13",
+      "source": "Étude technique GEII — Moteur CAN — dossier de fabrication",
+      "page": 13,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-moteur-dc-pilot-par-bus-can/02-page-006.webp",
+      "title": "Procédure de test de protection",
+      "desc": "Moteur CAN — procédure de vérification — page 6",
+      "source": "Étude technique GEII — Moteur CAN — procédure de vérification",
+      "page": 6,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/geii-moteur-dc-pilot-par-bus-can/02-page-011.webp",
+      "title": "Essais fonctionnels prévus",
+      "desc": "Moteur CAN — procédure de vérification — page 11",
+      "source": "Étude technique GEII — Moteur CAN — procédure de vérification",
+      "page": 11,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/geii-moteur-dc-pilot-par-bus-can/02-page-015.webp",
+      "title": "Protocole de test des trames CAN",
+      "desc": "Moteur CAN — procédure de vérification — page 15",
+      "source": "Étude technique GEII — Moteur CAN — procédure de vérification",
+      "page": 15,
+      "chapter": 4
+    }
+  ],
+  "geii-rs510": [
+    {
+      "image": "/assets/studies/geii-rs510/01-page-001.webp",
+      "title": "Circuit de puissance et bornier RS510",
+      "desc": "RS510 — schémas électriques — page 1",
+      "source": "Étude technique GEII — RS510 — schémas électriques",
+      "page": 1,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-rs510/01-page-002.webp",
+      "title": "Câblage de commande et sécurités",
+      "desc": "RS510 — schémas électriques — page 2",
+      "source": "Étude technique GEII — RS510 — schémas électriques",
+      "page": 2,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-rs510/01-page-003.webp",
+      "title": "Schéma complémentaire des commandes",
+      "desc": "RS510 — schémas électriques — page 3",
+      "source": "Étude technique GEII — RS510 — schémas électriques",
+      "page": 3,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-rs510/02-page-004.webp",
+      "title": "Justification des sections et protections",
+      "desc": "RS510 — dimensionnement — page 4",
+      "source": "Étude technique GEII — RS510 — dimensionnement",
+      "page": 4,
+      "chapter": 3
+    }
+  ],
+  "geii-retrofit-maquette-knx": [
+    {
+      "image": "/assets/studies/geii-retrofit-maquette-knx/01-page-001.webp",
+      "title": "Architecture KNX et bus TP",
+      "desc": "KNX — implantation — page 1",
+      "source": "Étude technique GEII — KNX — implantation",
+      "page": 1,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-retrofit-maquette-knx/02-page-001.webp",
+      "title": "Folio des équipements de tableau",
+      "desc": "KNX — schémas électriques — page 1",
+      "source": "Étude technique GEII — KNX — schémas électriques",
+      "page": 1,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-retrofit-maquette-knx/02-page-002.webp",
+      "title": "Folio des équipements d’ambiance",
+      "desc": "KNX — schémas électriques — page 2",
+      "source": "Étude technique GEII — KNX — schémas électriques",
+      "page": 2,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-retrofit-maquette-knx/03-page-001.webp",
+      "title": "Procédure ETS6 : adresse 1.1.8",
+      "desc": "KNX — adressage ETS6 — page 1",
+      "source": "Étude technique GEII — KNX — adressage ETS6",
+      "page": 1,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/geii-retrofit-maquette-knx/04-page-001.webp",
+      "title": "Vérification du scan de ligne KNX",
+      "desc": "KNX — communication et scan de ligne — page 1",
+      "source": "Étude technique GEII — KNX — communication et scan de ligne",
+      "page": 1,
+      "chapter": 3
+    }
+  ],
+  "geii-robot-suiveur-de-ligne": [
+    {
+      "image": "/assets/studies/geii-robot-suiveur-de-ligne/01-page-004.webp",
+      "title": "Architecture fonctionnelle du robot",
+      "desc": "Robot analogique — dossier de conception — page 4",
+      "source": "Étude technique GEII — Robot analogique — dossier de conception",
+      "page": 4,
+      "chapter": 0
+    },
+    {
+      "image": "/assets/studies/geii-robot-suiveur-de-ligne/01-page-005.webp",
+      "title": "Schéma structurel du suiveur de ligne",
+      "desc": "Robot analogique — dossier de conception — page 5",
+      "source": "Étude technique GEII — Robot analogique — dossier de conception",
+      "page": 5,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/geii-robot-suiveur-de-ligne/01-page-007.webp",
+      "title": "Générateur triangulaire FP2",
+      "desc": "Robot analogique — dossier de conception — page 7",
+      "source": "Étude technique GEII — Robot analogique — dossier de conception",
+      "page": 7,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-robot-suiveur-de-ligne/01-page-012.webp",
+      "title": "Analyse des essais analogiques",
+      "desc": "Robot analogique — dossier de conception — page 12",
+      "source": "Étude technique GEII — Robot analogique — dossier de conception",
+      "page": 12,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/geii-robot-suiveur-de-ligne/01-page-018.webp",
+      "title": "Fiche de mesures du comparateur FP3",
+      "desc": "Robot analogique — dossier de conception — page 18",
+      "source": "Étude technique GEII — Robot analogique — dossier de conception",
+      "page": 18,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/geii-robot-suiveur-de-ligne/01-page-025.webp",
+      "title": "Simulation du générateur triangulaire",
+      "desc": "Robot analogique — dossier de conception — page 25",
+      "source": "Étude technique GEII — Robot analogique — dossier de conception",
+      "page": 25,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/geii-robot-suiveur-de-ligne/01-page-028.webp",
+      "title": "Commande moteur et signal PWM",
+      "desc": "Robot analogique — dossier de conception — page 28",
+      "source": "Étude technique GEII — Robot analogique — dossier de conception",
+      "page": 28,
+      "chapter": 3
+    }
+  ],
+  "geii-testeur-de-batterie": [
+    {
+      "image": "/assets/studies/geii-testeur-de-batterie/01-page-001.webp",
+      "title": "Chaîne FP1 à FP5 : protection, comparaison et affichage",
+      "desc": "Testeur de batterie — schéma fonctionnel — page 1",
+      "source": "Étude technique GEII — Testeur de batterie — schéma fonctionnel",
+      "page": 1,
+      "chapter": 1
+    }
+  ],
+  "betem": [
+    {
+      "image": "/assets/studies/betem/01-page-019.webp",
+      "title": "Présentation des études et du dossier CFO/CFA",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 19",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 19,
+      "chapter": 1
+    },
+    {
+      "image": "/assets/studies/betem/01-page-022.webp",
+      "title": "Étude DIALux : locaux étudiés",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 22",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 22,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/betem/01-page-024.webp",
+      "title": "Résultats d’éclairement",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 24",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 24,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/betem/01-page-027.webp",
+      "title": "Implantations CFO/CFA",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 27",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 27,
+      "chapter": 2
+    },
+    {
+      "image": "/assets/studies/betem/01-page-029.webp",
+      "title": "Architecture du bilan de puissance",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 29",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 29,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/betem/01-page-032.webp",
+      "title": "Bilans des tableaux divisionnaires",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 32",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 32,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/betem/01-page-036.webp",
+      "title": "Dimensionnement Caneco BT",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 36",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 36,
+      "chapter": 3
+    },
+    {
+      "image": "/assets/studies/betem/01-page-070.webp",
+      "title": "Annexes de calcul Caneco BT",
+      "desc": "Rapport de stage BETEM — école Jean Macé — page 70",
+      "source": "Étude technique GEII — Rapport de stage BETEM — école Jean Macé",
+      "page": 70,
+      "chapter": 4
+    }
+  ]
+}

@@ -1,0 +1,3939 @@
+[
+  {
+    "id": "accueil",
+    "source": "Accueil.html",
+    "titre": "Accueil",
+    "type": "general",
+    "sections": [
+      {
+        "titre": "Introduction",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Étudiant en BUT Génie Électrique et Informatique Industrielle, orienté systèmes énergétiques et électronique de puissance."
+          }
+        ]
+      },
+      {
+        "titre": "Contexte",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce portfolio présente mon parcours dans le domaine de l'electricité et la maîttrise de l'energie ainsi que le développement d’une compétence de BUT2 à travers la conception d’un Battery Management System (BMS) pour batteries Li-ion."
+          },
+          {
+            "type": "texte",
+            "texte": "Il met en évidence les apprentissages techniques et le recul acquis au cours de ce projet."
+          }
+        ]
+      },
+      {
+        "titre": "Ma formation, le BUT GEII",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La formation GEII me permet de développer progressivement des compétences solides en systèmes électriques et électroniques. Grâce à une alternance entre théorie et pratique, elle m’apporte une compréhension approfondie des enjeux liés à l’énergie, à l’électronique et aux systèmes techniques."
+          },
+          {
+            "type": "texte",
+            "texte": "Réferentiel des compétences GEII"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-378cea514a0a4b.webp",
+        "legende": "Illustration issue de la page Accueil",
+        "authentique": true,
+        "reference": "Accueil/35183ea95a688bd7f07ebe6b76956850.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-e7ca7a7f39918b.webp",
+        "legende": "Illustration issue de la page Accueil",
+        "authentique": true,
+        "reference": "Accueil/d183eccd67b0bed582b2a8eadcd6edb4.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-816a481ea2e706.webp",
+        "legende": "Illustration issue de la page Accueil",
+        "authentique": true,
+        "reference": "Accueil/f50a8f0621750ffbfab7cb1e7f21297e.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [],
+    "liens": []
+  },
+  {
+    "id": "bms",
+    "source": "BMS.html",
+    "titre": "Battery Management System (BMS)",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Contexte du projet BMS",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Dans le cadre de mon projet tutoré en BUT2 Génie Électrique et Informatique Industrielle, j’ai participé à la conception d’un Battery Management System (BMS) destiné à la gestion d’un pack de batteries Li-ion."
+          },
+          {
+            "type": "texte",
+            "texte": "L’objectif du projet était d’assurer la surveillance, la protection et la sécurité des cellules, tout en garantissant un fonctionnement fiable du système de stockage d’énergie."
+          }
+        ]
+      },
+      {
+        "titre": "Travail de conception réalisé",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le travail de conception s’est articulé autour des étapes suivantes :"
+          },
+          {
+            "type": "puce",
+            "texte": "Analyse du besoin et des fonctions attendues du BMS"
+          },
+          {
+            "type": "puce",
+            "texte": "Étude des contraintes liées aux batteries Li-ion (tension, sécurité, équilibrage)"
+          },
+          {
+            "type": "puce",
+            "texte": "Définition de l’architecture globale du système"
+          },
+          {
+            "type": "puce",
+            "texte": "Choix des composants électroniques adaptés"
+          },
+          {
+            "type": "puce",
+            "texte": "Conception du schéma électrique"
+          },
+          {
+            "type": "puce",
+            "texte": "Réalisation et tests du système"
+          }
+        ]
+      },
+      {
+        "titre": "Résultats obtenus",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le BMS conçu permet la surveillance des tensions des cellules et leur protection contre les conditions de fonctionnement dangereuses, telles que les surtensions ou les sous-tensions."
+          },
+          {
+            "type": "texte",
+            "texte": "Les tests réalisés ont permis de valider le bon fonctionnement global du système et la cohérence des choix de conception effectués."
+          },
+          {
+            "type": "texte",
+            "texte": "Les valeurs et caracteristiques correspondent bien au résulat attendue."
+          }
+        ]
+      },
+      {
+        "titre": "Analyse critique et apprentissages",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet m’a permis de développer une réelle méthodologie de conception appliquée à un système énergétique. J’ai approfondi ma compréhension du fonctionnement des batteries Li-ion, des enjeux de sécurité associés et des contraintes liées à la gestion de l’énergie."
+          },
+          {
+            "type": "texte",
+            "texte": "Il m’a également appris à analyser un problème technique, à justifier des choix de conception et à identifier des pistes d’amélioration pour optimiser un système existant"
+          },
+          {
+            "type": "texte",
+            "texte": "Ce projet m'a également permis de renforcer mes connaissances, notamment sur la creation et le design de pcb ainsi que la realisation et la comprehension de schéma électrique."
+          }
+        ]
+      },
+      {
+        "titre": "Lien avec le parcours BUT GEII",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet de BMS illustre concrètement la compétence Concevoir développée en BUT GEII, en mobilisant des connaissances en électronique, en systèmes électriques et en gestion de l’énergie."
+          },
+          {
+            "type": "texte",
+            "texte": "Il constitue un élément central de mon parcours en BUT2 et s’inscrit pleinement dans mon projet professionnel orienté vers les systèmes énergétiques."
+          },
+          {
+            "type": "texte",
+            "texte": "Des éléments de la compétence Vérifier ont également été mobilisés lors des phases de tests et de validation du système."
+          }
+        ]
+      },
+      {
+        "titre": "Compétences mobilisées",
+        "blocs": []
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Concevoir un système en fiabilisant les solutions proposées"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC21.01 : Proposer des solutions techniques liées à l’analyse fonctionnelle"
+          },
+          {
+            "type": "puce",
+            "texte": "AC21.02 : Dé risquer les solutions techniques retenues"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Mettre en place un protocole de tests pour valider le fonctionnement d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC22.01 : Identifier les tests et mesures"
+          },
+          {
+            "type": "puce",
+            "texte": "AC22.02 : Certifier le fonctionnement"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence faiblement mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Intervenir sur un système pour effectuer une opération de maintenance"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissage critique"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.03 : Diagnostiquer un dysfonctionnement"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-40deb7c4fbbdb9.webp",
+        "legende": "Illustration issue de la page Battery Management System (BMS)",
+        "authentique": true,
+        "reference": "BMS/eca0e98554976e3d5fe73c85d4972028.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-1ed60ec4c59c2e.webp",
+        "legende": "Illustration issue de la page Battery Management System (BMS)",
+        "authentique": true,
+        "reference": "BMS/1818af08574fd55e283c7bca8999a189.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-615388cdac4b0d.webp",
+        "legende": "Illustration issue de la page Battery Management System (BMS)",
+        "authentique": true,
+        "reference": "BMS/c7a5d337d225c2affb0fc1bf54dad42d.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-3ffc3107d220a3.webp",
+        "legende": "Illustration issue de la page Battery Management System (BMS)",
+        "authentique": true,
+        "reference": "BMS/ae35d7d726cf3160a60f50700f66c48d.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-5eff485b4859ec.webp",
+        "legende": "Illustration issue de la page Battery Management System (BMS)",
+        "authentique": true,
+        "reference": "BMS/cb73aea2502789f6386edf192f4ca572.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Copie de Rapport du Projet Tutoré (6).pdf",
+        "url": "https://drive.google.com/file/d/1DUZowOv8VdRwOAyJHNs0hD_KosBUeGAz/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "capteur-de-temperature",
+    "source": "Capteur de Temperature.html",
+    "titre": "Capteur de température",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet consiste à concevoir un thermomètre numérique capable de mesurer une température et de l’afficher sur un écran LCD"
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le système repose sur une chaîne fonctionnelle :"
+          },
+          {
+            "type": "puce",
+            "texte": "Capteur LM335 → mesure de la température"
+          },
+          {
+            "type": "puce",
+            "texte": "Conditionnement analogique (soustracteur + amplificateur)"
+          },
+          {
+            "type": "puce",
+            "texte": "Conversion analogique-numérique (CAN)"
+          },
+          {
+            "type": "puce",
+            "texte": "Traitement par microcontrôleur (STM32)"
+          },
+          {
+            "type": "puce",
+            "texte": "Affichage sur écran LCD"
+          }
+        ]
+      },
+      {
+        "titre": "Démarche de conception",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet a été réalisé en plusieurs étapes :"
+          },
+          {
+            "type": "puce",
+            "texte": "définition du cahier des charges (0°C à 50°C, affichage LCD)"
+          },
+          {
+            "type": "puce",
+            "texte": "conception électronique (capteur + amplification)"
+          },
+          {
+            "type": "puce",
+            "texte": "dimensionnement des composants (résistances, gain)"
+          },
+          {
+            "type": "puce",
+            "texte": "programmation du microcontrôleur"
+          },
+          {
+            "type": "puce",
+            "texte": "réalisation et routage de la carte"
+          }
+        ]
+      },
+      {
+        "titre": "Fonctionnement électronique et logiciel",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le signal du capteur est :"
+          },
+          {
+            "type": "puce",
+            "texte": "adapté et amplifié (montage AOP)"
+          },
+          {
+            "type": "puce",
+            "texte": "converti en numérique via le CAN"
+          },
+          {
+            "type": "puce",
+            "texte": "traité par le microcontrôleur"
+          },
+          {
+            "type": "texte",
+            "texte": "Le programme :"
+          },
+          {
+            "type": "puce",
+            "texte": "récupère la valeur"
+          },
+          {
+            "type": "puce",
+            "texte": "la convertit en température"
+          },
+          {
+            "type": "puce",
+            "texte": "l’affiche sur LCD (format texte)"
+          }
+        ]
+      },
+      {
+        "titre": "Validation expérimentale et Analyse technique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Des mesures ont été réalisées pour valider :"
+          },
+          {
+            "type": "puce",
+            "texte": "la tension en sortie du capteur"
+          },
+          {
+            "type": "puce",
+            "texte": "la précision du montage analogique"
+          },
+          {
+            "type": "puce",
+            "texte": "la cohérence température ↔ tension"
+          },
+          {
+            "type": "texte",
+            "texte": "Points clés du projet :"
+          },
+          {
+            "type": "puce",
+            "texte": "précision dépend du capteur et du gain"
+          },
+          {
+            "type": "puce",
+            "texte": "importance du conditionnement analogique"
+          },
+          {
+            "type": "puce",
+            "texte": "interaction forte entre électronique et programmation"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse critique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Points forts :"
+          },
+          {
+            "type": "puce",
+            "texte": "projet complet (capteur → affichage)"
+          },
+          {
+            "type": "puce",
+            "texte": "combinaison électronique + informatique"
+          },
+          {
+            "type": "puce",
+            "texte": "réalisation concrète"
+          },
+          {
+            "type": "texte",
+            "texte": "Limite :"
+          },
+          {
+            "type": "puce",
+            "texte": "précision dépend des composants et du calibrage"
+          },
+          {
+            "type": "puce",
+            "texte": "sensibilité aux erreurs de conversion"
+          }
+        ]
+      },
+      {
+        "titre": "Concevoir",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "conception de la chaîne de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "choix des composants et dimensionnement"
+          },
+          {
+            "type": "puce",
+            "texte": "développement du système complet"
+          }
+        ]
+      },
+      {
+        "titre": "Vérifier",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "mesures expérimentales"
+          },
+          {
+            "type": "puce",
+            "texte": "validation de la précision"
+          },
+          {
+            "type": "texte",
+            "texte": "👉Apprentissages critiques :"
+          },
+          {
+            "type": "puce",
+            "texte": "Concevoir un système de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "Vérifier la cohérence des résultats"
+          }
+        ]
+      },
+      {
+        "titre": "Compétences",
+        "blocs": []
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Mener une conception partielle intégrant une démarche projet"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.01 : Identifier un besoin et ses contraintes"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.02 : Décrire le fonctionnement d’un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.03 : Mettre en œuvre une solution simple"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Effectuer les tests et mesures nécessaires à une vérification d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC12.01 : Identifier les grandeurs à mesurer"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.02 : Mettre en œuvre un protocole de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.03 : Exploiter les résultats"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-40deb7c4fbbdb9.webp",
+        "legende": "Illustration issue de la page Capteur de température",
+        "authentique": true,
+        "reference": "Capteur de Temperature/eca0e98554976e3d5fe73c85d4972028.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-076d33b946e2eb.webp",
+        "legende": "Illustration issue de la page Capteur de température",
+        "authentique": true,
+        "reference": "Capteur de Temperature/dd88392079c62f593260ad38b7fc0085.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-9c5820659b9c74.webp",
+        "legende": "Illustration issue de la page Capteur de température",
+        "authentique": true,
+        "reference": "Capteur de Temperature/606e37e41d28a67f0b4d2cb6acf42c14.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-16934f4496b960.webp",
+        "legende": "Illustration issue de la page Capteur de température",
+        "authentique": true,
+        "reference": "Capteur de Temperature/2d66650a237288cda75d9aa729b62a5e.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-396d210ec26803.webp",
+        "legende": "Illustration issue de la page Capteur de température",
+        "authentique": true,
+        "reference": "Capteur de Temperature/a472b2ad79f5758913560f5727d079f3.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Rapport du Projet Tutoré (1).pdf",
+        "url": "https://drive.google.com/file/d/1g454FphzkkJfOsuCZOv01eCxW6a3tZzl/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "cblage-domestique",
+    "source": "Cblage domestique.html",
+    "titre": "Câblage domestique",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet consiste à réaliser et valider une installation électrique domestique comprenant deux zones : un garage et un couloir."
+          },
+          {
+            "type": "texte",
+            "texte": "L’objectif est de concevoir une installation fonctionnelle respectant la norme NF C 15-100."
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement et choix technique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet consiste à réaliser et valider une installation électrique domestique comprenant deux zones : un garage et un couloir."
+          },
+          {
+            "type": "texte",
+            "texte": "L’objectif est de concevoir une installation fonctionnelle respectant la norme NF C 15-100."
+          },
+          {
+            "type": "texte",
+            "texte": "L’installation comprend :"
+          },
+          {
+            "type": "puce",
+            "texte": "un tableau électrique avec protection différentielle"
+          },
+          {
+            "type": "puce",
+            "texte": "des circuits prises et éclairage (garage)"
+          },
+          {
+            "type": "puce",
+            "texte": "un système va-et-vient"
+          },
+          {
+            "type": "puce",
+            "texte": "un télérupteur pour le couloir"
+          },
+          {
+            "type": "texte",
+            "texte": "=> Les schémas de câblage ont été réalisés en amont afin de définir le fonctionnement global du système."
+          },
+          {
+            "type": "texte",
+            "texte": "Les choix techniques ont été réalisés en respectant la norme :"
+          },
+          {
+            "type": "puce",
+            "texte": "circuit prises : 2,5 mm² / 16-20 A"
+          },
+          {
+            "type": "puce",
+            "texte": "circuit éclairage : 1,5 mm² / 10-16 A"
+          },
+          {
+            "type": "puce",
+            "texte": "protection différentielle 30 mA"
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement et choix technique",
+        "blocs": []
+      },
+      {
+        "titre": "Validation expérimentale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Un cahier de recette a été réalisé afin de valider :"
+          },
+          {
+            "type": "puce",
+            "texte": "la continuité des circuits"
+          },
+          {
+            "type": "puce",
+            "texte": "le bon fonctionnement des disjoncteurs"
+          },
+          {
+            "type": "puce",
+            "texte": "l’absence de défaut (court-circuit, mauvais câblage)"
+          },
+          {
+            "type": "puce",
+            "texte": "le fonctionnement des équipements (prises, lampes, interrupteurs)"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse critique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet a permis de mettre en évidence l’importance :"
+          },
+          {
+            "type": "puce",
+            "texte": "du respect des normes"
+          },
+          {
+            "type": "puce",
+            "texte": "de la rigueur dans le câblage"
+          },
+          {
+            "type": "puce",
+            "texte": "de la validation par tests"
+          },
+          {
+            "type": "texte",
+            "texte": "Une amélioration possible serait d’optimiser l’organisation du câblage pour faciliter la maintenance."
+          }
+        ]
+      },
+      {
+        "titre": "Lien avec la compétence Concevoir",
+        "blocs": []
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Mener une conception partielle intégrant une démarche projet"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.01 : Identifier un besoin et ses contraintes"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.02 : Décrire le fonctionnement d’un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.03 : Mettre en œuvre une solution simple"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Effectuer les tests et mesures nécessaires à une vérification d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC12.01 : Identifier les grandeurs à mesurer"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.02 : Mettre en œuvre un protocole de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.03 : Exploiter les résultats"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Câblage domestique",
+        "authentique": true,
+        "reference": "Cblage domestique/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-a889243344d9e9.webp",
+        "legende": "Illustration issue de la page Câblage domestique",
+        "authentique": true,
+        "reference": "Cblage domestique/c35ed2da4e37442a81778ce57c6bf394.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-1dec40181cacac.webp",
+        "legende": "Illustration issue de la page Câblage domestique",
+        "authentique": true,
+        "reference": "Cblage domestique/34804563b355221dcf9d03641fd7fa84.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-b4cfd9e69576b1.webp",
+        "legende": "Illustration issue de la page Câblage domestique",
+        "authentique": true,
+        "reference": "Cblage domestique/2d0c22767a5acc8b198a0d375b80e5d6.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-055e9cbd21b1a4.webp",
+        "legende": "Illustration issue de la page Câblage domestique",
+        "authentique": true,
+        "reference": "Cblage domestique/2a31bd68a297680145001c663b47869d.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Cahier_de_recette Turc De Moura El Hajjaji PDF.pdf",
+        "url": "https://drive.google.com/file/d/1R83QiPsH7ox0auRC6oEtt55G6OJZbeSJ/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "concevoir",
+    "source": "Concevoir_.html",
+    "titre": "Concevoir",
+    "type": "competence",
+    "sections": [
+      {
+        "titre": "la partie Génie Electrique et Informatique Industrielle d'un système",
+        "blocs": []
+      },
+      {
+        "titre": "Introduction de la compétence",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La compétence Concevoir consiste à analyser un besoin, définir une solution technique adaptée et mettre en œuvre un système électrique ou électronique répondant à des contraintes fonctionnelles, techniques et de sécurité."
+          },
+          {
+            "type": "texte",
+            "texte": "Découvrez les projets associés à cette compétence"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Battery management system"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Dé électronique"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Câblage domestique"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Diemmensionnemetnt électrique"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Testeur de batterie"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Capteur de température"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Robot suiveur de ligne"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-4a6c5ebf2dbc96.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /8083788cc782d66e072e5b3ad3f40afb.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-1ed60ec4c59c2e.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /1818af08574fd55e283c7bca8999a189.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-567fafb92dbd27.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /b3f149f64b659ee0d71b224fd75b0d6f.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-e236b7a1e703f0.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /647f2c128f66b9c0a91feed3c181c006.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-a9e1e1e4311a27.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /fbdc5a9535288f963326c5aa7eb789fe.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-c8f9a1ea00fc0f.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /0aed886fa5b999feacf82db252f1c16f.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-076d33b946e2eb.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /dd88392079c62f593260ad38b7fc0085.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-d5a6e8c4c4653e.webp",
+        "legende": "Illustration issue de la page Concevoir",
+        "authentique": true,
+        "reference": "Concevoir /399132063d2b9c1d68cd556fe51216c6.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [],
+    "liens": []
+  },
+  {
+    "id": "contacts",
+    "source": "Contacts.html",
+    "titre": "Contacts",
+    "type": "general",
+    "sections": [
+      {
+        "titre": "Envie de me contacter ?",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Cliquez"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez"
+          },
+          {
+            "type": "texte",
+            "texte": "Mail étudiant"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez"
+          },
+          {
+            "type": "texte",
+            "texte": "Mail personnel"
+          }
+        ]
+      },
+      {
+        "titre": "Contacts",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "hicham.el-hajjaji@etu.umontpellier.fr"
+          },
+          {
+            "type": "texte",
+            "texte": "07 77 38 99 22"
+          },
+          {
+            "type": "texte",
+            "texte": "Montpellier"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-baf38ed109df11.webp",
+        "legende": "Illustration issue de la page Contacts",
+        "authentique": true,
+        "reference": "Contacts/74cb683b612a0d2848dd9e50a879eba4.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [],
+    "liens": [
+      {
+        "titre": "Cliquez",
+        "url": "http://www.linkedin.com/in/hicham-el-hajjaji"
+      },
+      {
+        "titre": "Cliquez",
+        "url": "https://outlook.office.com/mail/deeplink/compose?to=hicham.el-hajjaji@etu.umontpellier.fr&subject=Contact%20Portfolio"
+      }
+    ]
+  },
+  {
+    "id": "d-lectronique",
+    "source": "D lectronique.html",
+    "titre": "Dé électronique",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation du projet",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet consiste à concevoir un dé électronique permettant de générer un nombre aléatoire compris entre 1 et 6, puis de l’afficher à l’aide d’un afficheur 7 segments."
+          },
+          {
+            "type": "texte",
+            "texte": "Ce projet s’inscrit dans le cadre du développement de la compétence du BUT1 Concevoir un système électrique et électronique."
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement et choix technique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le système repose sur un compteur modulo 6 qui génère les valeurs de 0 à 5. Un signal d’horloge permet de faire évoluer le compteur, et l’arrêt de celui-ci permet de figer une valeur."
+          },
+          {
+            "type": "texte",
+            "texte": "Les sorties du compteur sont ensuite adaptées pour piloter un afficheur 7 segments et afficher les valeurs de 1 à 6."
+          },
+          {
+            "type": "texte",
+            "texte": "Le choix d’un compteur modulo 6 permet de limiter simplement les valeurs générées."
+          },
+          {
+            "type": "texte",
+            "texte": "L’utilisation d’un afficheur 7 segments assure une lecture claire et standardisée du résultat."
+          }
+        ]
+      },
+      {
+        "titre": "Validation expérimentale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Des fiches de mesures ont été réalisées afin de vérifier :"
+          },
+          {
+            "type": "puce",
+            "texte": "le bon fonctionnement du compteur"
+          },
+          {
+            "type": "puce",
+            "texte": "la cohérence des valeurs affichées"
+          },
+          {
+            "type": "puce",
+            "texte": "la stabilité du système"
+          }
+        ]
+      },
+      {
+        "titre": "Lien avec la compétence Concevoir",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet mobilise la compétence Concevoir, en mettant en œuvre :"
+          },
+          {
+            "type": "puce",
+            "texte": "une analyse fonctionnelle simple"
+          },
+          {
+            "type": "puce",
+            "texte": "le choix de solutions techniques adaptées"
+          },
+          {
+            "type": "puce",
+            "texte": "la réalisation et la validation d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Mener une conception partielle intégrant une démarche projet"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.01 : Identifier un besoin et ses contraintes"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.02 : Décrire le fonctionnement d’un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.03 : Mettre en œuvre une solution simple"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Effectuer les tests et mesures nécessaires à une vérification d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC12.01 : Identifier les grandeurs à mesurer"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.02 : Mettre en œuvre un protocole de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.03 : Exploiter les résultats"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Dé électronique",
+        "authentique": true,
+        "reference": "D lectronique/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-567fafb92dbd27.webp",
+        "legende": "Illustration issue de la page Dé électronique",
+        "authentique": true,
+        "reference": "D lectronique/b3f149f64b659ee0d71b224fd75b0d6f.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Fiche_de_mesures (1).pdf",
+        "url": "https://drive.google.com/file/d/1_CyCRcwsvjJoxY6neUjI_IPD1tNE4kXB/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "dimensionnement-lectrique",
+    "source": "Dimensionnement lectrique.html",
+    "titre": "Dimensionnement électrique",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet consiste à concevoir le schéma électrique complet d’une installation domestique, en respectant les normes de sécurité et de dimensionnement."
+          }
+        ]
+      },
+      {
+        "titre": "Principe",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "L’installation est organisée autour d’un tableau électrique principal comprenant :"
+          },
+          {
+            "type": "puce",
+            "texte": "un disjoncteur de branchement 500 mA"
+          },
+          {
+            "type": "puce",
+            "texte": "plusieurs interrupteurs différentiels 30 mA"
+          },
+          {
+            "type": "puce",
+            "texte": "des disjoncteurs divisionnaires pour chaque circuit"
+          },
+          {
+            "type": "texte",
+            "texte": "Les circuits alimentent :"
+          },
+          {
+            "type": "puce",
+            "texte": "prises de courant"
+          },
+          {
+            "type": "puce",
+            "texte": "éclairage"
+          },
+          {
+            "type": "puce",
+            "texte": "électroménager (lave-linge, four, plaque…)"
+          },
+          {
+            "type": "puce",
+            "texte": "chauffage et chauffe-eau"
+          },
+          {
+            "type": "texte",
+            "texte": "L’ensemble est réparti sur 3 rangées distinctes pour une meilleure organisation"
+          }
+        ]
+      },
+      {
+        "titre": "Démarche de conception",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet repose sur :"
+          },
+          {
+            "type": "puce",
+            "texte": "l’analyse des besoins d’une habitation"
+          },
+          {
+            "type": "puce",
+            "texte": "le découpage en circuits spécialisés"
+          },
+          {
+            "type": "puce",
+            "texte": "le choix des protections adaptées"
+          },
+          {
+            "type": "puce",
+            "texte": "le dimensionnement des sections de câbles"
+          }
+        ]
+      },
+      {
+        "titre": "Conformité et sécurité",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "L’installation a été conçue selon la norme NF C 15-100, qui impose :"
+          },
+          {
+            "type": "puce",
+            "texte": "protection différentielle des personnes (30 mA)"
+          },
+          {
+            "type": "puce",
+            "texte": "mise à la terre obligatoire"
+          },
+          {
+            "type": "puce",
+            "texte": "nombre minimal de prises par pièce"
+          },
+          {
+            "type": "puce",
+            "texte": "respect des sections de conducteurs"
+          },
+          {
+            "type": "texte",
+            "texte": "La présence d’un parafoudre est également prise en compte (zone orageuse)"
+          }
+        ]
+      },
+      {
+        "titre": "Validation et Analyse technique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Une analyse de conformité a été réalisée :"
+          },
+          {
+            "type": "puce",
+            "texte": "vérification des protections"
+          },
+          {
+            "type": "puce",
+            "texte": "cohérence des circuits"
+          },
+          {
+            "type": "puce",
+            "texte": "respect des normes"
+          },
+          {
+            "type": "texte",
+            "texte": "Résultat :"
+          },
+          {
+            "type": "texte",
+            "texte": "L’installation est globalement conforme à la norme NF C 15-100, avec une seule réserve sur la section du conducteur de terre du parafoudre"
+          },
+          {
+            "type": "texte",
+            "texte": "Points importants :"
+          },
+          {
+            "type": "puce",
+            "texte": "bonne organisation du tableau (3 rangées)"
+          },
+          {
+            "type": "puce",
+            "texte": "séparation des circuits pour la sécurité"
+          },
+          {
+            "type": "puce",
+            "texte": "dimensionnement cohérent"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse critique",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "projet réaliste et complet"
+          },
+          {
+            "type": "puce",
+            "texte": "respect des normes"
+          },
+          {
+            "type": "puce",
+            "texte": "vision globale d’une installation"
+          },
+          {
+            "type": "texte",
+            "texte": "Limite :"
+          },
+          {
+            "type": "puce",
+            "texte": "vérification terrain partielle"
+          },
+          {
+            "type": "puce",
+            "texte": "certains éléments à confirmer"
+          }
+        ]
+      },
+      {
+        "titre": "Compétences",
+        "blocs": []
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Mener une conception partielle intégrant une démarche projet"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.01 : Identifier un besoin et ses contraintes"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.02 : Décrire le fonctionnement d’un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.03 : Mettre en œuvre une solution simple"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Effectuer les tests et mesures nécessaires à une vérification d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC12.01 : Identifier les grandeurs à mesurer"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.02 : Mettre en œuvre un protocole de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.03 : Exploiter les résultats"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-40deb7c4fbbdb9.webp",
+        "legende": "Illustration issue de la page Dimensionnement électrique",
+        "authentique": true,
+        "reference": "Dimensionnement lectrique/eca0e98554976e3d5fe73c85d4972028.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-a9e1e1e4311a27.webp",
+        "legende": "Illustration issue de la page Dimensionnement électrique",
+        "authentique": true,
+        "reference": "Dimensionnement lectrique/fbdc5a9535288f963326c5aa7eb789fe.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-9936c5745217bf.webp",
+        "legende": "Illustration issue de la page Dimensionnement électrique",
+        "authentique": true,
+        "reference": "Dimensionnement lectrique/487741cc4fa0051347868cb3afdae73e.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-c73fab078dd18b.webp",
+        "legende": "Illustration issue de la page Dimensionnement électrique",
+        "authentique": true,
+        "reference": "Dimensionnement lectrique/e8fcfce8b291f6f5ab3c82e025587c21.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "schema_elec_maison.pdf",
+        "url": "https://drive.google.com/file/d/1D7KC4obIZHeb4-bVuVoJxe76NYS03hvX/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "installer",
+    "source": "Installer.html",
+    "titre": "Installer",
+    "type": "competence",
+    "sections": [
+      {
+        "titre": "tout ou partie d’un système de production, de conversion et de gestion d’énergie",
+        "blocs": []
+      },
+      {
+        "titre": "Introduction",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La compétence Installer consiste à mettre en œuvre un système électrique ou électronique en respectant les schémas, les normes et les règles de sécurité. Elle implique la réalisation du câblage, l’intégration des composants ainsi que la mise en service du système."
+          },
+          {
+            "type": "texte",
+            "texte": "Cette compétence est mobilisée à travers différents projets réalisés en BUT GEII, notamment lors de la réalisation de maquettes de câblage électrique et de systèmes automatisés."
+          },
+          {
+            "type": "texte",
+            "texte": "Découvrez les projets associés à cette compétence"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Rétrofit d'une maquette KNX"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Platine de démarage moteur via variateur de fréquence RS510"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Robot suiveur de ligne"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Câblage domestique"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-4a6c5ebf2dbc96.webp",
+        "legende": "Illustration issue de la page Installer",
+        "authentique": true,
+        "reference": "Installer/8083788cc782d66e072e5b3ad3f40afb.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-8cdac292d280fe.webp",
+        "legende": "Illustration issue de la page Installer",
+        "authentique": true,
+        "reference": "Installer/6af8730e11033abaf831f923bcb656f3.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-24c2b14dcbb7de.webp",
+        "legende": "Illustration issue de la page Installer",
+        "authentique": true,
+        "reference": "Installer/db8628fffbbb4b4402faaa56b765b16b.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-d5a6e8c4c4653e.webp",
+        "legende": "Illustration issue de la page Installer",
+        "authentique": true,
+        "reference": "Installer/399132063d2b9c1d68cd556fe51216c6.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-e236b7a1e703f0.webp",
+        "legende": "Illustration issue de la page Installer",
+        "authentique": true,
+        "reference": "Installer/647f2c128f66b9c0a91feed3c181c006.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [],
+    "liens": []
+  },
+  {
+    "id": "maintenir",
+    "source": "Maintenir.html",
+    "titre": "Maintenir",
+    "type": "competence",
+    "sections": [
+      {
+        "titre": "Assurer le maintien en condition opérationnelle d'un système",
+        "blocs": []
+      },
+      {
+        "titre": "Introduction",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La compétence Maintenir consiste à diagnostiquer un dysfonctionnement sur un système électrique ou électronique, à en identifier les causes et à proposer une solution corrective. Elle s’appuie sur une démarche d’analyse rigoureuse, combinant observations, mesures et compréhension du système."
+          },
+          {
+            "type": "texte",
+            "texte": "Cette compétence est mobilisée lors des phases de diagnostic et de résolution de problèmes rencontrés sur différents projets réalisés en BUT GEII."
+          },
+          {
+            "type": "texte",
+            "texte": "Découvrez les projets associés à cette compétence"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez"
+          },
+          {
+            "type": "texte",
+            "texte": "Malaxeur"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Platine de démarage moteur via variateur de fréquence RS510"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez !"
+          },
+          {
+            "type": "texte",
+            "texte": "Battery management system"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-4a6c5ebf2dbc96.webp",
+        "legende": "Illustration issue de la page Maintenir",
+        "authentique": true,
+        "reference": "Maintenir/8083788cc782d66e072e5b3ad3f40afb.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-3bce6f518d6d00.webp",
+        "legende": "Illustration issue de la page Maintenir",
+        "authentique": true,
+        "reference": "Maintenir/42a3e98f221a6fdbec1ef05682309dee.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-24c2b14dcbb7de.webp",
+        "legende": "Illustration issue de la page Maintenir",
+        "authentique": true,
+        "reference": "Maintenir/db8628fffbbb4b4402faaa56b765b16b.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-1ed60ec4c59c2e.webp",
+        "legende": "Illustration issue de la page Maintenir",
+        "authentique": true,
+        "reference": "Maintenir/1818af08574fd55e283c7bca8999a189.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [],
+    "liens": []
+  },
+  {
+    "id": "malaxeur",
+    "source": "Malaxeur.html",
+    "titre": "Malaxeur",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet consiste à vérifier le bon fonctionnement d’un système automatisé de type malaxeur, en s’appuyant sur un cahier de recette, des mesures expérimentales et une analyse de dysfonctionnement."
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le malaxeur fonctionne selon un cycle automatisé en plusieurs phases :"
+          },
+          {
+            "type": "puce",
+            "texte": "montée en vitesse"
+          },
+          {
+            "type": "puce",
+            "texte": "phases d’attente"
+          },
+          {
+            "type": "puce",
+            "texte": "décélération"
+          },
+          {
+            "type": "puce",
+            "texte": "arrêt contrôlé avec position de la pale"
+          },
+          {
+            "type": "texte",
+            "texte": "L’ensemble est piloté par un automate, avec gestion :"
+          },
+          {
+            "type": "puce",
+            "texte": "de la sécurité"
+          },
+          {
+            "type": "puce",
+            "texte": "de la vitesse"
+          },
+          {
+            "type": "puce",
+            "texte": "de la température"
+          }
+        ]
+      },
+      {
+        "titre": "Démarche de vérification et Validation expérimentale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Un plan de test complet a été mis en place pour valider chaque fonction :"
+          },
+          {
+            "type": "puce",
+            "texte": "sécurité (arrêt en cas de défaut)"
+          },
+          {
+            "type": "puce",
+            "texte": "cycle de fonctionnement (phases PH0 à PH7)"
+          },
+          {
+            "type": "puce",
+            "texte": "conditions de démarrage"
+          },
+          {
+            "type": "puce",
+            "texte": "vitesse (rampe d’accélération/décélération)"
+          },
+          {
+            "type": "puce",
+            "texte": "positionnement de la pale"
+          },
+          {
+            "type": "texte",
+            "texte": "Tous les tests sont décrits dans un cahier de recette structuré"
+          },
+          {
+            "type": "texte",
+            "texte": "Les tests ont permis de valider :"
+          },
+          {
+            "type": "puce",
+            "texte": "fonctionnement correct du cycle"
+          },
+          {
+            "type": "puce",
+            "texte": "respect des rampes de vitesse (≈10 s accélération, ≈5 s décélération)"
+          },
+          {
+            "type": "puce",
+            "texte": "arrêt précis de la pale"
+          },
+          {
+            "type": "puce",
+            "texte": "temps de cycle ≈ 36,7 s"
+          },
+          {
+            "type": "texte",
+            "texte": "La majorité des fonctions sont validées, avec des écarts faibles (<5%)"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse de dysfonctionnement",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Une étude a été réalisée sur la chaîne de mesure de température (PT100) :"
+          },
+          {
+            "type": "puce",
+            "texte": "vérification matérielle (résistance cohérente ≈108 Ω à 21°C)"
+          },
+          {
+            "type": "puce",
+            "texte": "détection d’un conditionneur défectueux (tension nulle)"
+          },
+          {
+            "type": "puce",
+            "texte": "correction d’erreurs logicielles (conversion et adressage)"
+          }
+        ]
+      },
+      {
+        "titre": "Mesures et précision",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Plusieurs méthodes de mesure ont été comparées :"
+          },
+          {
+            "type": "puce",
+            "texte": "2 fils"
+          },
+          {
+            "type": "puce",
+            "texte": "2 fils + connecteur"
+          },
+          {
+            "type": "puce",
+            "texte": "4 fils"
+          },
+          {
+            "type": "puce",
+            "texte": "multimètre"
+          },
+          {
+            "type": "texte",
+            "texte": "Résultat :"
+          },
+          {
+            "type": "puce",
+            "texte": "méthode 4 fils = la plus précise"
+          },
+          {
+            "type": "puce",
+            "texte": "erreur jusqu’à 21% en 2 fils + connecteur"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse critique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet met en évidence :"
+          },
+          {
+            "type": "puce",
+            "texte": "l’importance d’un protocole de test rigoureux"
+          },
+          {
+            "type": "puce",
+            "texte": "l’impact du câblage sur la précision des mesures"
+          },
+          {
+            "type": "puce",
+            "texte": "la nécessité de croiser tests matériels et logiciels"
+          },
+          {
+            "type": "texte",
+            "texte": "Limite :"
+          },
+          {
+            "type": "puce",
+            "texte": "fonction température non validée (défaut matériel)"
+          }
+        ]
+      },
+      {
+        "titre": "Lien avec la compétence Vérifier",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet illustre la compétence Vérifier, en mettant en œuvre :"
+          },
+          {
+            "type": "puce",
+            "texte": "un protocole de test structuré"
+          },
+          {
+            "type": "puce",
+            "texte": "des mesures expérimentales"
+          },
+          {
+            "type": "puce",
+            "texte": "l’analyse et la correction de dysfonctionnements"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques :"
+          },
+          {
+            "type": "puce",
+            "texte": "Identifier les tests et mesures"
+          },
+          {
+            "type": "puce",
+            "texte": "Valider le fonctionnement d’un système"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Malaxeur",
+        "authentique": true,
+        "reference": "Malaxeur/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-c19ef04f865861.webp",
+        "legende": "Illustration issue de la page Malaxeur",
+        "authentique": true,
+        "reference": "Malaxeur/4bc0d0fa8d34d8a25cf475eaa0b17cbc.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-3bce6f518d6d00.webp",
+        "legende": "Illustration issue de la page Malaxeur",
+        "authentique": true,
+        "reference": "Malaxeur/42a3e98f221a6fdbec1ef05682309dee.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-bfd47834cd975f.webp",
+        "legende": "Illustration issue de la page Malaxeur",
+        "authentique": true,
+        "reference": "Malaxeur/ba6d985f44058de02da6a8d6f7ed9a1f.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Fiche_interventionEL_HAJJAJI_TURC_DE_MOURA.pdf",
+        "url": "https://drive.google.com/file/d/1nJmjEFJMxEqqD5jhuj3RIfsiIkqKrVM1/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "Fiche_de_mesuresEL_HAJJAJI_TURC_DE_MOURA.pdf",
+        "url": "https://drive.google.com/file/d/11otl28vVexrf2WJGnA72d6wbUcVcNZrQ/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "MalaxeurCDR_finale.pdf",
+        "url": "https://drive.google.com/file/d/1zzIyj3ZAjn2wBIwyn2PBY2DuhCdM-de4/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "mes-comptences",
+    "source": "Mes comptences.html",
+    "titre": "Mes compétences",
+    "type": "competence",
+    "sections": [
+      {
+        "titre": "Introduction générale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La formation BUT2 EME GEII repose sur le développement progressif de quatre compétences professionnelles : Concevoir, Vérifier, Installer et Maintenir des systèmes électriques et électroniques."
+          },
+          {
+            "type": "texte",
+            "texte": "Les deux icônes indiquent lorsque les projets sont réalisé en autonomie ou en SAE (Situation d'Apprentissage et d'Evaluation)"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-40deb7c4fbbdb9.webp",
+        "legende": "Illustration issue de la page Mes compétences",
+        "authentique": true,
+        "reference": "Mes comptences/eca0e98554976e3d5fe73c85d4972028.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Mes compétences",
+        "authentique": true,
+        "reference": "Mes comptences/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-a99e7f1f112a15.webp",
+        "legende": "Illustration issue de la page Mes compétences",
+        "authentique": true,
+        "reference": "Mes comptences/baa7edf7f37138af0deea668cf806ee3.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-c9b0f19d19b885.webp",
+        "legende": "Illustration issue de la page Mes compétences",
+        "authentique": true,
+        "reference": "Mes comptences/3925d91364983b516a3822920e7bc5ae.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-3573e8e9e5b024.webp",
+        "legende": "Illustration issue de la page Mes compétences",
+        "authentique": true,
+        "reference": "Mes comptences/b16bd9ea4f9d28abc303963e7e991661.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-9848b3aa3213a1.webp",
+        "legende": "Illustration issue de la page Mes compétences",
+        "authentique": true,
+        "reference": "Mes comptences/8a4b90634e9e0d36d844d51c3ecb4806.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "BUT_GEII-Referentiel_Competences (1).pdf",
+        "url": "https://drive.google.com/file/d/13J11WoDqNyCcR_-UlXHvGzFSlMUQkEzQ/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "moteur-dc-pilot-par-bus-can",
+    "source": "Moteur DC pilot par bus CAN.html",
+    "titre": "Moteur DC piloté par bus CAN",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation du projet",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet consiste à concevoir, fabriquer et tester un prototype de carte électronique permettant de piloter un moteur à courant continu via une interface Bus CAN."
+          },
+          {
+            "type": "texte",
+            "texte": "L’objectif est de réaliser un système complet intégrant à la fois la partie puissance (commande moteur), la partie acquisition (mesure courant/tension) et la communication (CAN)."
+          }
+        ]
+      },
+      {
+        "titre": "Fonctionnement du système",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le système repose sur plusieurs fonctions principales :"
+          },
+          {
+            "type": "puce",
+            "texte": "FP1 / FP2 : Commande moteurPont en H (DRV8251A)Pilotage en vitesse et sens de rotation"
+          },
+          {
+            "type": "puce",
+            "texte": "Pont en H (DRV8251A)"
+          },
+          {
+            "type": "puce",
+            "texte": "Pilotage en vitesse et sens de rotation"
+          },
+          {
+            "type": "puce",
+            "texte": "FP3 : Mesure du courant moteurAmplification via AOPConversion analogique vers µC"
+          },
+          {
+            "type": "puce",
+            "texte": "Amplification via AOP"
+          },
+          {
+            "type": "puce",
+            "texte": "Conversion analogique vers µC"
+          },
+          {
+            "type": "puce",
+            "texte": "FP4 : ProtectionMOSFET en diode idéale contre inversion de polarité"
+          },
+          {
+            "type": "puce",
+            "texte": "MOSFET en diode idéale contre inversion de polarité"
+          },
+          {
+            "type": "puce",
+            "texte": "FP5 : Mesure de tensionDiviseur + AOP pour adaptation ADC"
+          },
+          {
+            "type": "puce",
+            "texte": "Diviseur + AOP pour adaptation ADC"
+          },
+          {
+            "type": "puce",
+            "texte": "FP6 : Communication CANTransceiver CAN (TCAN3414)Gestion des trames et terminaison"
+          },
+          {
+            "type": "puce",
+            "texte": "Transceiver CAN (TCAN3414)"
+          },
+          {
+            "type": "puce",
+            "texte": "Gestion des trames et terminaison"
+          },
+          {
+            "type": "puce",
+            "texte": "FP7 : StockageEEPROM pour sauvegarde paramètres"
+          },
+          {
+            "type": "puce",
+            "texte": "EEPROM pour sauvegarde paramètres"
+          },
+          {
+            "type": "puce",
+            "texte": "FP8 : Codeur incrémentalMesure vitesse et position"
+          },
+          {
+            "type": "puce",
+            "texte": "Mesure vitesse et position"
+          },
+          {
+            "type": "puce",
+            "texte": "FP9 : Interface utilisateurLED état, fonctionnement et sens moteur"
+          },
+          {
+            "type": "puce",
+            "texte": "LED état, fonctionnement et sens moteur"
+          }
+        ]
+      },
+      {
+        "titre": "Tests et validation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Une procédure de test complète a été mise en place pour valider le fonctionnement du système."
+          },
+          {
+            "type": "texte",
+            "texte": "Tests réalisés :"
+          },
+          {
+            "type": "puce",
+            "texte": "Tests de continuité (absence de court-circuit)"
+          },
+          {
+            "type": "puce",
+            "texte": "Vérification des protections (inversion de polarité)"
+          },
+          {
+            "type": "puce",
+            "texte": "Tests des LED (états système)"
+          },
+          {
+            "type": "puce",
+            "texte": "Validation de la commande moteur"
+          },
+          {
+            "type": "puce",
+            "texte": "Test de limitation de courant"
+          },
+          {
+            "type": "puce",
+            "texte": "Vérification de la communication CAN"
+          }
+        ]
+      },
+      {
+        "titre": "Compétences mobilisées",
+        "blocs": []
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Concevoir un système en fiabilisant les solutions proposées"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC21.01 : Proposer des solutions techniques liées à l’analyse fonctionnelle"
+          },
+          {
+            "type": "puce",
+            "texte": "AC21.02 : Dé risquer les solutions techniques retenues"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Mettre en place un protocole de tests pour valider le fonctionnement d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC22.01 : Identifier les tests et mesures"
+          },
+          {
+            "type": "puce",
+            "texte": "AC22.02 : Certifier le fonctionnement"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Moteur DC piloté par bus CAN",
+        "authentique": true,
+        "reference": "Moteur DC pilot par bus CAN/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      }
+    ],
+    "documents": [
+      {
+        "titre": "DoFAB.pdf",
+        "url": "https://drive.google.com/file/d/1BKdCtVBRAinme0O340uu8sDVa9Lvs21m/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "Procédure de test.pdf",
+        "url": "https://drive.google.com/file/d/1BnZOdMNFkKh0S8jO5RyCvjUY3ypYsyaD/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "prsentation",
+    "source": "Prsentation.html",
+    "titre": "Présentation personnelle",
+    "type": "profil",
+    "sections": [
+      {
+        "titre": "Qui suis-je ?",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Je suis étudiant en deuxième année de BUT Génie Électrique et Informatique Industrielle à l’IUT Montpellier-Sète."
+          },
+          {
+            "type": "texte",
+            "texte": "Intéressé par les systèmes électriques et la gestion de l’énergie, j’ai choisi cette formation pour acquérir des compétences techniques concrètes en électronique et en énergie."
+          },
+          {
+            "type": "texte",
+            "texte": "Je recherche actuellement un alternance pour mon BUT3 à partir de septembre 2026"
+          }
+        ]
+      },
+      {
+        "titre": "Mon parcours",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Après l’obtention de mon baccalauréat en 2021, j’ai intégré une licence d’informatique afin d’approfondir mes connaissances dans le domaine du numérique. Cette première expérience m’a permis de développer une base solide en programmation et en logique informatique."
+          },
+          {
+            "type": "texte",
+            "texte": "Souhaitant m’orienter vers un parcours plus concret et davantage axé sur les systèmes techniques et l’énergie, j’ai repris mes études en 2024 en intégrant le BUT Génie Électrique et Informatique Industrielle à l’IUT Montpellier-Sète."
+          }
+        ]
+      },
+      {
+        "titre": "Ma Spécialité, Electricité et Maîtrise de l'Energie (EME)",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La spécialité EME est orientée vers les systèmes énergétiques et l’électronique appliquée à la gestion de l’énergie. Elle me permet d’acquérir une compréhension approfondie des systèmes électriques, notamment en ce qui concerne le stockage, la protection et la supervision de l’énergie."
+          },
+          {
+            "type": "texte",
+            "texte": "Durant les 3 années, l'objectifs de ce parcours est de développer progressivement quatre compétences clés : maintenir, installer, concevoir et vérifier des systèmes électriques et électroniques via diverses projet alternant entre un gros projet en autonomie durant l'année (Projet tutoré) et diverse projets encadrés par les enseignants de l'IUT (SAE)."
+          },
+          {
+            "type": "texte",
+            "texte": "Découvrez directement les projets associés à ces compétences !"
+          },
+          {
+            "type": "texte",
+            "texte": "Réferentiel des compétences :"
+          },
+          {
+            "type": "texte",
+            "texte": "Cette orientation se reflète dans le projet de Battery Management System (BMS), qui mobilise des compétences en électronique, en sécurité des systèmes et en analyse de fonctionnement."
+          },
+          {
+            "type": "texte",
+            "texte": "Découvrez directement le BMS !"
+          },
+          {
+            "type": "texte",
+            "texte": "BMS"
+          },
+          {
+            "type": "texte",
+            "texte": "Le projet de BMS illustre concrètement la compétence Concevoir développée en BUT GEII, en mobilisant des connaissances en électronique, en systèmes électriques et en gestion de l’énergie."
+          },
+          {
+            "type": "texte",
+            "texte": "Il constitue un élément central de mon parcours en BUT2 et s’inscrit pleinement dans mon projet professionnel orienté vers les systèmes énergétiques."
+          }
+        ]
+      },
+      {
+        "titre": "Mon projet professionnel",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Mon projet professionnel s’oriente vers les domaines de l’énergie et de l’électronique de puissance, notamment autour des systèmes de stockage et de gestion d’énergie."
+          },
+          {
+            "type": "texte",
+            "texte": "Je souhaite évoluer vers un métier technique impliquant la conception, l’analyse ou l’exploitation de systèmes énergétiques"
+          },
+          {
+            "type": "texte",
+            "texte": "téléchargez !"
+          },
+          {
+            "type": "texte",
+            "texte": "mon CV"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-44f6dee556958d.webp",
+        "legende": "Illustration issue de la page Présentation personnelle",
+        "authentique": true,
+        "reference": "Prsentation/618391f8a57ff2cd1c9a3d12c37d8602.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-5dbd4f640507d9.webp",
+        "legende": "Illustration issue de la page Présentation personnelle",
+        "authentique": true,
+        "reference": "Prsentation/cf03056250344624bde2a9e64ec1a18e.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-3660a4e1daa4df.webp",
+        "legende": "Illustration issue de la page Présentation personnelle",
+        "authentique": true,
+        "reference": "Prsentation/f992d1a7e1244922b0e3e98c27ff63b0.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-dcf5d36c74da2d.webp",
+        "legende": "Illustration issue de la page Présentation personnelle",
+        "authentique": true,
+        "reference": "Prsentation/cd539e9c685e5af50a60198c6c056611.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "téléchargez !",
+        "url": "https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view?usp=drive_link",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": [
+      {
+        "titre": "Profil LinkedIn",
+        "url": "http://www.linkedin.com/in/hicham-el-hajjaji"
+      }
+    ]
+  },
+  {
+    "id": "rs510",
+    "source": "RS510.html",
+    "titre": "Variateur RS510",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet consiste à dimensionner et vérifier une installation électrique pilotant un moteur triphasé via un variateur de vitesse RS510, en respectant les normes de sécurité et de fonctionnement."
+          }
+        ]
+      },
+      {
+        "titre": "Principe du système",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le système étudié est une platine industrielle composée :"
+          },
+          {
+            "type": "puce",
+            "texte": "d’un variateur de vitesse RS510"
+          },
+          {
+            "type": "puce",
+            "texte": "d’un moteur triphasé"
+          },
+          {
+            "type": "puce",
+            "texte": "d’une chaîne de commande (boutons, sélecteurs, potentiomètre)"
+          },
+          {
+            "type": "puce",
+            "texte": "de protections électriques (disjoncteurs, contacteur, transformateur)"
+          },
+          {
+            "type": "texte",
+            "texte": "Le variateur permet de contrôler la vitesse et le sens de rotation du moteur en fonction des consignes utilisateur"
+          }
+        ]
+      },
+      {
+        "titre": "Démarche de travail",
+        "blocs": []
+      },
+      {
+        "titre": "Le projet s’articule en deux parties principales :",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "1. Dimensionnement"
+          },
+          {
+            "type": "puce",
+            "texte": "choix des sections de câbles (1 mm² commande / 2,5 mm² puissance)"
+          },
+          {
+            "type": "puce",
+            "texte": "justification thermique et électrique"
+          },
+          {
+            "type": "puce",
+            "texte": "Respect de la norme NF C 15-100"
+          },
+          {
+            "type": "texte",
+            "texte": "2. Vérification du système"
+          },
+          {
+            "type": "puce",
+            "texte": "Une procédure complète a été mise en place :"
+          },
+          {
+            "type": "puce",
+            "texte": "analyse visuelle (câblage, sécurité)"
+          },
+          {
+            "type": "puce",
+            "texte": "tests électriques (continuité, isolement, absence de court-circuit)"
+          },
+          {
+            "type": "puce",
+            "texte": "mise sous tension progressive"
+          },
+          {
+            "type": "puce",
+            "texte": "essais fonctionnels du moteur"
+          }
+        ]
+      },
+      {
+        "titre": "Validation expérimentale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Les tests ont permis de valider :"
+          },
+          {
+            "type": "puce",
+            "texte": "continuité des circuits et mise à la terre (< 1 Ω)"
+          },
+          {
+            "type": "puce",
+            "texte": "absence de court-circuit (> 1 MΩ)"
+          },
+          {
+            "type": "puce",
+            "texte": "fonctionnement des protections (Q1, Q2, Q3, KM)"
+          },
+          {
+            "type": "puce",
+            "texte": "alimentation correcte (230V / 24V)"
+          },
+          {
+            "type": "puce",
+            "texte": "variation de vitesse de 0 à 50 Hz"
+          }
+        ]
+      },
+      {
+        "titre": "dddd",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le variateur RS510 permet :"
+          },
+          {
+            "type": "puce",
+            "texte": "démarrage progressif du moteur"
+          },
+          {
+            "type": "puce",
+            "texte": "réglage de vitesse via potentiomètre (0–10 V)"
+          },
+          {
+            "type": "puce",
+            "texte": "sélection de vitesses prédéfinies (5 Hz, 20 Hz, 50 Hz)"
+          },
+          {
+            "type": "puce",
+            "texte": "inversion du sens de rotation"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse et sécurité",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet met en évidence :"
+          },
+          {
+            "type": "puce",
+            "texte": "l’importance du dimensionnement (échauffement, chute de tension)"
+          },
+          {
+            "type": "puce",
+            "texte": "la vérification des protections électriques"
+          },
+          {
+            "type": "puce",
+            "texte": "la gestion des risques (arrêt d’urgence, défauts)"
+          },
+          {
+            "type": "texte",
+            "texte": "Une mauvaise configuration peut entraîner :"
+          },
+          {
+            "type": "puce",
+            "texte": "non démarrage"
+          },
+          {
+            "type": "puce",
+            "texte": "surintensité"
+          },
+          {
+            "type": "puce",
+            "texte": "voire destruction du variateur"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse critique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Points forts :"
+          },
+          {
+            "type": "puce",
+            "texte": "démarche très professionnelle (procédure complète)"
+          },
+          {
+            "type": "puce",
+            "texte": "validation rigoureuse de chaque étape"
+          },
+          {
+            "type": "puce",
+            "texte": "lien direct avec le monde industriel"
+          },
+          {
+            "type": "texte",
+            "texte": "Limite :"
+          },
+          {
+            "type": "puce",
+            "texte": "dépend fortement du bon paramétrage du variateur"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Intervenir sur un système pour effectuer une opération de maintenance"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.01 : Exécuter l’entretien et le contrôle d’un système en respectant une procédure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.02 : Exécuter une opération de maintenance (corrective, préventive, améliorative)"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.03 : Diagnostiquer un dysfonctionnement dans un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.04 : Identifier la cause racine du dysfonctionnement"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Mettre en place un protocole de tests pour valider le fonctionnement d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC22.01 : Identifier les tests et mesures"
+          },
+          {
+            "type": "puce",
+            "texte": "AC22.02 : Certifier le fonctionnement"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Variateur RS510",
+        "authentique": true,
+        "reference": "RS510/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-62fb1dd1ac7541.webp",
+        "legende": "Illustration issue de la page Variateur RS510",
+        "authentique": true,
+        "reference": "RS510/2384f640aeba9bdd9550093c0a9ee0c6.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-24c2b14dcbb7de.webp",
+        "legende": "Illustration issue de la page Variateur RS510",
+        "authentique": true,
+        "reference": "RS510/db8628fffbbb4b4402faaa56b765b16b.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "schF",
+        "url": "https://drive.google.com/file/d/1S7KDSNcyuzESZtjCU52dvvKE_bClZ3oe/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "ELHAJJAJICASSAING.pdf",
+        "url": "https://drive.google.com/file/d/1Z-mu95ZUU_nXMZnpCHp2K2n0Ach5JAc8/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "retrofit-maquette-knx",
+    "source": "Retrofit maquette KNX.html",
+    "titre": "Rétrofit maquette KNX",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet consiste à mettre en service et configurer une installation domotique KNX, en réalisant l’adressage et la programmation des équipements via le logiciel ETS6."
+          },
+          {
+            "type": "texte",
+            "texte": "L’objectif est d’assurer la communication entre les différents modules du bus KNX."
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le système repose sur une architecture KNX comprenant :"
+          },
+          {
+            "type": "puce",
+            "texte": "une alimentation bus 29V DC"
+          },
+          {
+            "type": "puce",
+            "texte": "une interface USB-KNX"
+          },
+          {
+            "type": "puce",
+            "texte": "des actionneurs et capteurs KNX"
+          },
+          {
+            "type": "puce",
+            "texte": "une ligne principale et des sous-lignes"
+          },
+          {
+            "type": "texte",
+            "texte": "Tous les équipements communiquent via le bus KNX (paire torsadée)"
+          }
+        ]
+      },
+      {
+        "titre": "Démarche mise en œuvre",
+        "blocs": []
+      },
+      {
+        "titre": "1. Adressage des équipements",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Chaque équipement est configuré avec une adresse individuelle via ETS6 :"
+          },
+          {
+            "type": "puce",
+            "texte": "connexion USB → KNX"
+          },
+          {
+            "type": "puce",
+            "texte": "ajout des équipements dans le projet"
+          },
+          {
+            "type": "puce",
+            "texte": "attribution d’une adresse"
+          },
+          {
+            "type": "puce",
+            "texte": "téléchargement dans le module"
+          }
+        ]
+      },
+      {
+        "titre": "Démarche mise en œuvre",
+        "blocs": []
+      },
+      {
+        "titre": "2. Programmation et diagnostic",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Une vérification du réseau KNX est réalisée via :"
+          },
+          {
+            "type": "puce",
+            "texte": "scan de ligne"
+          },
+          {
+            "type": "puce",
+            "texte": "visualisation des équipements connectés"
+          },
+          {
+            "type": "puce",
+            "texte": "contrôle des adresses"
+          }
+        ]
+      },
+      {
+        "titre": "Validation expérimentale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Les tests permettent de valider :"
+          },
+          {
+            "type": "puce",
+            "texte": "la connexion PC ↔ KNX"
+          },
+          {
+            "type": "puce",
+            "texte": "la communication sur le bus"
+          },
+          {
+            "type": "puce",
+            "texte": "la présence des équipements"
+          },
+          {
+            "type": "puce",
+            "texte": "la cohérence des adresses"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse technique et critique",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "mportance de l’adressage dans KNX"
+          },
+          {
+            "type": "puce",
+            "texte": "dépendance à la bonne connexion physique du bus"
+          },
+          {
+            "type": "puce",
+            "texte": "rôle du logiciel ETS dans la configuration"
+          },
+          {
+            "type": "texte",
+            "texte": "Points forts :"
+          },
+          {
+            "type": "puce",
+            "texte": "mise en œuvre réelle d’un système domotique"
+          },
+          {
+            "type": "puce",
+            "texte": "utilisation d’un outil professionnel (ETS6)"
+          },
+          {
+            "type": "puce",
+            "texte": "compréhension du réseau KNX"
+          },
+          {
+            "type": "texte",
+            "texte": "Limite :"
+          },
+          {
+            "type": "puce",
+            "texte": "dépendance forte au câblage"
+          },
+          {
+            "type": "puce",
+            "texte": "configuration logicielle parfois complexe"
+          }
+        ]
+      },
+      {
+        "titre": "Compétences",
+        "blocs": []
+      },
+      {
+        "titre": "Compétences principales",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Maintenir - Assurer le maintien en condition opérationnelle d'un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Intervenir sur un système pour effectuer une opération de maintenance"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.01 : Exécuter l’entretien et le contrôle d’un système en respectant une procédure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.02 : Exécuter une opération de maintenance (corrective, préventive, améliorative)"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.03 : Diagnostiquer un dysfonctionnement dans un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC23.04 : Identifier la cause racine du dysfonctionnement"
+          },
+          {
+            "type": "texte",
+            "texte": "Installer tout ou partie d’un système de production, de conversion et de gestion d’énergie"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Procéder à une installation ou à une mise en service en suivant un protocole"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC24.01 : Appliquer la procédure d’installation d’un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC24.02 : Exécuter la mise en service d’un système en respectant la procédure"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT2 : Mettre en place un protocole de tests pour valider le fonctionnement d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC22.01 : Identifier les tests et mesures"
+          },
+          {
+            "type": "puce",
+            "texte": "AC22.02 : Certifier le fonctionnement"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Rétrofit maquette KNX",
+        "authentique": true,
+        "reference": "Retrofit maquette KNX/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-8cdac292d280fe.webp",
+        "legende": "Illustration issue de la page Rétrofit maquette KNX",
+        "authentique": true,
+        "reference": "Retrofit maquette KNX/6af8730e11033abaf831f923bcb656f3.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-e702697073aa34.webp",
+        "legende": "Illustration issue de la page Rétrofit maquette KNX",
+        "authentique": true,
+        "reference": "Retrofit maquette KNX/22b4f56418b47e75dacb10e5cb0b0ece.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-49ecfaf01c90bd.webp",
+        "legende": "Illustration issue de la page Rétrofit maquette KNX",
+        "authentique": true,
+        "reference": "Retrofit maquette KNX/6ddab40304115b59e8e44b63e783cefc.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-b178d51ef54b07.webp",
+        "legende": "Illustration issue de la page Rétrofit maquette KNX",
+        "authentique": true,
+        "reference": "Retrofit maquette KNX/b928aed99ebc95f7087aebb7d17844c6.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Maquette-KNX.pdf",
+        "url": "https://drive.google.com/file/d/1FHNs6SQIikJa1XWYnKKb-kQZaCR2jTgd/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "Schéma d'implantation.drawio (5).pdf",
+        "url": "https://drive.google.com/file/d/1QBDf0NIMBm8p1JMm1Ad7fwCE4ebWchUt/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "Schéma electrique.pdf",
+        "url": "https://drive.google.com/file/d/1eyC3EHVmHN3nQVsyRfEu1aHzspLUNWjZ/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "ProcedureAdressage.pdf",
+        "url": "https://drive.google.com/file/d/1EERayjf-8NGGvlWhGpHjpDCEvsjjjcZ7/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "ProcedureProgrammation.pdf",
+        "url": "https://drive.google.com/file/d/1RrR6qBbUs-2hCkYP55PQiAe8crYAK3G5/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "robot-suiveur-de-ligne",
+    "source": "Robot Suiveur de ligne.html",
+    "titre": "Robot suiveur de ligne",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le projet consiste à concevoir la partie commande d’un robot suiveur de ligne analogique, capable de détecter une ligne au sol et d’ajuster la vitesse de ses moteurs pour suivre une trajectoire."
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement et choix techniques",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le système repose sur plusieurs fonctions :"
+          },
+          {
+            "type": "puce",
+            "texte": "Détection de ligne par capteurs infrarouges"
+          },
+          {
+            "type": "puce",
+            "texte": "Génération d’un signal triangulaire"
+          },
+          {
+            "type": "puce",
+            "texte": "Comparaison des signaux pour créer une PWM"
+          },
+          {
+            "type": "puce",
+            "texte": "Commande des moteurs via un MOSFET"
+          },
+          {
+            "type": "texte",
+            "texte": "La vitesse des moteurs dépend du rapport cyclique de la PWM, ce qui permet de corriger la trajectoire du robot."
+          },
+          {
+            "type": "texte",
+            "texte": "Le choix d’une architecture analogique permet :"
+          },
+          {
+            "type": "puce",
+            "texte": "un fonctionnement rapide"
+          },
+          {
+            "type": "puce",
+            "texte": "une mise en œuvre sans programmation"
+          },
+          {
+            "type": "puce",
+            "texte": "une compréhension directe des signaux"
+          },
+          {
+            "type": "texte",
+            "texte": "L’utilisation d’un AOP LM324 et de capteurs IR permet une solution simple et efficace."
+          }
+        ]
+      },
+      {
+        "titre": "Validation expérimentale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Des fiches de mesures ont été réalisées pour valider :"
+          },
+          {
+            "type": "puce",
+            "texte": "la génération du signal triangulaire (~1 kHz)"
+          },
+          {
+            "type": "puce",
+            "texte": "la création de la PWM"
+          },
+          {
+            "type": "puce",
+            "texte": "la variation de la vitesse moteur"
+          },
+          {
+            "type": "texte",
+            "texte": "Résultats :"
+          },
+          {
+            "type": "puce",
+            "texte": "fréquence mesurée ≈ 967 Hz"
+          },
+          {
+            "type": "puce",
+            "texte": "tensions conformes (≈ 3V à 9V)"
+          },
+          {
+            "type": "puce",
+            "texte": "comportement global validé"
+          }
+        ]
+      },
+      {
+        "titre": "FP2",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "générer un signal triangulaire"
+          }
+        ]
+      },
+      {
+        "titre": "FP3",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Comparer le signal"
+          }
+        ]
+      },
+      {
+        "titre": "FP4",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Interfacer la puissance"
+          }
+        ]
+      },
+      {
+        "titre": "Analyse critique",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "Une erreur de conception initiale (montage de l’intégrateur) a nécessité une correction, ce qui met en évidence l’importance de la validation en conception."
+          },
+          {
+            "type": "puce",
+            "texte": "Le système final est fonctionnel mais pourrait être amélioré en précision et en robustesse."
+          }
+        ]
+      },
+      {
+        "titre": "Lien avec la compétence Concevoir",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet mobilise la compétence du BUT1 Concevoir, en mettant en œuvre :"
+          },
+          {
+            "type": "puce",
+            "texte": "une analyse fonctionnelle du système"
+          },
+          {
+            "type": "puce",
+            "texte": "le choix et le dimensionnement des composants"
+          },
+          {
+            "type": "puce",
+            "texte": "la conception d’une carte électronique"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Mener une conception partielle intégrant une démarche projet"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.01 : Identifier un besoin et ses contraintes"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.02 : Décrire le fonctionnement d’un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.03 : Mettre en œuvre une solution simple"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Effectuer les tests et mesures nécessaires à une vérification d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC12.01 : Identifier les grandeurs à mesurer"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.02 : Mettre en œuvre un protocole de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.03 : Exploiter les résultats"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Robot suiveur de ligne",
+        "authentique": true,
+        "reference": "Robot Suiveur de ligne/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-d5a6e8c4c4653e.webp",
+        "legende": "Illustration issue de la page Robot suiveur de ligne",
+        "authentique": true,
+        "reference": "Robot Suiveur de ligne/399132063d2b9c1d68cd556fe51216c6.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "EL_HAJJAJI-TURC_DE_MOURA_GRB_Dossier_Robot_Analogique.pdf",
+        "url": "https://drive.google.com/file/d/1VnUyYhQXuqZbGDBkj-TeMvi-r2FzmB1I/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "FP2.docx",
+        "url": "https://drive.google.com/file/d/16CnfWQ-WurFxivr5jqBFhUdMF9hmsv4V/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "FP3.docx",
+        "url": "https://drive.google.com/file/d/1PAVAtAyFFHYbEoZxt1vpSOsrInQn68-g/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "FM, FP4 Final.docx",
+        "url": "https://drive.google.com/file/d/1EmMr4MP02408lO4OzZIY3M-ykfY0-N1R/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "DOSSIER FAB.doc",
+        "url": "https://drive.google.com/file/d/1UqMX-7K9PQpYKlKKianWLd_EOAf_m0zy/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "stage-chez-betem",
+    "source": "Stage chez BETEM.html",
+    "titre": "Stage chez BETEM",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Introduction",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "J'ai effectué mon stage de deuxième année de BUT GEII au sein de BETEM Montpellier, bureau d'études techniques pluridisciplinaire spécialisé dans la conception des installations techniques des bâtiments."
+          },
+          {
+            "type": "texte",
+            "texte": "BETEM intervient dans de nombreux domaines tels que l'électricité (CFO/CFA), le CVC, la plomberie, les structures et l'économie de la construction."
+          }
+        ]
+      },
+      {
+        "titre": "Missions réalisés",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Au cours de ce stage, j'ai participé à plusieurs missions relevant du domaine de l'électricité du bâtiment :"
+          },
+          {
+            "type": "puce",
+            "texte": "Implantation CFO/CFA sur AutoCAD"
+          },
+          {
+            "type": "puce",
+            "texte": "Réalisation de schémas électriques et synoptiques"
+          },
+          {
+            "type": "puce",
+            "texte": "Bilans de puissance"
+          },
+          {
+            "type": "puce",
+            "texte": "Études d'éclairement sous DIALux EVO"
+          },
+          {
+            "type": "puce",
+            "texte": "Dimensionnement des installations électriques"
+          },
+          {
+            "type": "puce",
+            "texte": "Rédaction de pièces techniques (CCTP)"
+          },
+          {
+            "type": "puce",
+            "texte": "Participation à la conception de projets ERP et logements"
+          },
+          {
+            "type": "texte",
+            "texte": "Implantation CFO/CFA"
+          },
+          {
+            "type": "texte",
+            "texte": "outil : AutoCAD"
+          },
+          {
+            "type": "texte",
+            "texte": "Analyse des pièces"
+          }
+        ]
+      },
+      {
+        "titre": "Projet principal : Restructuration de l'école Jean Macé",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Mon projet principal a porté sur la restructuration de l'école Jean Macé à Montpellier."
+          },
+          {
+            "type": "texte",
+            "texte": "Cette opération visait à moderniser les installations électriques du bâtiment tout en améliorant ses performances énergétiques et son confort d'utilisation."
+          }
+        ]
+      },
+      {
+        "titre": "Travaux réalisés :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "Implantation des luminaires"
+          },
+          {
+            "type": "puce",
+            "texte": "Études d'éclairement"
+          },
+          {
+            "type": "puce",
+            "texte": "Implantation des brasseurs d'air"
+          },
+          {
+            "type": "puce",
+            "texte": "Réalisation de bilans de puissance"
+          },
+          {
+            "type": "puce",
+            "texte": "Participation à la conception CFO/CFA"
+          }
+        ]
+      },
+      {
+        "titre": "Synoptique du CFO Jean Macé",
+        "blocs": []
+      },
+      {
+        "titre": "Outils utilisés",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce stage m'a permis de découvrir et d'utiliser plusieurs logiciels professionnels lié à l'étude et au dimensionnement :"
+          },
+          {
+            "type": "texte",
+            "texte": "Caneco BT"
+          },
+          {
+            "type": "texte",
+            "texte": "DIALux evo"
+          },
+          {
+            "type": "texte",
+            "texte": "PVsyst"
+          }
+        ]
+      },
+      {
+        "titre": "Apports du stage",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Cette expérience m'a permis de développer mes compétences techniques en conception électrique ainsi que ma maîtrise des outils utilisés en bureau d'études."
+          },
+          {
+            "type": "texte",
+            "texte": "J'ai également découvert l'organisation d'un projet de construction, depuis les études de conception jusqu'à la préparation des dossiers techniques."
+          }
+        ]
+      },
+      {
+        "titre": "Vous pouvez retouver ici les pièces écrites réalisés sur ce stage",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Diaporama de soutenance"
+          },
+          {
+            "type": "texte",
+            "texte": "Rapport de stage"
+          }
+        ]
+      },
+      {
+        "titre": "Lien avec les compétences du BUT GEII",
+        "blocs": []
+      },
+      {
+        "titre": "Concevoir la partie GEII d’un système",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Missions associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "Bilans de puissance,"
+          },
+          {
+            "type": "puce",
+            "texte": "Etude DIALux,"
+          },
+          {
+            "type": "puce",
+            "texte": "CCTP."
+          }
+        ]
+      },
+      {
+        "titre": "Vérifier la partie GEII d’un système",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Missions associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "Contrôle des résultats,"
+          },
+          {
+            "type": "puce",
+            "texte": "Conformité normative."
+          }
+        ]
+      },
+      {
+        "titre": "Installer la partie GEII d’un système",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Missions associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "Compréhension des méthodes de mise en œuvre."
+          }
+        ]
+      },
+      {
+        "titre": "Maintenir la partie GEII d’un système",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Missions associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "Analyse de solutions techniques et contraintes d'exploitation."
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-14f5382bc2086d.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/49a5f97bc361f676af4c4ca457b697a2.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-c1245930346368.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/a530ca374a0b9fffdab8848ef0a3cb15.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-9a731976d4ba00.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/faf6e18b3991252beadf81ea2a7d6d62.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-7d50abcaa89648.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/d010307715dc3a2776a5ae2cd29293ad.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-14abcdf26b91af.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/8d9c44ceebea20667692b311be43803a.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-0134ef101168ac.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/a9a3c60c048aeb93c6e16c445e50a972.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-94a43daf5b3147.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/43bceb20ca5567660aef088a6e071d02.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-3068b8c78ba0ed.webp",
+        "legende": "Illustration issue de la page Stage chez BETEM",
+        "authentique": true,
+        "reference": "Stage chez BETEM/6a4287adf8a0853d8aa0c2f3ce426c33.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Soutenance.pdf",
+        "url": "https://drive.google.com/file/d/1U7Alct94nQVQ5GEdErkwluCyLxvbRWVc/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      },
+      {
+        "titre": "Rapport_Stage_ELHAJJAJI_Hicham.pdf",
+        "url": "https://drive.google.com/file/d/1fw49ZGvTp4p5psBAYGVg9xB1s0CNSocD/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "testeur-de-batterie",
+    "source": "Testeur de batterie.html",
+    "titre": "Testeur de batterie",
+    "type": "projet",
+    "sections": [
+      {
+        "titre": "Présentation",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Ce projet consiste à concevoir et réaliser un testeur de batterie, permettant d’évaluer l’état d’une batterie à partir de sa tension et d’afficher un résultat visuel."
+          }
+        ]
+      },
+      {
+        "titre": "Principe de fonctionnement",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le système repose sur une chaîne fonctionnelle en plusieurs blocs :"
+          },
+          {
+            "type": "puce",
+            "texte": "FP1 : Protection contre inversion de polarité"
+          },
+          {
+            "type": "puce",
+            "texte": "FP2 : Génération d’un seuil de référence"
+          },
+          {
+            "type": "puce",
+            "texte": "FP3 : Adaptation et mise à l’échelle de la tension batterie"
+          },
+          {
+            "type": "puce",
+            "texte": "FP4 : Comparaison (AOP comparateur)"
+          },
+          {
+            "type": "puce",
+            "texte": "FP5 : Affichage (LED)"
+          }
+        ]
+      },
+      {
+        "titre": "Démarche de conception",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La conception s’est faite en plusieurs étapes :"
+          },
+          {
+            "type": "puce",
+            "texte": "analyse du besoin (tester rapidement une batterie)"
+          },
+          {
+            "type": "puce",
+            "texte": "choix des fonctions électroniques"
+          },
+          {
+            "type": "puce",
+            "texte": "dimensionnement des composants (résistances, seuils)"
+          },
+          {
+            "type": "puce",
+            "texte": "réalisation du schéma électrique"
+          },
+          {
+            "type": "puce",
+            "texte": "routage du PCB"
+          },
+          {
+            "type": "texte",
+            "texte": "Une carte électronique complète a été réalisée (typon + implantation)"
+          }
+        ]
+      },
+      {
+        "titre": "Fonctionnement électronique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Le testeur fonctionne par comparaison de tension :"
+          },
+          {
+            "type": "puce",
+            "texte": "la tension batterie est adaptée via un pont diviseur"
+          },
+          {
+            "type": "puce",
+            "texte": "une tension de référence est générée"
+          },
+          {
+            "type": "puce",
+            "texte": "un comparateur (AOP) compare les deux"
+          },
+          {
+            "type": "puce",
+            "texte": "le résultat pilote une LED d’indication"
+          },
+          {
+            "type": "texte",
+            "texte": "Permet de savoir si la batterie est OK ou faible"
+          }
+        ]
+      },
+      {
+        "titre": "Validation et Analyse technique",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La validation du système repose sur :"
+          },
+          {
+            "type": "puce",
+            "texte": "mesure des tensions aux points de test"
+          },
+          {
+            "type": "puce",
+            "texte": "vérification des seuils de déclenchement"
+          },
+          {
+            "type": "puce",
+            "texte": "observation du comportement de la LED"
+          },
+          {
+            "type": "texte",
+            "texte": "Le système répond correctement à la logique attendue"
+          },
+          {
+            "type": "texte",
+            "texte": "Points importants du projet :"
+          },
+          {
+            "type": "puce",
+            "texte": "protection contre erreur utilisateur (polarité inversée)"
+          },
+          {
+            "type": "puce",
+            "texte": "précision du seuil → dépend des résistances"
+          },
+          {
+            "type": "puce",
+            "texte": "simplicité du circuit → robuste et efficace"
+          },
+          {
+            "type": "texte",
+            "texte": "Circuit typique de conditionnement + décision analogique"
+          }
+        ]
+      },
+      {
+        "titre": "Compétences",
+        "blocs": []
+      },
+      {
+        "titre": "Compétence principale",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Concevoir la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Mener une conception partielle intégrant une démarche projet"
+          },
+          {
+            "type": "texte",
+            "texte": "Apprentissages critiques associés :"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.01 : Identifier un besoin et ses contraintes"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.02 : Décrire le fonctionnement d’un système"
+          },
+          {
+            "type": "puce",
+            "texte": "AC11.03 : Mettre en œuvre une solution simple"
+          }
+        ]
+      },
+      {
+        "titre": "Compétence secondaire mobilisée",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "Vérifier la partie GEII d’un système"
+          },
+          {
+            "type": "texte",
+            "texte": "Niveau BUT1 : Effectuer les tests et mesures nécessaires à une vérification d’un système"
+          }
+        ]
+      },
+      {
+        "titre": "Apprentissages critiques :",
+        "blocs": [
+          {
+            "type": "puce",
+            "texte": "AC12.01 : Identifier les grandeurs à mesurer"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.02 : Mettre en œuvre un protocole de mesure"
+          },
+          {
+            "type": "puce",
+            "texte": "AC12.03 : Exploiter les résultats"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-bcb5d4e83cacdc.webp",
+        "legende": "Illustration issue de la page Testeur de batterie",
+        "authentique": true,
+        "reference": "Testeur de batterie/e6b61ab8f57df2f87d076d5510c91c67.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-c8f9a1ea00fc0f.webp",
+        "legende": "Illustration issue de la page Testeur de batterie",
+        "authentique": true,
+        "reference": "Testeur de batterie/0aed886fa5b999feacf82db252f1c16f.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-141f20e8ba23dc.webp",
+        "legende": "Illustration issue de la page Testeur de batterie",
+        "authentique": true,
+        "reference": "Testeur de batterie/0cab3f50a14527df35f9c9bcbf317118.jpg",
+        "partagee": false
+      },
+      {
+        "src": "/legacy/legacy-ab76adf5dc3f1f.webp",
+        "legende": "Illustration issue de la page Testeur de batterie",
+        "authentique": true,
+        "reference": "Testeur de batterie/754e691fcc2d72b2087465ce0a7c254a.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [
+      {
+        "titre": "Testeur_Sch_Elec1.pdf",
+        "url": "https://drive.google.com/file/d/1G9x2CgpA1yLwIBKgea3wS4kZZbmhQICB/view",
+        "statut": "Lien Google Drive original — accès à vérifier"
+      }
+    ],
+    "liens": []
+  },
+  {
+    "id": "vrifier",
+    "source": "Vrifier.html",
+    "titre": "Vérifier",
+    "type": "competence",
+    "sections": [
+      {
+        "titre": "la partie Génie Electrique et Informatique Industrielle d'un système",
+        "blocs": []
+      },
+      {
+        "titre": "Introduction de la compétence",
+        "blocs": [
+          {
+            "type": "texte",
+            "texte": "La compétence Vérifier consiste à valider le fonctionnement d’un système électrique ou électronique en s’appuyant sur des mesures expérimentales et des protocoles de tests adaptés. Elle permet de garantir la conformité du système vis-à-vis du cahier des charges et d’identifier d’éventuels écarts entre le comportement attendu et réel."
+          },
+          {
+            "type": "texte",
+            "texte": "Elle est mise en œuvre à travers plusieurs projets en BUT GEII, notamment lors des phases de tests du robot suiveur de ligne et de la validation d’une installation électrique domestiqu"
+          },
+          {
+            "type": "texte",
+            "texte": "Découvrez les projets associés à cette compétence"
+          },
+          {
+            "type": "texte",
+            "texte": "Cliquez"
+          },
+          {
+            "type": "texte",
+            "texte": "Malaxeur"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "/legacy/legacy-4a6c5ebf2dbc96.webp",
+        "legende": "Illustration issue de la page Vérifier",
+        "authentique": true,
+        "reference": "Vrifier/8083788cc782d66e072e5b3ad3f40afb.jpg",
+        "partagee": true
+      },
+      {
+        "src": "/legacy/legacy-3bce6f518d6d00.webp",
+        "legende": "Illustration issue de la page Vérifier",
+        "authentique": true,
+        "reference": "Vrifier/42a3e98f221a6fdbec1ef05682309dee.jpg",
+        "partagee": false
+      }
+    ],
+    "documents": [],
+    "liens": []
+  }
+]

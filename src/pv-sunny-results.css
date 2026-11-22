@@ -1,0 +1,84 @@
+/* Rapport de simulation SMA Sunny Design (2026) : figures retracées à partir
+   des valeurs et schémas du document fourni, sans résultats extrapolés. */
+.pv-source-stamp{display:flex;align-items:center;gap:13px;flex-wrap:wrap;color:#8ad1fd;font-size:10px;line-height:1.5;letter-spacing:.10em;font-weight:750;padding:17px 20px;margin:25px 0 31px;border-left:3px solid #65c5fa;background:linear-gradient(90deg,#183e5b,#0d2336)}
+.pv-source-stamp svg{flex-shrink:0}
+.pv-source-stamp span:last-child{margin-left:auto;color:#d9edfa}
+.pv-real-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:25px 0}
+.pv-real-metric{display:flex;flex-direction:column;gap:12px;border:1px solid #46708b;background:linear-gradient(145deg,#17364c,#112438);padding:19px 15px;min-width:0}
+.pv-real-metric b{font:700 clamp(22px,2.2vw,32px)/1.15 'Space Grotesk',sans-serif;color:#c9efff;letter-spacing:-.055em}
+.pv-real-metric span{font-size:11px;line-height:1.65;color:#aacbdc}
+.pv-real-system{margin:24px 0 30px}
+.pv-real-system__intro{display:flex;gap:15px;align-items:center}
+.pv-real-system__intro>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:11px;padding:21px 16px;border:1px solid #4a7693;background:#153148;min-height:165px}
+.pv-real-system__intro>div>span,.pv-real-string>span{color:#8ed1ff;letter-spacing:.11em;font-size:10px;font-weight:750}
+.pv-real-system__intro strong{font-size:clamp(19px,1.8vw,28px);color:#e8f6ff;letter-spacing:-.04em}
+.pv-real-system__intro small{font-size:12px;color:#a9c5d9;line-height:1.6}
+.pv-real-system__intro>svg{flex-shrink:0;color:#83cafa}
+.pv-real-string-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin:20px 0}
+.pv-real-string{display:flex;flex-direction:column;gap:11px;background:#102a40;border:1px solid #3c6886;padding:23px}
+.pv-real-string strong{font-size:19px;color:#dff5ff}
+.pv-real-panels{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:7px 0}
+.pv-real-panels>span{height:57px;background:linear-gradient(145deg,#15436b,#0d608e);border:1px solid #7dd3ff;box-shadow:inset 0 0 9px #5ac3ff1c}
+.pv-real-string__facts{display:flex;justify-content:space-between;flex-wrap:wrap;gap:7px 10px}
+.pv-real-string__facts span{font-size:11px;color:#a6c6d9}
+.pv-real-system>p{color:#b9ccdc;line-height:1.9;font-size:14px}
+.pv-real-system__checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pv-real-system__checks span{padding:14px;background:#18364b;border-left:2px solid #5db7e9;font-size:12px;line-height:1.6;color:#b9d2e4}
+.pv-real-system__checks b{color:#e0f5ff;margin-right:8px}
+.pv-real-origin{display:block;color:#86a9c2;font-size:11px;line-height:1.75;margin-top:15px;font-style:normal}
+.pv-real-roof{background:#11293e;border:1px solid #3c6b8b;margin:28px 0;padding:22px 26px 18px}
+.pv-real-roof svg{width:100%;max-height:470px}
+.pv-real-roof p{font-size:13px;line-height:1.8;color:#b2cad8}
+.pv-real-balance{margin:28px 0}
+.pv-real-balance__streams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0}
+.pv-real-balance__streams>div{background:#10263a;border:1px solid #365a76;padding:21px}
+.pv-real-balance__stream-label{display:flex;align-items:center;gap:11px;color:#b5e3ff;font-size:12px;letter-spacing:.035em}
+.pv-real-balance__bar{display:flex;height:22px;background:#213648;overflow:hidden;margin:22px 0 13px}
+.pv-real-balance__bar span{height:100%;display:block}
+.pv-real-balance__streams p{font-size:12px;color:#abc6d8;line-height:1.75;margin:0}
+.pv-real-analysis{display:flex;align-items:start;gap:16px;padding:20px;background:linear-gradient(120deg,#183953,#10283e);border-left:3px solid #6fc8ff;margin:28px 0}
+.pv-real-analysis svg{flex-shrink:0;color:#8dd6ff;margin-top:2px}
+.pv-real-analysis p{margin:0;color:#c3dae9;font-size:13px;line-height:1.9}
+.pv-real-analysis strong{color:#f0f9ff}
+.pv-real-monthly{margin:32px 0;padding:27px;background:#11263a;border:1px solid #39627f}
+.pv-real-monthly__header{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:24px}
+.pv-real-monthly__header>div:first-child{display:flex;flex-direction:column;gap:9px}
+.pv-real-monthly__header span{font-size:10px;color:#91ceef;letter-spacing:.1em;font-weight:750}
+.pv-real-monthly__header strong{color:#e4f4fc;font-size:20px}
+.pv-real-monthly__tabs{display:flex;gap:7px}
+.pv-real-monthly__tabs button{background:#16364e;border:1px solid #487595;color:#a9d2ea;font-size:10px;letter-spacing:.08em;font-weight:750;padding:10px 15px;cursor:pointer;transition:background .2s,border-color .2s}
+.pv-real-monthly__tabs button:hover,.pv-real-monthly__tabs button:focus-visible,.pv-real-monthly__tabs button[aria-pressed="true"]{background:#2b82b8;border-color:#b7e7ff;color:white}
+.pv-real-monthly__chart{height:270px;display:grid;grid-template-columns:47px repeat(12,minmax(0,1fr));gap:8px;padding:22px 0 0;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(33.333% - 1px),#78a6c625 33.333%,transparent calc(33.333% + 1px));border-bottom:1px solid #537d9c}
+.pv-real-monthly__axis{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding:0 7px 22px 0;font-size:9px;color:#91b8cf}
+.pv-real-monthly__column{display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;min-width:0}
+.pv-real-monthly__number{font-size:10px;color:#c5e5f8!important;letter-spacing:0!important}
+.pv-real-monthly__bar{width:100%;flex:1;min-height:0;position:relative;display:flex;align-items:flex-end;justify-content:center}
+.pv-real-monthly__stack{position:absolute;bottom:0;width:80%;transition:height .32s ease}
+.pv-real-monthly__stack--primary{background:linear-gradient(180deg,#429ddd,#24628d)}
+.pv-real-monthly__stack--secondary{width:36%;background:linear-gradient(180deg,#9de5ff,#65bce5);left:0;border-right:1px solid #cdf3ff}
+.pv-real-monthly__column small{font-size:9px;color:#8daec3;white-space:nowrap;line-height:1.2}
+.pv-real-monthly__legend{display:flex;gap:11px;align-items:center;flex-wrap:wrap;color:#acccdf;font-size:11px;line-height:1.5;margin:20px 0}
+.pv-real-monthly__legend i{height:10px;width:10px;background:#318cc0}
+.pv-real-monthly__legend i:nth-of-type(2){background:#8ddcff;margin-left:18px}
+.pv-real-monthly__details{margin:20px 0;border-top:1px solid #366080}
+.pv-real-monthly__details summary{list-style:none;cursor:pointer;padding:17px 0;color:#9cd8fa;font-size:11px;font-weight:750;letter-spacing:.11em}
+.pv-real-monthly__details summary::before{content:'+';margin-right:14px;font-size:17px}
+.pv-real-monthly__details[open] summary::before{content:'−'}
+.pv-real-monthly__table{overflow-x:auto}
+.pv-real-monthly__table table{border-collapse:collapse;width:100%;min-width:660px}
+.pv-real-monthly__table th{background:#21506d;color:#cbebfc;text-align:left;font-size:10px;padding:12px}
+.pv-real-monthly__table td{padding:12px;color:#bfd4e3;border-top:1px solid #3c5b70;font-size:12px;background:#142f44}
+.pv-real-monthly__table td:first-child{font-weight:700;color:#e8f5fc}
+.pv-real-economics{margin:26px 0}
+.detail-panel--reader .pv-real-monthly__chart{height:385px;gap:15px}
+.detail-panel--reader .pv-real-metric{padding:25px}
+.detail-panel--reader .pv-real-roof svg{max-height:640px}
+.detail-panel--reader .pv-real-monthly__number{font-size:12px}
+@media(max-width:1300px){.pv-real-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.pv-real-monthly__chart{gap:4px}}
+@media(max-width:1060px){.pv-real-system__intro{flex-direction:column}.pv-real-system__intro>div{width:100%}.pv-real-system__intro>svg{transform:rotate(90deg)}.pv-real-balance__streams{grid-template-columns:1fr}.pv-real-monthly__header{flex-wrap:wrap}.pv-real-monthly__chart{overflow-x:auto}}
+@media(prefers-reduced-motion:reduce){.pv-real-monthly__stack{transition:none}}
+
+.pv-study .pv-real-title{font:650 clamp(19px,2vw,28px)/1.3 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#d5efff;margin:42px 0 20px}
+.pv-real-performance{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 22px}
+.pv-real-performance span{display:flex;flex:1;gap:8px;align-items:center;flex-wrap:wrap;min-width:200px;padding:14px 15px;border:1px solid #345a74;background:#122e43;color:#a8c7d9;font-size:11px;line-height:1.65}
+.pv-real-performance b{color:#dff4ff;font-size:13px}

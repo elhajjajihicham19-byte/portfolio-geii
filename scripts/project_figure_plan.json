@@ -1,0 +1,409 @@
+[
+  {
+    "id": "geii-capteur-de-temperature",
+    "files": [
+      {
+        "id": "1g454FphzkkJfOsuCZOv01eCxW6a3tZzl",
+        "label": "Thermomètre numérique — rapport de projet",
+        "pages": [
+          [
+            4,
+            1,
+            "Architecture fonctionnelle du thermomètre"
+          ],
+          [
+            5,
+            2,
+            "Conditionnement analogique du LM335"
+          ],
+          [
+            11,
+            2,
+            "Programmation et affichage sur LCD"
+          ],
+          [
+            12,
+            3,
+            "Routage de la carte et relevés de tension"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-cblage-domestique",
+    "files": [
+      {
+        "id": "1R83QiPsH7ox0auRC6oEtt55G6OJZbeSJ",
+        "label": "Câblage domestique — cahier de recette",
+        "pages": [
+          [
+            2,
+            1,
+            "Schéma des circuits du garage et du couloir"
+          ],
+          [
+            3,
+            2,
+            "Dimensionnement et protection des circuits"
+          ],
+          [
+            4,
+            3,
+            "Vérifications électriques du garage"
+          ],
+          [
+            5,
+            3,
+            "Essais de fonctionnement du couloir"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-d-lectronique",
+    "files": [
+      {
+        "id": "1_CyCRcwsvjJoxY6neUjI_IPD1tNE4kXB",
+        "label": "Dé électronique — fiche de mesures",
+        "pages": [
+          [
+            1,
+            1,
+            "Compteur CD4017 et schéma de test"
+          ],
+          [
+            2,
+            3,
+            "Oscillogrammes des sorties Q0 à Q6"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-dimensionnement-lectrique",
+    "files": [
+      {
+        "id": "1D7KC4obIZHeb4-bVuVoJxe76NYS03hvX",
+        "label": "Schémas électriques de la maison",
+        "pages": [
+          [
+            1,
+            1,
+            "Schéma électrique général de l’habitation"
+          ],
+          [
+            2,
+            2,
+            "Première rangée du tableau"
+          ],
+          [
+            3,
+            2,
+            "Deuxième rangée du tableau"
+          ],
+          [
+            4,
+            3,
+            "Troisième rangée et détails des protections"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-malaxeur",
+    "files": [
+      {
+        "id": "1zzIyj3ZAjn2wBIwyn2PBY2DuhCdM-de4",
+        "label": "Malaxeur — cahier de recette",
+        "pages": [
+          [
+            2,
+            1,
+            "Séquence PH0 à PH7 et contrôles de sécurité"
+          ],
+          [
+            3,
+            3,
+            "Mesures des rampes et contrôle de température"
+          ],
+          [
+            4,
+            4,
+            "Bilan des fonctions validées et non validées"
+          ]
+        ]
+      },
+      {
+        "id": "11otl28vVexrf2WJGnA72d6wbUcVcNZrQ",
+        "label": "Malaxeur — fiche de mesures PT100",
+        "pages": [
+          [
+            1,
+            3,
+            "Comparaison des montages PT100 à deux et quatre fils"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-moteur-dc-pilot-par-bus-can",
+    "files": [
+      {
+        "id": "1BKdCtVBRAinme0O340uu8sDVa9Lvs21m",
+        "label": "Moteur CAN — dossier de fabrication",
+        "pages": [
+          [
+            3,
+            0,
+            "Architecture du shield moteur CAN"
+          ],
+          [
+            8,
+            1,
+            "Pont en H et mesure de courant"
+          ],
+          [
+            10,
+            2,
+            "Conception du circuit de puissance"
+          ],
+          [
+            13,
+            2,
+            "Schéma et implantation du shield"
+          ]
+        ]
+      },
+      {
+        "id": "1BnZOdMNFkKh0S8jO5RyCvjUY3ypYsyaD",
+        "label": "Moteur CAN — procédure de vérification",
+        "pages": [
+          [
+            6,
+            3,
+            "Procédure de test de protection"
+          ],
+          [
+            11,
+            3,
+            "Essais fonctionnels prévus"
+          ],
+          [
+            15,
+            4,
+            "Protocole de test des trames CAN"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-rs510",
+    "files": [
+      {
+        "id": "1S7KDSNcyuzESZtjCU52dvvKE_bClZ3oe",
+        "label": "RS510 — schémas électriques",
+        "pages": [
+          [
+            1,
+            1,
+            "Circuit de puissance et bornier RS510"
+          ],
+          [
+            2,
+            2,
+            "Câblage de commande et sécurités"
+          ],
+          [
+            3,
+            2,
+            "Schéma complémentaire des commandes"
+          ]
+        ]
+      },
+      {
+        "id": "1Z-mu95ZUU_nXMZnpCHp2K2n0Ach5JAc8",
+        "label": "RS510 — dimensionnement",
+        "pages": [
+          [
+            4,
+            3,
+            "Justification des sections et protections"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-retrofit-maquette-knx",
+    "files": [
+      {
+        "id": "1QBDf0NIMBm8p1JMm1Ad7fwCE4ebWchUt",
+        "label": "KNX — implantation",
+        "pages": [
+          [
+            1,
+            1,
+            "Architecture KNX et bus TP"
+          ]
+        ]
+      },
+      {
+        "id": "1eyC3EHVmHN3nQVsyRfEu1aHzspLUNWjZ",
+        "label": "KNX — schémas électriques",
+        "pages": [
+          [
+            1,
+            2,
+            "Folio des équipements de tableau"
+          ],
+          [
+            2,
+            2,
+            "Folio des équipements d’ambiance"
+          ]
+        ]
+      },
+      {
+        "id": "1EERayjf-8NGGvlWhGpHjpDCEvsjjjcZ7",
+        "label": "KNX — adressage ETS6",
+        "pages": [
+          [
+            1,
+            3,
+            "Procédure ETS6 : adresse 1.1.8"
+          ]
+        ]
+      },
+      {
+        "id": "1RrR6qBbUs-2hCkYP55PQiAe8crYAK3G5",
+        "label": "KNX — communication et scan de ligne",
+        "pages": [
+          [
+            1,
+            3,
+            "Vérification du scan de ligne KNX"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-robot-suiveur-de-ligne",
+    "files": [
+      {
+        "id": "1VnUyYhQXuqZbGDBkj-TeMvi-r2FzmB1I",
+        "label": "Robot analogique — dossier de conception",
+        "pages": [
+          [
+            4,
+            0,
+            "Architecture fonctionnelle du robot"
+          ],
+          [
+            5,
+            1,
+            "Schéma structurel du suiveur de ligne"
+          ],
+          [
+            7,
+            2,
+            "Générateur triangulaire FP2"
+          ],
+          [
+            12,
+            3,
+            "Analyse des essais analogiques"
+          ],
+          [
+            18,
+            3,
+            "Fiche de mesures du comparateur FP3"
+          ],
+          [
+            25,
+            2,
+            "Simulation du générateur triangulaire"
+          ],
+          [
+            28,
+            3,
+            "Commande moteur et signal PWM"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geii-testeur-de-batterie",
+    "files": [
+      {
+        "id": "1G9x2CgpA1yLwIBKgea3wS4kZZbmhQICB",
+        "label": "Testeur de batterie — schéma fonctionnel",
+        "pages": [
+          [
+            1,
+            1,
+            "Chaîne FP1 à FP5 : protection, comparaison et affichage"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "betem",
+    "files": [
+      {
+        "id": "1fw49ZGvTp4p5psBAYGVg9xB1s0CNSocD",
+        "label": "Rapport de stage BETEM — école Jean Macé",
+        "pages": [
+          [
+            19,
+            1,
+            "Présentation des études et du dossier CFO/CFA"
+          ],
+          [
+            22,
+            3,
+            "Étude DIALux : locaux étudiés"
+          ],
+          [
+            24,
+            3,
+            "Résultats d’éclairement"
+          ],
+          [
+            27,
+            2,
+            "Implantations CFO/CFA"
+          ],
+          [
+            29,
+            3,
+            "Architecture du bilan de puissance"
+          ],
+          [
+            32,
+            3,
+            "Bilans des tableaux divisionnaires"
+          ],
+          [
+            36,
+            3,
+            "Dimensionnement Caneco BT"
+          ],
+          [
+            70,
+            4,
+            "Annexes de calcul Caneco BT"
+          ]
+        ]
+      }
+    ]
+  }
+]

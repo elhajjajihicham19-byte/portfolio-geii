@@ -1,0 +1,85 @@
+/* Navigation de bord d'écran, uniquement sur ordinateur */
+.edge-nav{
+  --edge-handle:25px;
+  position:fixed;left:0;top:0;z-index:65;
+  width:315px;height:100dvh;max-height:100vh;
+  transform:translateX(calc(-100% + var(--edge-handle)));
+  transition:transform .42s cubic-bezier(.2,.78,.2,1);
+  background:linear-gradient(145deg,rgba(8,22,38,.985),rgba(9,34,56,.975));
+  border-right:1px solid #3277a9;
+  box-shadow:18px 0 70px #02091270;
+  backdrop-filter:blur(18px);
+  isolation:isolate;
+}
+.edge-nav--open,.edge-nav:focus-within{transform:translateX(0)}
+.edge-nav__edge{
+  position:absolute;right:0;top:0;bottom:0;width:var(--edge-handle);
+  background:linear-gradient(180deg,rgba(12,51,81,.85),rgba(20,51,82,.6),rgba(6,30,53,.85));
+  border-left:1px solid #367baf44;pointer-events:none;opacity:.85
+}
+.edge-nav__edge:after{
+  content:'';position:absolute;top:18%;bottom:18%;right:2px;width:2px;
+  background:linear-gradient(transparent,#72caff77,#379deb55,transparent);
+  box-shadow:0 0 14px #56b8ff66;animation:edge-nav-shimmer 9s ease-in-out infinite
+}
+.edge-nav__trigger{
+  position:absolute;top:50%;right:0;transform:translateY(-50%);
+  width:var(--edge-handle);min-height:177px;z-index:3;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;
+  border:0;border-top:1px solid #6ebdf144;border-bottom:1px solid #6ebdf144;
+  background:linear-gradient(180deg,#153957,#0d2b47);
+  color:#b4e3ff;cursor:pointer;padding:10px 0;
+  transition:background .2s,box-shadow .2s
+}
+.edge-nav__trigger svg{flex-shrink:0;width:15px}
+.edge-nav__trigger span{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:9px;letter-spacing:.14em;font-weight:700
+}
+.edge-nav__trigger:hover,.edge-nav__trigger:focus-visible,.edge-nav--open .edge-nav__trigger{
+  background:#1f669a;color:white;box-shadow:0 0 22px #51b5ff45
+}
+.edge-nav__body{
+  height:100%;width:calc(100% - var(--edge-handle));
+  display:flex;flex-direction:column;padding:clamp(28px,4vh,45px) 21px 24px 27px;
+  overflow-y:auto;scrollbar-width:thin;scrollbar-color:#5483a7 transparent;
+  overscroll-behavior:contain
+}
+.edge-nav__identity{display:flex;align-items:center;gap:11px;padding:0 4px 30px;border-bottom:1px solid #325673a1}
+.edge-nav__identity svg{color:#7dd1ff;filter:drop-shadow(0 0 10px #54b9ff78)}
+.edge-nav__identity span{font:700 12px 'Space Grotesk',sans-serif;letter-spacing:.1em;color:#d3edff}
+.edge-nav__body>p{font-size:9px;letter-spacing:.17em;color:#729bbb;font-weight:700;margin:28px 6px 15px}
+.edge-nav nav{display:flex;flex-direction:column;gap:5px;width:100%}
+.edge-nav__link{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:15px 11px;min-height:50px;
+  border:1px solid transparent;border-left:2px solid transparent;
+  background:transparent;color:#b5cbe0;
+  transition:background .22s,color .22s,border-color .22s,transform .22s;
+  font-size:13px;letter-spacing:0;font-weight:600
+}
+.edge-nav__link svg{flex-shrink:0;color:#6fa8ce}
+.edge-nav__link-number{font-size:9px;font-weight:700;color:#608aaa;letter-spacing:.12em}
+.edge-nav__link-name{flex:1}
+.edge-nav__link-arrow{opacity:0;transform:translateX(-4px);transition:opacity .2s,transform .2s}
+.edge-nav__link--active,.edge-nav__link:hover,.edge-nav__link:focus-visible{
+  color:#f1faff;background:linear-gradient(90deg,#184e77ac,#122b4648);
+  border-color:#3676a35e;border-left-color:#81d4ff;transform:translateX(3px)
+}
+.edge-nav__link--active svg,.edge-nav__link:hover svg{color:#9cdcff}
+.edge-nav__link:hover .edge-nav__link-arrow,.edge-nav__link--active .edge-nav__link-arrow{opacity:1;transform:translateX(0)}
+.edge-nav__footer{
+  margin-top:auto;border-top:1px solid #32536d7f;padding:24px 7px 0;
+  font-size:9px;font-weight:700;letter-spacing:.14em;color:#7cabc9
+}
+.edge-nav__footer span{color:#5dbfff;margin:0 5px}
+@keyframes edge-nav-shimmer{0%,100%{opacity:.38}50%{opacity:1}}
+@media(max-height:760px){
+  .edge-nav__body{padding-top:23px;padding-bottom:14px}
+  .edge-nav__identity{padding-bottom:17px}
+  .edge-nav__body>p{margin:17px 6px 10px}
+  .edge-nav__link{min-height:41px;padding:11px 9px}
+  .edge-nav__footer{padding-top:12px}
+}
+@media(max-width:950px){.edge-nav{display:none}}
+@media(prefers-reduced-motion:reduce){.edge-nav,.edge-nav *{animation:none!important;transition:none!important}}
