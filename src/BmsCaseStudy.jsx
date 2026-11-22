@@ -11,14 +11,19 @@ const images={
   cell:'/legacy/legacy-3ffc3107d220a3.webp',
   board:'/legacy/legacy-5eff485b4859ec.webp'
 };
-function Figure({src,title,caption,onZoom,wide=false}){
+function Figure({src,title,caption,onZoom,wide=false,source='Photographie originale — Google Sites'}){
   return <figure className={'bms-figure'+(wide?' bms-figure--wide':'')}>
-    <button type="button" className="bms-figure-image" onClick={()=>onZoom({image:src,title,desc:caption,source:'Photographie originale — Google Sites'})} aria-label={'Agrandir : '+title}>
+    <button type="button" className="bms-figure-image" onClick={()=>onZoom({image:src,title,desc:caption,source})} aria-label={'Agrandir : '+title}>
       <img src={src} alt={title} loading="lazy"/>
       <span><ZoomIn size={17}/> AGRANDIR</span>
     </button>
     <figcaption><strong>{title}</strong><span>{caption}</span></figcaption>
   </figure>;
+}
+function ReportFigure({page,title,caption,onZoom,wide=false}) {
+  const id=String(page).padStart(2,'0');
+  return <Figure src={'/assets/bms/rapport-page-'+id+'.webp'} title={title} caption={caption}
+    onZoom={onZoom} wide={wide} source={'Capture authentique du rapport tutoré BMS — page '+page+'/27'}/>;
 }
 function Source({page,label}){
   return <a className="bms-source" href={REPORT} target="_blank" rel="noopener noreferrer">
@@ -65,6 +70,9 @@ export default function BmsCaseStudy({onZoom}){
         </div>
         <Figure src={images.board} title="Assemblage réel de la carte" caption="Gros plan sur le PCB, les connexions de puissance, le porte-fusible et les composants soudés." onZoom={onZoom}/>
       </div>
+      <div className="bms-report-figure-single">
+        <ReportFigure page={6} title="Schéma d’architecture original — ML5243" caption="Page 6 du rapport tutoré : broches du superviseur, MOSFET de charge/décharge et détection thermique. Capture du document d'origine, non redessinée." onZoom={onZoom} wide/>
+      </div>
     </section>
 
     <section className="bms-chapter" aria-labelledby="bms-design">
@@ -84,6 +92,11 @@ export default function BmsCaseStudy({onZoom}){
           <Source page="11" label="Versions 1, 2 et 3 du PCB"/>
         </div>
         <Figure src={images.assembly} title="PCB équipé, vue d'ensemble" caption="Version assemblée et connectée au pack. Les captures du routage KiCad se consultent dans le rapport source, pages 10 et 11." onZoom={onZoom}/>
+      </div>
+      <div className="bms-report-figures">
+        <ReportFigure page={9} title="Conception matérielle et brochage du ML5243" caption="Schéma et contraintes électriques du circuit — rapport original, page 9." onZoom={onZoom}/>
+        <ReportFigure page={10} title="Routage KiCad — pistes et shunt" caption="Vue réelle du PCB routé : chemin de puissance 2 mm et shunt cible 1 mΩ — rapport original, page 10." onZoom={onZoom}/>
+        <ReportFigure page={11} title="Évolution des trois versions du PCB" caption="Comparaison des versions fabriquées, difficultés d’assemblage et corrections — rapport original, page 11." onZoom={onZoom} wide/>
       </div>
       <div className="bms-original-document">
         <div>
@@ -115,6 +128,11 @@ export default function BmsCaseStudy({onZoom}){
           </tbody>
         </table>
       </div>
+      <div className="bms-report-figures">
+        <ReportFigure page={14} title="Test 1 — résultats à vide" caption="Mesures Vbat/Vout et état de Q3/Q4, avec photos du banc d’essai : page 14 du rapport." onZoom={onZoom}/>
+        <ReportFigure page={15} title="Test 2 — décharge sous charge" caption="Vgs ≈ 0,58 V ; Vout ≈ 11,8 mV. La conduction des MOSFET n’est pas validée — page 15." onZoom={onZoom}/>
+        <ReportFigure page={16} title="Tests 3 et 4 — charge et tensions des cellules" caption="Courant de charge quasi nul, cellule 3 à 2,295 V et interrupteurs bloqués — page 16." onZoom={onZoom} wide/>
+      </div>
       <div className="bms-results-source"><Source page="13–16" label="Protocole et tableaux d'essais originaux"/></div>
     </section>
 
@@ -140,6 +158,9 @@ export default function BmsCaseStudy({onZoom}){
           <div><XCircle size={18}/> Recharge du pack : KO</div>
           <div><CheckCircle2 size={18}/> Démarche de diagnostic documentée</div>
         </div>
+      </div>
+      <div className="bms-report-figure-single">
+        <ReportFigure page={17} title="Démarche de diagnostic d'origine" caption="Causes possibles, mesures de contrôle et actions correctives envisagées dans le rapport de projet — page 17." onZoom={onZoom} wide/>
       </div>
     </section>
 
