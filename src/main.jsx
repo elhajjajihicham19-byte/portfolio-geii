@@ -324,18 +324,73 @@ function ProjectCard({project:p,onOpen,featured=false}){
   </article>;
 }
 
-function ProjectYearGroup({items,onOpen,featureTutored=false}){
-  return <div className="project-year-list">
-    {[3,2,1].map(year=>{
-      const entries=items.filter(p=>p.year===year);
-      if(!entries.length)return null;
-      return <div key={year} className={'project-year-block project-year-block--'+year}>
-        <div className="project-year-heading reveal"><span>BUT{year}</span><span>{entries.length} {entries.length===1?'RÉALISATION':'RÉALISATIONS'}</span></div>
-        <div className="projects-list">
-          {entries.map(p=><ProjectCard key={p.id} project={p} featured={featureTutored&&['pv','bms'].includes(p.id)} onOpen={onOpen}/>)}
+function ProjectSelector({selectedId,onSelect}){
+  const [open,setOpen]=useState(false);
+  const selectorRef=useRef(null);
+  const choiceCount=academicProjects.length-1;
+
+  useEffect(()=>{
+    if(!open)return;
+    const closeOutside=e=>{
+      if(selectorRef.current&&!selectorRef.current.contains(e.target))setOpen(false);
+    };
+    const closeEscape=e=>{
+      if(e.key==='Escape'){
+        setOpen(false);
+        selectorRef.current?.querySelector('.project-selector__trigger')?.focus();
+      }
+    };
+    document.addEventListener('pointerdown',closeOutside);
+    document.addEventListener('keydown',closeEscape);
+    return()=>{
+      document.removeEventListener('pointerdown',closeOutside);
+      document.removeEventListener('keydown',closeEscape);
+    };
+  },[open]);
+
+  const groups=[
+    {title:'PROJETS TUTORÉS',items:tutoredProjects},
+    {title:'SAE & RÉALISATIONS PRATIQUES',items:appliedProjects}
+  ];
+  return <div className={'project-selector'+(open?' project-selector--open':'')}
+      ref={selectorRef} data-lenis-prevent={open||undefined}>
+    <button type="button" className="project-selector__trigger"
+      aria-expanded={open} aria-controls="project-selector-list"
+      onClick={()=>setOpen(value=>!value)}>
+      <span className="project-selector__trigger-icon"><Layers size={20}/></span>
+      <span className="project-selector__trigger-text">
+        <strong>EXPLORER LES AUTRES PROJETS</strong>
+        <small>{choiceCount} autres réalisations · Projets tutorés et SAE, du BUT3 au BUT1</small>
+      </span>
+      <span className="project-selector__trigger-count">{String(choiceCount).padStart(2,'0')}</span>
+      <ChevronRight size={21} className="project-selector__chevron"/>
+    </button>
+    {open&&<div id="project-selector-list" className="project-selector__list"
+      onWheel={e=>e.stopPropagation()}>
+      {groups.map(group=><div className="project-selector__group" key={group.title}>
+        <div className="project-selector__group-name">
+          <span>{group.title}</span><span>{group.items.length} DOSSIERS</span>
         </div>
-      </div>;
-    })}
+        {[3,2,1].map(year=>{
+          const entries=group.items.filter(p=>p.year===year&&p.id!==selectedId);
+          if(!entries.length)return null;
+          return <div className="project-selector__year" key={year}>
+            <span className="project-selector__year-label">BUT{year}</span>
+            <div className="project-selector__choices">{entries.map(p=>
+              <button key={p.id} type="button" className="project-selector__choice"
+                onClick={()=>{setOpen(false);onSelect(p)}}>
+                <span className="project-selector__choice-icon">{p.no}</span>
+                <span className="project-selector__choice-text">
+                  <strong>{p.name}</strong>
+                  <small>{p.short}</small>
+                </span>
+                <ArrowUpRight size={17}/>
+              </button>
+            )}</div>
+          </div>;
+        })}
+      </div>)}
+    </div>}
   </div>;
 }
 
@@ -395,6 +450,7 @@ function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
 function App(){
   const [project,setProject]=useState(null);const [zoom,setZoom]=useState(null);
   const [showDocumentCatalogue,setShowDocumentCatalogue]=useState(false);
+  const [selectedProjectId,setSelectedProjectId]=useState('pv');
   const lenisRef=useRef(null);
   const closeDetail=()=>{setProject(null);setZoom(null)};
   useEffect(()=>{
@@ -417,6 +473,13 @@ function App(){
     return()=>window.removeEventListener('keydown',handle);
   },[zoom]);
   const openProject=(p)=>{setProject(p);setZoom(null)};
+  const selectedProject=academicProjects.find(p=>p.id===selectedProjectId)||tutoredProjects[0];
+  const selectProject=p=>{
+    setSelectedProjectId(p.id);
+    requestAnimationFrame(()=>{
+      lenisRef.current?.scrollTo('#project-featured',{offset:-80,duration:.85});
+    });
+  };
   return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><ElectricAmbient/><CircuitInteractions paused={Boolean(project||zoom)}/><div className="grain" aria-hidden="true"/>{!project&&!zoom&&<EdgeNavigation/>}
     <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
     <main>
@@ -440,32 +503,21 @@ function App(){
         <SectionHeader number="04" title="PROJETS & RÉALISATIONS" aside={`${academicProjects.length} ÉTUDES UNIVERSITAIRES`}/>
         <div className="projects-intro reveal">
           <h2>APPRENDRE <span>PAR LA PRATIQUE.</span></h2>
-          <p>Deux parcours de réalisation : les projets tutorés au premier plan, puis les SAE et travaux pratiques. Chaque projet présente la démarche, les choix techniques, les résultats et le recul acquis, de la troisième à la première année.</p>
+          <p>Une réalisation à découvrir à la fois. Parcourez les projets tutorés et les SAE depuis la liste, classés de la troisième à la première année.</p>
         </div>
-
-        <div className="projects-group projects-group--tutored">
-          <div className="projects-group-heading reveal">
-            <div className="projects-group-heading-main">
-              <span className="projects-group-index">01 / SUIVI DE PROJET</span>
-              <h3>PROJETS <em>TUTORÉS.</em></h3>
-              <p>Des travaux de conception développés sur plusieurs semaines, avec une démarche complète : cahier des charges, architecture, essais et analyse critique.</p>
+        <div id="project-featured" className="project-selected">
+          <div className="project-selected__heading">
+            <div>
+              <span>PROJET EN VEDETTE / BUT{selectedProject.year}</span>
+              <h3>{selectedProject.category==='tutored'?'PROJET TUTORÉ':'SAE & RÉALISATION PRATIQUE'}</h3>
             </div>
-            <span className="projects-group-count">{String(tutoredProjects.length).padStart(2,'0')} DOSSIERS</span>
+            <span className="project-selected__counter">01 PROJET AFFICHÉ · {academicProjects.length} DISPONIBLES</span>
           </div>
-          <ProjectYearGroup items={tutoredProjects} featureTutored onOpen={openProject}/>
+          <ProjectCard key={selectedProject.id} project={selectedProject}
+            featured={['pv','bms'].includes(selectedProject.id)}
+            onOpen={openProject}/>
         </div>
-
-        <div className="projects-group projects-group--applied">
-          <div className="projects-group-heading reveal">
-            <div className="projects-group-heading-main">
-              <span className="projects-group-index">02 / MISE EN APPLICATION</span>
-              <h3>SAE & <em>RÉALISATIONS PRATIQUES.</em></h3>
-              <p>Des systèmes conçus, câblés, programmés ou vérifiés pendant le BUT GEII. Les SAE identifiées et les travaux pratiques sont distingués dans chaque fiche pour respecter la nature réelle des activités.</p>
-            </div>
-            <span className="projects-group-count">{String(appliedProjects.length).padStart(2,'0')} DOSSIERS</span>
-          </div>
-          <ProjectYearGroup items={appliedProjects} onOpen={openProject}/>
-        </div>
+        <ProjectSelector selectedId={selectedProject.id} onSelect={selectProject}/>
       </section>
 
       <section id="experience" className="section experience"><SectionHeader number="05" title="EXPÉRIENCE PROFESSIONNELLE"/><div className="experience-grid"><div className="reveal"><span className="superline">STAGE · AVRIL — JUIN 2026</span><h2>DU COURS<br/>AU <span>BUREAU D'ÉTUDES.</span></h2><p className="experience-lead">10 semaines dans l'environnement d'un bureau d'études électriques à Montpellier, avec une immersion sur des projets de bâtiments.</p><button className="primary as-button" type="button" onClick={()=>openProject(betemExperience)}>EXPLORER LE STAGE <ArrowUpRight size={17}/></button></div><div className="experience-details reveal"><div className="experience-company"><span>ENTREPRISE</span><strong>BETEM — Montpellier</strong></div><div className="experience-company"><span>DOMAINE</span><strong>Études CFO / CFA et basse tension</strong></div><div className="experience-company"><span>LOGICIELS UTILISÉS</span><strong>AutoCAD, Revit, Caneco BT, DIALux evo</strong></div><div className="experience-company"><span>COMPÉTENCES MOBILISÉES</span><strong>Concevoir · Vérifier · Préparer l'installation</strong></div><div className="experience-acquired"><b>CE QUE CETTE EXPÉRIENCE M'A APPORTÉ</b><p>Une meilleure compréhension de la production des plans et pièces écrites, de la cohérence entre les livrables, du rôle de chaque intervenant et des contraintes concrètes d'un projet.</p></div></div></div>
