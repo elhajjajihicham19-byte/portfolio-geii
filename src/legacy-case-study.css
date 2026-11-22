@@ -57,3 +57,25 @@
 .legacy-chapter-figure>button img{padding:12px}
 .legacy-chapter-photo-stack .legacy-chapter-figure figcaption strong{letter-spacing:0}
 @media(max-width:1100px){.legacy-chapter-figure>button{height:380px}}
+
+/* Rectification d'orientation sans modifier les fichiers sources. */
+.legacy-chapter-figure>button img{
+  transform:rotate(var(--figure-rotation,0deg));
+}
+.legacy-chapter-figure>button:hover img{
+  transform:rotate(var(--figure-rotation,0deg)) scale(1.035);
+}
+.legacy-chapter-figure--document>button{
+  background:radial-gradient(ellipse at center,#2a4c68,#0d2032 80%);
+}
+.legacy-chapter-figure--document>button img{
+  padding:16px 22px;
+  filter:drop-shadow(0 11px 21px rgba(2,12,22,.27));
+}
+.legacy-figure-unavailable{
+  display:flex!important;align-items:center;gap:10px;
+  position:static!important;border:1px solid #426480;
+  padding:18px 24px!important;background:#153046!important;
+  color:#bcd8e8!important;font-size:12px!important;
+}
+.legacy-chapter-figure>button:disabled{cursor:default}
