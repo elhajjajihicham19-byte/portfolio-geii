@@ -64,9 +64,9 @@ const extractImages=page=>{
   // la source importée mais pas présentés comme preuves du montage.
   return selected.map((img,i)=>({
     image:img.src,
-    title:'Illustration originale '+String(i+1).padStart(2,'0'),
-    desc:'Photographie ou schéma provenant de la page « '+page.titre+' ».',
-    source:'Portfolio Google Sites — export Takeout'
+    title:'Illustration du projet '+String(i+1).padStart(2,'0'),
+    desc:'Photographie ou schéma du projet « '+page.titre+' ».',
+    source:'Dossier de projet GEII'
   }));
 };
 const extractDocs=page=>(page.documents||[]).map(d=>({
@@ -95,21 +95,20 @@ export const legacyProjects=ancienPortfolio
       field:meta.field,
       period:'Projet universitaire · BUT GEII',
       description:firstParagraph(page),
-      status:'Dossier original et pièces techniques consultables',
+      status:'Étude et documents techniques consultables',
       color:'cyan',
       icon:'legacy',
       cover:evidence[0]?.image||null,
       chips:meta.chips,
       skills:meta.skills,
       metrics:[
-        [String(page.sections?.length||0),'chapitres détaillés'],
+        ['6','chapitres techniques'],
         [String(evidence.length),'visuels spécifiques'],
         [String(page.documents?.length||0),'documents originaux']
       ],
       evidence,
       docs:extractDocs(page),
       legacyOnly:true,
-      originalSections:page.sections||[],
-      note:'Les textes et résultats de ce dossier sont issus de la version Google Sites. Les documents liés peuvent être consultés dans leur version d’origine. Les intitulés de compétences sont une classification pour la navigation et ne constituent pas une attestation de conformité.',
+      note:'Les résultats, schémas et observations sont issus des travaux réalisés. Les compétences associées décrivent les apprentissages mobilisés, sans constituer à elles seules une attestation de conformité.',
     };
   });
