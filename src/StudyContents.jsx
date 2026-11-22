@@ -20,7 +20,7 @@ export default function StudyContents({panelRef,projectId,readingMode}){
     const entries=elements.map((node,i)=>{
       const raw=node.querySelector('.bms-chapter-index span, .chapter-index')?.textContent
         ||node.querySelector('h4,h3')?.textContent||'Chapitre '+(i+1);
-      const title=raw.replace(/^\\s*\\d+\\s*\\/\\s*/,'').trim();
+      const title=raw.replace(/^\s*\d+\s*\/\s*/,'').trim();
       const id='study-'+projectId+'-'+String(i+1).padStart(2,'0');
       node.id=id;
       return {id,title,index:i,node};
