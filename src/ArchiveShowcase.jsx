@@ -22,7 +22,7 @@ export default function ArchiveShowcase(){
     return()=>{document.body.style.overflow=previous;window.removeEventListener('keydown',onKey)};
   },[selected,photo]);
   return <section id="archives" className="section import-archives">
-    <div className="section-heading"><span className="index">05 / PARCOURS & COMPÉTENCES D'ORIGINE</span><span className="rule"/><span className="heading-aside">SOURCES GOOGLE TAKEOUT · 2026</span></div>
+    <div className="section-heading"><span className="index">06 / PARCOURS & COMPÉTENCES D'ORIGINE</span><span className="rule"/><span className="heading-aside">SOURCES GOOGLE TAKEOUT · 2026</span></div>
     <div className="import-intro">
       <div><p className="import-kicker">LA MÉMOIRE DES PROJETS</p><h2>MA FORMATION, <span>MES COMPÉTENCES.</span></h2></div>
       <p>Les douze projets de l'ancien site sont désormais directement intégrés aux études détaillées ci-dessus. Ici, je conserve les autres pages historiques : ma présentation, mon parcours et les compétences GEII, avec leur texte intégral.</p>
