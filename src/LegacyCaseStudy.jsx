@@ -36,10 +36,15 @@ function IndentedSources({docs}){
  </div>;
 }
 function LegacyPhoto({ev,onZoom,i}){
- return <figure className="legacy-chapter-figure">
-  <button type="button" onClick={()=>onZoom(ev)} aria-label={'Agrandir une illustration du projet : '+ev.title}>
-   <img src={ev.image} alt={ev.title} loading="lazy"/>
-   <span><ZoomIn size={17}/> AGRANDIR</span>
+ const [failed,setFailed]=useState(false);
+ const isDocument=ev.image?.startsWith('/assets/studies/');
+ return <figure className={'legacy-chapter-figure'+(isDocument?' legacy-chapter-figure--document':'')}>
+  <button type="button" disabled={failed} onClick={()=>onZoom(ev)}
+   style={{'--figure-rotation':(ev.rotation||0)+'deg'}}
+   aria-label={'Agrandir une illustration du projet : '+ev.title}>
+   {failed?<span className="legacy-figure-unavailable"><FileText size={24}/> Aperçu indisponible</span>:
+    <img src={ev.image} alt={ev.title} loading="lazy" decoding="async" onError={()=>setFailed(true)}/>}
+   {!failed&&<span><ZoomIn size={17}/> AGRANDIR</span>}
   </button>
   <figcaption><strong>{ev.title?.startsWith('Illustration du projet')?'FIGURE '+String(i+1).padStart(2,'0'):ev.title||'FIGURE '+String(i+1).padStart(2,'0')}</strong>
    <span>{ev.desc||'Photographie ou schéma authentique du projet.'}</span>
