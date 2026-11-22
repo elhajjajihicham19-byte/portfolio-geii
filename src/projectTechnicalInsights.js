@@ -36,13 +36,29 @@ export const projectTechnicalInsights = {
    table:{columns:['Fonction','Résultat'],rows:[['Cycle PH0–PH7','36,7 s ; consigne ≈ 35 s'],['Sécurités accessibles','Validées dans le cahier de recette'],['Affichage température','21,32 °C / référence 21,18 °C'],['Chauffage','Non testé : défaut sur résistances']]},note:'La mention « validé » du dossier pour l’affichage doit être nuancée au regard du critère de 0,01 °C.'}
  ],
  'geii-moteur-dc-pilot-par-bus-can':[
-  {chapter:1,title:'Architecture du shield moteur',text:'J’ai documenté le pont en H DRV8251A, les fonctions de mesure du courant et de la tension d’alimentation, le codeur, les interfaces CAN et l’association avec la carte NUCLEO-F303RE. L’architecture sépare les protections, la commande du moteur et la communication.',
-   metrics:[['DRV8251A','Pont de commande'],['NUCLEO-F303RE','Contrôleur'],['CANH / CANL','Bus différentiel']]},
-  {chapter:3,title:'Procédure de validation prévue',text:'J’ai rédigé des tests hors tension et sous alimentation : continuité de OUT1/OUT2 et VMOT, protection contre l’inversion de polarité, consigne PWM, limitation de courant et émission de trames CAN. Le tableau de synthèse du document n’est pas rempli : il s’agit d’un protocole à exécuter et non de résultats de validation acquis.',
-   table:{columns:['Fonction','Contrôle prévu'],rows:[['Continuité','Absence de court-circuit OUT1/OUT2 et alimentations'],['Commande moteur','Sens et rapport cyclique'],['Limitation de courant','Seuil via charge de test'],['Communication CAN','CANH/CANL, acquittement ACK, décodage de la trame']]},
-   note:'Aucun PASS global n’est annoncé : la fiche de résultats de l’essai était encore vierge.'},
-  {chapter:4,title:'Mesures attendues sur le bus CAN',text:'La procédure prévoit de distinguer les états dominants et récessifs, avec une tension différentielle CANH–CANL d’environ 2 V ou 0 V. Un exemple de trame est donné à 125 kbit/s pour préparer l’observation à l’oscilloscope ; ces valeurs sont des critères de test, pas des mesures du prototype.',
-   metrics:[['125 kbit/s','Exemple de débit'],['≈ 2 V','CAN différentiel dominant'],['≈ 0 V','CAN différentiel récessif']]}
+  {chapter:1,title:'Architecture du shield moteur CAN',text:'J’ai conçu un shield autour du pont en H DRV8251A et de la NUCLEO-F303RE. Les fonctions assurent la commande du moteur, la mesure du courant et de la tension, la limitation en courant, la gestion des LED et l’échange de messages sur CANH/CANL.',
+   metrics:[['DRV8251A','Pont de puissance'],['NUCLEO-F303RE','Microcontrôleur'],['CANH / CANL','Communication différentielle']]},
+  {chapter:3,title:'Contrôles électriques et fonctionnels réalisés',text:'J’ai rédigé une procédure puis effectué les essais consignés sur la carte de l’enseignant Jean-Roch Vaille, comme précisé en page 1 du rapport de test (révision 4 du 05/12/2025). Les vérifications de continuité (sorties moteur, alimentation, broches du microcontrôleur), la protection contre l’inversion de polarité et plusieurs comportements des LED sont notés PASS. Le sens moteur, le test sous charge et les trames CAN font également l’objet d’observations enregistrées.',
+   table:{columns:['Essai consigné','Mesure / observation','Statut du rapport'],rows:[
+    ['Continuité (pages 2–4)','Aucun court-circuit détecté','PASS'],
+    ['Inversion de polarité FP4 (p. 5)','Absence de tension relevée','PASS'],
+    ['LED veille / activité (p. 8–10)','Clignotements lent, rapide et flash observés','PASS'],
+    ['Sens du moteur / LED D3 (p. 11)','Changement de couleur selon la commande','PASS'],
+    ['Commande à 100 % (p. 12)','10 V / 100 Ω → I = 0,10 A mesuré','PASS'],
+    ['Communication CAN (p. 15)','Trames obtenues annoncées correspondantes','PASS']
+   ]},
+   note:'Ces essais ont été réalisés sur la carte de l’enseignant ; ils ne suffisent pas à certifier le fonctionnement de mon propre PCB. La page CAN comporte aussi une mention résiduelle indiquant que des mesures seront réalisées à réception de la carte.'},
+  {chapter:3,title:'Comparer les seuils théoriques aux mesures obtenues',text:'La procédure montre plusieurs résultats présentés comme réussis malgré un écart avec leur critère numérique. Pour la mesure de VMOT = 10 V, la sortie VADC0 vaut 1,869 V contre 2,00 V attendus ±2 %. L’essai de limitation à 100 mA donne 80 mA ; la consigne enregistrée à 200 mA conduit à 190 mA. J’ai donc distingué le statut inscrit sur la fiche du respect réel des tolérances.',
+   table:{columns:['Fonction','Cible indiquée','Valeur relevée','Lecture technique'],rows:[
+    ['FP5 — acquisition (p. 6)','2,00 V ±2 % (1,96–2,04 V)','1,869 V','Écart −6,55 % ; hors tolérance'],
+    ['FP1/FP3 — moteur (p. 12)','0,10 A ±2 %','0,10 A','Cible atteinte'],
+    ['FP2 — limitation (p. 13)','100 mA ±2 %','80 mA','Écart −20 % ; hors tolérance'],
+    ['FP7 — sauvegarde (p. 14)','200 mA ±2 %','190 mA','Écart −5 % ; hors tolérance']
+   ]},
+   note:'La fiche mentionne PASS pour FP5, FP2 et FP7, même si les valeurs chiffrées ne respectent pas les critères annoncés. La synthèse de la page 16 ne coche pas FP7. Ces écarts méritent une vérification instrumentale avant conclusion globale.'},
+  {chapter:4,title:'Interpréter le signal CAN et les limites des essais',text:'J’ai vérifié le principe d’une trame CAN différentielle : état dominant avec une différence CANH−CANL voisine de 2 V et état récessif proche de 0 V. Le protocole propose notamment un exemple à 125 kbit/s et indique que les trames obtenues correspondaient aux trames attendues. Néanmoins, le document ne contient pas de décodage complet mesuré ni de capture probante pour tous les champs.',
+   metrics:[['≈ 2 V','CAN dominant attendu'],['≈ 0 V','CAN récessif attendu'],['125 kbit/s','Débit de l’exemple']] ,
+   note:'La conclusion CAN est rapportée comme telle dans la procédure ; une validation complète sur mon prototype nécessiterait une acquisition des trames et la traçabilité du banc d’essai.'}
  ],
  'geii-rs510':[
   {chapter:1,title:'Bornier de commande du variateur',text:'Nous avons identifié les entrées logiques S1 à S5, la sortie 24 V de commande, le relais RA/RB et l’entrée analogique AVI. Le potentiomètre alimenté en 10 V permet d’ajuster la consigne de fréquence, tandis que les sélecteurs commandent le sens et les vitesses prédéfinies.'},
