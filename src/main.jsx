@@ -6,18 +6,17 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { ArrowUpRight, ArrowDown, ArrowLeft, X, Zap, Cpu, CircuitBoard, Download, ExternalLink, Layers, GraduationCap, FileText, CheckCircle2, AlertCircle, BriefcaseBusiness, Wrench, Microscope, ChevronRight, Link2, ShieldCheck, Sun, MapPin, Mail } from 'lucide-react';
-import ArchiveShowcase from './ArchiveShowcase.jsx';
 import { legacyProjects, originalFor, originalEvidence, originalDocuments } from './legacyProjects.js';
 import BmsCaseStudy from './BmsCaseStudy.jsx';
 import PvCaseStudy from './PvCaseStudy.jsx';
 import LegacyCaseStudy from './LegacyCaseStudy.jsx';
 import AppliedTechnicalStudy from './AppliedTechnicalStudy.jsx';
+import BetemCaseStudy from './BetemCaseStudy.jsx';
 import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const REFERENTIEL = 'https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2023-12/g-nie-lectrique-et-informatique-industrielle-30834.pdf';
-const OLD_SITE = 'https://sites.google.com/view/portfoliohichamelhajjaji/accueil';
 
 const projects = [
   {
@@ -140,15 +139,14 @@ const originalBMS = originalFor('BMS');
 const originalBETEM = originalFor('Stage chez BETEM');
 for(const [project,archive] of [[projects[0],originalBMS],[projects[1],originalBETEM]]){
   if(!archive)continue;
-  project.originalSections=archive.sections||[];
   const seen=new Set((project.evidence||[]).map(x=>x.image));
   project.evidence=[...(project.evidence||[]),...originalEvidence(archive).filter(x=>!seen.has(x.image))];
   project.docs=[...(project.docs||[]),...originalDocuments(archive)];
   if(project.id==='bms'){
     project.cover=project.evidence[0]?.image||null;
-    project.note="Photographies et rapport authentiques issus de l'ancien portfolio. La conception et les essais ont été réalisés mais la sortie à 0 V ne permet pas de valider le fonctionnement du BMS. Les conclusions actualisées priment sur le texte historique.";
+    project.note="Les photographies, schémas et mesures proviennent des travaux du projet. Les essais n'ont pas validé la charge ni la décharge du BMS ; le diagnostic technique est détaillé dans le dossier.";
   } else {
-    project.note="Documents originaux du stage et sources de l'étude. La publication des plans et pièces professionnelles a été autorisée par BETEM selon la confirmation de l'étudiant.";
+    project.note="Les plans, pièces techniques et photographies présentés correspondent aux travaux de mon stage. Leur diffusion dans ce portfolio a été validée par BETEM.";
   }
 }
 projects.push(...legacyProjects);
@@ -218,7 +216,7 @@ const documents = [
 documents.push(...ancienPortfolio.flatMap(page=>(page.documents||[]).map(doc=>({
   title:doc.titre||'Document technique',
   type:page.titre.toUpperCase(),
-  desc:'Pièce originale référencée dans le portfolio Google Sites.',
+  desc:'Pièce de projet : rapport, schéma, mesure ou document technique.',
   url:doc.url,
   external:true,
   icon:FileText
@@ -292,31 +290,15 @@ function ProjectDetail({project:p,onClose,onZoom}){
     {p.id==='pv'&&<PvCaseStudy/>}
     {p.legacyOnly&&<LegacyCaseStudy project={p} onZoom={onZoom}/>}
     {['cem','dialux'].includes(p.id)&&<AppliedTechnicalStudy project={p} onZoom={onZoom}/>}
-    {!p.legacyOnly&&!['bms','pv','cem','dialux'].includes(p.id)&&<div className="detail-chapters">
+    {p.id==='betem'&&<BetemCaseStudy project={p} onZoom={onZoom}/>}
+    {!p.legacyOnly&&!['bms','pv','cem','dialux','betem'].includes(p.id)&&<div className="detail-chapters">
       <section><span className="chapter-index">01 / CONTEXTE</span><h3>Pourquoi ce projet ?</h3><p>{p.context}</p></section>
       <section><span className="chapter-index">02 / MON RÔLE</span><h3>Ce que j'ai réalisé</h3><p>{p.role}</p></section>
       <section className="wide"><span className="chapter-index">03 / DÉMARCHE</span><h3>Étapes techniques</h3><ol className="process-list">{p.method.map((step,i)=><li key={i}><b>{String(i+1).padStart(2,'0')}</b><span>{step}</span></li>)}</ol></section>
       <section><span className="chapter-index">04 / RÉSULTATS</span><h3>Ce que montrent les résultats</h3><p>{p.results}</p></section>
       <section className="critical-section"><span className="chapter-index">05 / PRISE DE RECUL</span><h3>Mon autoévaluation</h3><p>{p.critique}</p></section>
     </div>}
-    {!!p.originalSections?.length&&!p.legacyOnly&&p.id!=='bms'&&<div className="historical-dossier">
-      <div className="small-heading"><span className="index">DOSSIER INTÉGRAL / PORTFOLIO D'ORIGINE</span><span className="rule"/></div>
-      <p className="historical-context">Transcription intégrale des sections rédigées lors du projet. Les résultats du dossier d'origine sont conservés pour leur valeur pédagogique et historique ; ils sont à lire avec les éventuelles conclusions actualisées ci-dessus.</p>
-      <div className="historical-grid">{p.originalSections.map((chapter,i)=><section className="historical-chapter" key={i}>
-        <span className="chapter-index">{String(i+1).padStart(2,'0')} / {String(p.originalSections.length).padStart(2,'0')}</span>
-        <h3>{chapter.titre}</h3>
-        {(chapter.blocs||[]).map((block,j)=><p key={j} className={block.type==='puce'?'historical-bullet':''}>{block.type==='puce'?'— ':''}{block.texte}</p>)}
-      </section>)}</div>
-    </div>}
-    {p.id==='bms'&&!!p.originalSections?.length&&<details className="bms-old-transcript">
-      <summary>VOIR LA TRANSCRIPTION COMPLÈTE DE L'ANCIEN PORTFOLIO <ChevronRight size={17}/></summary>
-      <p>Les affirmations de validation de l'ancien texte sont conservées pour traçabilité historique. Les mesures et conclusions de la fiche actuelle et du rapport de tests doivent prévaloir.</p>
-      <div className="historical-grid">{p.originalSections.map((chapter,i)=><section className="historical-chapter" key={i}>
-        <span className="chapter-index">{String(i+1).padStart(2,'0')} / {String(p.originalSections.length).padStart(2,'0')}</span>
-        <h3>{chapter.titre}</h3>{(chapter.blocs||[]).map((block,j)=><p key={j} className={block.type==='puce'?'historical-bullet':''}>{block.type==='puce'?'— ':''}{block.texte}</p>)}
-      </section>)}</div>
-    </details>}
-    {!p.legacyOnly&&!['cem','dialux'].includes(p.id)&&<div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.id==='bms'?<div className="bms-embedded-evidence"><CheckCircle2 size={18}/><p>Les photographies du PCB et les mesures sont placées directement dans les chapitres techniques ci-dessus. Les pièces sources figurent ci-dessous.</p></div>:p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
+    {!p.legacyOnly&&!['cem','dialux','betem'].includes(p.id)&&<div className="detail-evidence"><div className="small-heading"><span className="index">06 / TRACES ET PREUVES</span><span className="rule"/></div>{p.id==='bms'?<div className="bms-embedded-evidence"><CheckCircle2 size={18}/><p>Les photographies du PCB et les mesures sont placées directement dans les chapitres techniques ci-dessus. Les pièces sources figurent ci-dessous.</p></div>:p.evidence?.length?<EvidenceGrid items={p.evidence} onZoom={onZoom}/>:<div className="missing-proof"><AlertCircle size={19}/><p>Les documents graphiques originaux de ce projet restent à intégrer. Aucun schéma fictif n'est présenté comme une preuve.</p></div>}
       {p.note&&<p className="source-note"><ShieldCheck size={17}/>{p.note}</p>}
       {p.docs?.length>0&&<div className="download-list">{p.docs.map(d=><div key={d.url}><span>{d.type}</span><div className="document-actions"><DocumentLink url={d.url} label={d.label}/><button className="preview-doc-button" type="button" onClick={()=>setPreviewDoc(d)}>APERÇU DU DOCUMENT <ExternalLink size={15}/></button></div></div>)}</div>}
     </div>}
@@ -343,7 +325,7 @@ function App(){
   useEffect(()=>{document.body.style.overflow=(project||zoom)?'hidden':'';return()=>{document.body.style.overflow=''}},[project,zoom]);
   const openProject=(p)=>{setProject(p);setZoom(null)};
   return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><div className="grain" aria-hidden="true"/>
-    <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#archives">PARCOURS D'ORIGINE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
+    <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
     <main>
       <section className="hero" id="accueil"><Scene/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
 
@@ -351,8 +333,8 @@ function App(){
       </section>
 
       <section id="formation" className="section formation"><SectionHeader number="02" title="MA FORMATION" aside="DU BAC À L'INGÉNIERIE"/><div className="formation-intro reveal"><h2>MON <span>PARCOURS.</span></h2><p>Une formation qui associe bases scientifiques, conception, travaux pratiques et projets appliqués à l'énergie.</p></div><div className="timeline reveal">
-        <div className="timeline-item"><span className="timeline-count">01</span><div className="timeline-year">AVANT LE BUT</div><div><h3>Baccalauréat général</h3><p>Spécialités mathématiques et physique. Acquisition de bases scientifiques pour comprendre les phénomènes électriques et mécaniques.</p></div></div>
-        <div className="timeline-item"><span className="timeline-count">02</span><div className="timeline-year">APRÈS LE BAC</div><div><h3>Première année d'informatique</h3><p>Initiation à la programmation, à la logique et aux méthodes d'analyse, avant une réorientation vers les applications électriques.</p></div></div>
+        <div className="timeline-item"><span className="timeline-count">01</span><div className="timeline-year">AVANT LE BUT</div><div><h3>Baccalauréat général</h3><p>Obtention du baccalauréat en 2021, spécialités mathématiques et physique. Acquisition de bases scientifiques pour comprendre les phénomènes électriques et mécaniques.</p></div></div>
+        <div className="timeline-item"><span className="timeline-count">02</span><div className="timeline-year">APRÈS LE BAC</div><div><h3>Première année d'informatique</h3><p>Première année de licence informatique, avant ma réorientation en 2024 vers le BUT GEII. J'y ai développé des bases en programmation et en logique, utiles pour les systèmes techniques.</p></div></div>
         <div className="timeline-item current"><span className="timeline-count">03</span><div className="timeline-year">2024—2027 · EN COURS</div><div><h3>BUT Génie électrique et informatique industrielle</h3><p><strong>Parcours Électricité et maîtrise de l'énergie.</strong> Électrotechnique, conversion d'énergie, électronique, automatismes, modélisation, contrôle-commande et réseaux électriques.</p><Chips items={['Électrotechnique','Électronique de puissance','Installations BT','Énergies renouvelables','Mesures & essais']}/></div></div>
         <div className="timeline-item future"><span className="timeline-count">04</span><div className="timeline-year">APRÈS LE BUT · OBJECTIF</div><div><h3>Poursuite en école d'ingénieurs</h3><p>Objectif : approfondir le génie électrique, de préférence en apprentissage, puis travailler dans les réseaux électriques et les installations de transport et distribution HTA/HTB.</p></div></div>
       </div><div className="formation-footer reveal"><div><strong>POURQUOI LE PARCOURS EME ?</strong><p>Pour étudier la production, la conversion, le transport et l'utilisation de l'énergie électrique, de la théorie aux applications industrielles.</p></div><DocumentLink url={REFERENTIEL} label="CONSULTER LE RÉFÉRENTIEL NATIONAL" external/></div>
@@ -414,11 +396,9 @@ function App(){
         </div>
       </section>
 
-      <ArchiveShowcase/>
+      <section id="documents" className="section documents"><SectionHeader number="06" title="DOCUMENTS & PREUVES" aside="SOURCES AUTHENTIQUES"/><div className="documents-heading reveal"><h2>DES TRACES <span>CONCRÈTES.</span></h2><p>Les rapports, schémas, cahiers de recette et procédures de test sont associés aux études correspondantes. Cette bibliothèque rassemble également leurs documents complémentaires.</p></div><div className="documents-grid reveal">{documents.map((d,i)=><a key={d.title} href={d.url} target="_blank" rel="noopener noreferrer" className="doc-card"><div className="doc-num">{String(i+1).padStart(2,'0')} / ARCHIVE</div><d.icon size={30}/><div><span className="doc-type">{d.type}</span><h3>{d.title}</h3><p>{d.desc}</p></div><span className="doc-open">{d.external?'OUVRIR LA SOURCE':'TÉLÉCHARGER'} <ArrowUpRight size={15}/></span></a>)}</div><div className="proof-caveat reveal"><AlertCircle size={20}/><p><strong>Documents encore à intégrer :</strong> schémas complémentaires, extraits de mesures, illustrations techniques et autres preuves à sélectionner au fil des prochaines améliorations. La diffusion des documents de stage BETEM a été validée selon la confirmation de l'étudiant.</p></div></section>
 
-      <section id="documents" className="section documents"><SectionHeader number="07" title="DOCUMENTS & PREUVES" aside="SOURCES AUTHENTIQUES"/><div className="documents-heading reveal"><h2>DES TRACES <span>CONCRÈTES.</span></h2><p>Les documents PDF et Word d'origine complètent les dossiers détaillés : rapports, schémas, cahiers de recette et procédures de test.</p></div><div className="documents-grid reveal">{documents.map((d,i)=><a key={d.title} href={d.url} target="_blank" rel="noopener noreferrer" className="doc-card"><div className="doc-num">{String(i+1).padStart(2,'0')} / ARCHIVE</div><d.icon size={30}/><div><span className="doc-type">{d.type}</span><h3>{d.title}</h3><p>{d.desc}</p></div><span className="doc-open">{d.external?'OUVRIR LA SOURCE':'TÉLÉCHARGER'} <ArrowUpRight size={15}/></span></a>)}</div><div className="proof-caveat reveal"><AlertCircle size={20}/><p><strong>Documents encore à intégrer :</strong> schémas complémentaires, extraits de mesures, illustrations techniques et autres preuves à sélectionner au fil des prochaines améliorations. La diffusion des documents de stage BETEM a été validée selon la confirmation de l'étudiant.</p></div></section>
-
-      <section id="contact" className="section contact"><SectionHeader number="08" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span><a href={OLD_SITE} target="_blank" rel="noopener noreferrer">ANCIEN PORTFOLIO ↗</a></div></section>
+      <section id="contact" className="section contact"><SectionHeader number="07" title="CONTACT"/><p className="reveal">UNE QUESTION SUR UN PROJET OU UNE OPPORTUNITÉ ?</p><a className="contact-title reveal" href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">ÉCHANGEONS <ArrowUpRight/></a><div className="contact-bottom"><a href="mailto:hicham.el-hajjaji@etu.umontpellier.fr">HICHAM.EL-HAJJAJI@ETU.UMONTPELLIER.FR</a><a href="tel:+33777389922">07 77 38 99 22</a><span>MONTPELLIER · FRANCE</span></div></section>
     </main><footer><span>© 2026 HICHAM EL HAJJAJI</span><a href="#accueil">RETOUR EN HAUT ↑</a><span>BUT GEII / ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</span></footer>
     {project&&<ProjectDetail project={project} onClose={closeDetail} onZoom={setZoom}/>}
     {zoom&&<div className="zoom-overlay" onClick={()=>setZoom(null)} role="presentation"><div className="zoom-frame" onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label={zoom.title}><button onClick={()=>setZoom(null)} type="button"><X size={20}/> FERMER</button><img src={zoom.image} alt={zoom.title}/><div><strong>{zoom.title}</strong><span>{zoom.desc}</span></div></div></div>}
