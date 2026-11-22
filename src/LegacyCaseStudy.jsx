@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {ArrowUpRight, BookOpen, Camera, ChevronRight, FileText, Info, Layers3, ShieldCheck, ZoomIn} from 'lucide-react';
+import {ArrowUpRight, BookOpen, Camera, FileText, Info, Layers3, ShieldCheck, ZoomIn} from 'lucide-react';
 import {legacyNarratives} from './legacyNarratives.js';
 import './legacy-case-study.css';
 
 /**
  * Même rythme de lecture que la fiche BMS :
  * cahier des charges -> architecture -> conception -> essais -> critique -> compétences.
- * Photos d'origine dans les chapitres. Le texte Takeout complet reste accessible.
+ * Photographies et preuves authentiques dans les chapitres.
  */
 const sectionNames=[
  '01 / OBJECTIF & CAHIER DES CHARGES',
@@ -31,7 +31,7 @@ function IndentedSources({docs}){
     <iframe title={'Aperçu original : '+selected.label} loading="lazy" src={'https://drive.google.com/file/d/'+fileId+'/preview'}/>
     <p>Document Google Drive d’origine ; son affichage dépend des autorisations accordées aux visiteurs.</p>
   </div>}
-  <p>Ces documents proviennent du portfolio initial et sont conservés sous leur nom d’origine.</p>
+  <p>Ces pièces sont les documents techniques associés au projet.</p>
  </div>;
 }
 function LegacyPhoto({ev,onZoom,i}){
@@ -40,8 +40,8 @@ function LegacyPhoto({ev,onZoom,i}){
    <img src={ev.image} alt={ev.title} loading="lazy"/>
    <span><ZoomIn size={17}/> AGRANDIR</span>
   </button>
-  <figcaption><strong>Illustration d’origine {String(i+1).padStart(2,'0')}</strong>
-   <span>{ev.desc||'Image authentique récupérée depuis le portfolio Google Sites.'}</span>
+  <figcaption><strong>Illustration du projet {String(i+1).padStart(2,'0')}</strong>
+   <span>{ev.desc||'Photographie ou schéma authentique du projet.'}</span>
   </figcaption>
  </figure>
 }
@@ -53,16 +53,15 @@ function picturePositions(count){
  return [0,1,2,3,4].slice(0,count);
 }
 export default function LegacyCaseStudy({project,onZoom}){
- const [sourceOpen,setSourceOpen]=useState(false);
  const data=legacyNarratives[project.id];
  if(!data)return null;
  const figures=project.evidence||[];
  const pictureChapters=picturePositions(figures.length);
  return <div className="bms-study legacy-study">
   <div className="bms-study-heading">
-   <span>RÉALISATION UNIVERSITAIRE / DOSSIER GEII D’ORIGINE</span>
+   <span>RÉALISATION UNIVERSITAIRE / PROJET GEII</span>
    <h3>DU BESOIN <em>À LA VÉRIFICATION.</em></h3>
-   <p>{data.subtitle}. Cette fiche présente la démarche suivie, les étapes de conception et les contrôles réalisés. Les explications sont rédigées à partir des pièces du projet ; leurs formulations originales restent consultables en annexe.</p>
+   <p>{data.subtitle}. Cette fiche présente la démarche suivie, les étapes de conception et les contrôles réalisés. Les étapes de conception et les résultats sont illustrés par les photographies, schémas et documents du projet.</p>
   </div>
   {data.chapters.map(([title,body],i)=>{
    const figureIndexes=pictureChapters.reduce((acc,pos,index)=>{if(pos===i)acc.push(index);return acc},[]);
@@ -73,22 +72,13 @@ export default function LegacyCaseStudy({project,onZoom}){
       <h4 id={'geii-section-'+project.id+'-'+i}>{title}</h4>
       <p>{body}</p>
       {i===3&&<IndentedSources docs={project.docs}/>}
-      {i===4&&<p className="legacy-precision"><Info size={17}/> Les observations, valeurs et limites sont reprises des travaux historiques. Le texte ne constitue pas une nouvelle vérification expérimentale.</p>}
+      {i===4&&<p className="legacy-precision"><Info size={17}/> Les résultats présentés proviennent des essais du projet ; ils doivent être interprétés selon les conditions et limites décrites dans les documents techniques.</p>}
       {i===5&&<div className="legacy-skills-list">{(project.skills||[]).map(skill=><span key={skill}>{skill}</span>)}</div>}
      </div>
      {!!figureIndexes.length&&<div className="legacy-chapter-photo-stack">{figureIndexes.map(index=><LegacyPhoto key={index} ev={figures[index]} onZoom={onZoom} i={index}/>)}</div>}
     </div>
    </section>
   })}
-  {figures.length===0&&<div className="legacy-no-photo"><Camera size={22}/><p>Cette page de l'ancien portfolio ne contenait pas de photographie spécifique à cette réalisation. Les documents techniques d'origine sont disponibles dans la partie vérification, sans photographie générique présentée comme une preuve.</p></div>}
-  <details open={sourceOpen} onToggle={e=>setSourceOpen(e.currentTarget.open)} className="legacy-full-source">
-   <summary>TRANSCRIPTION INTÉGRALE DE L’ANCIEN PORTFOLIO <ChevronRight size={18}/></summary>
-   <p>Les textes suivants sont conservés dans leur formulation d’origine pour la traçabilité du dossier. Les synthèses de la fiche principale sont destinées à faciliter la lecture.</p>
-   <div className="historical-grid">{(project.originalSections||[]).map((chapter,i)=><section key={i} className="historical-chapter">
-    <span className="chapter-index">{String(i+1).padStart(2,'0')}</span>
-    <h3>{chapter.titre}</h3>
-    {(chapter.blocs||[]).map((block,j)=><p key={j} className={block.type==='puce'?'historical-bullet':''}>{block.type==='puce'?'— ':''}{block.texte}</p>)}
-   </section>)}</div>
-  </details>
+  {figures.length===0&&<div className="legacy-no-photo"><Camera size={22}/><p>Aucune photographie spécifique n’est disponible pour cette réalisation. Les pièces techniques sont accessibles dans la partie vérification.</p></div>}
  </div>;
 }
