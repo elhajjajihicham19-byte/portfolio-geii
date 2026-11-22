@@ -35,7 +35,7 @@ const missingStudyFigures=evidenceFigures
 const imageSourceFiles=[
  'src/main.jsx','src/legacyProjects.js','src/BmsCaseStudy.jsx',
  'src/AppliedTechnicalStudy.jsx','src/BetemCaseStudy.jsx',
- 'src/LegacyCaseStudy.jsx'
+ 'src/LegacyCaseStudy.jsx','src/StudyHighlights.jsx'
 ];
 const codeImageRefs=[...new Set(imageSourceFiles.flatMap(file=>{
  const source=fs.readFileSync(file,'utf8');
@@ -50,10 +50,25 @@ const brokenCoverFiles=codeImageRefs.filter(src=>{
  return buf.length<700;
 });
 
+// Vérifications des éléments éditoriaux et de la version voulue du hero.
+const portfolioUiSources=[
+ 'src/StudyContents.jsx','src/study-contents.css',
+ 'src/StudyHighlights.jsx','src/study-highlights.css',
+ 'src/portfolio-polish.css'
+];
+const missingUiSources=portfolioUiSources.filter(file=>!fs.existsSync(file));
+const homeSource=fs.readFileSync('src/main.jsx','utf8');
+const missingUiFeatures=[
+ ['noyau énergétique restauré',homeSource.includes('function EnergyCore(')&&!homeSource.includes('function ElectronHero(')],
+ ['WebGL hors écran',homeSource.includes("frameloop={playing?'always':'demand'}")],
+ ['sommaire intégré',homeSource.includes('<StudyContents panelRef=')],
+ ['figures mises en avant',homeSource.includes('<StudyHighlights project=')],
+ ['sélecteur illustré',homeSource.includes('project-selector__thumbnail')]
+].filter(([,present])=>!present).map(([name])=>name);
 const invalidSourceFigures=evidenceFigures.filter(item=>!item.title||!item.desc||item.chapter<0||item.chapter>5);
-const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,missingCemFigures,coverReferences:codeImageRefs.length,missingCoverFiles,brokenCoverFiles,studyFigureCount:evidenceFigures.length,studyProjects:evidenceEntries.length,expectedStudies,expectedStudyFigures,missingStudyFigures,invalidSourceFigures:invalidSourceFigures.length,incompletePages:incomplete.map(p=>p.titre)};
+const counts={pages:pages.length,projects:projects.length,documents:docs.length,imageReferences:refs.length,missingImages:missing,missingBmsFigures,missingCemFigures,coverReferences:codeImageRefs.length,missingCoverFiles,brokenCoverFiles,studyFigureCount:evidenceFigures.length,studyProjects:evidenceEntries.length,expectedStudies,expectedStudyFigures,missingStudyFigures,invalidSourceFigures:invalidSourceFigures.length,missingUiSources,missingUiFeatures,incompletePages:incomplete.map(p=>p.titre)};
 console.log(JSON.stringify(counts,null,2));
-if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||missingCemFigures.length||missingCoverFiles.length||brokenCoverFiles.length||missingStudyFigures.length||invalidSourceFigures.length||evidenceEntries.length!==expectedStudies||evidenceFigures.length!==expectedStudyFigures||incomplete.length){
+if(pages.length!==20||projects.length!==12||docs.length!==27||missing.length||missingBmsFigures.length||missingCemFigures.length||missingCoverFiles.length||brokenCoverFiles.length||missingUiSources.length||missingUiFeatures.length||missingStudyFigures.length||invalidSourceFigures.length||evidenceEntries.length!==expectedStudies||evidenceFigures.length!==expectedStudyFigures||incomplete.length){
  console.error('Vérification de la migration non validée. Consulter les données ci-dessus.');
  process.exit(1);
 }
