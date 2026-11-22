@@ -87,6 +87,8 @@ export const legacyProjects=ancienPortfolio
     const evidence=extractImages(page);
     return {
       id:'geii-'+page.id,
+      category:page.id==='capteur-de-temperature'?'tutored':'applied',
+      nature:page.id==='capteur-de-temperature'?'PROJET TUTORÉ':page.id==='robot-suiveur-de-ligne'?'SAE DOCUMENTÉE':'RÉALISATION UNIVERSITAIRE',
       name:page.titre,
       no:String(index+6).padStart(2,'0'),
       short:page.sections?.[0]?.titre||'Étude et réalisation technique',
