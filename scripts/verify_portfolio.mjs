@@ -39,7 +39,7 @@ const imageSourceFiles=[
 ];
 const codeImageRefs=[...new Set(imageSourceFiles.flatMap(file=>{
  const source=fs.readFileSync(file,'utf8');
- return [...source.matchAll(/\\/(?:assets|legacy)\\/[a-zA-Z0-9_./-]+\\.(?:webp|png|jpe?g)/g)].map(match=>match[0]);
+ return [...source.matchAll(/\/(?:assets|legacy)\/[a-zA-Z0-9_./-]+\.(?:webp|png|jpe?g)/g)].map(match=>match[0]);
 }))];
 const missingCoverFiles=codeImageRefs.filter(src=>!fs.existsSync(path.join('public',src.slice(1))));
 const brokenCoverFiles=codeImageRefs.filter(src=>{
