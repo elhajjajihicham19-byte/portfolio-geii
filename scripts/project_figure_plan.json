@@ -17,14 +17,14 @@
             "Conditionnement analogique du LM335"
           ],
           [
-            12,
-            3,
-            "Commande LCD et traitement numérique"
+            11,
+            2,
+            "Programmation et affichage sur LCD"
           ],
           [
-            13,
+            12,
             3,
-            "Fiche de mesures et routage"
+            "Routage de la carte et relevés de tension"
           ]
         ]
       }
@@ -266,11 +266,6 @@
             2,
             2,
             "Folio des équipements d’ambiance"
-          ],
-          [
-            3,
-            2,
-            "Folio de raccordement"
           ]
         ]
       },
