@@ -12,7 +12,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: npm
       - name: Installer les dépendances
         run: npm install
       - name: Contrôler les 20 pages, 12 projets et les images
