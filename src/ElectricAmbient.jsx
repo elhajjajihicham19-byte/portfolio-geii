@@ -21,6 +21,7 @@ export default function ElectricAmbient(){
     <div className="electric-ambient__glow electric-ambient__glow--left"/>
     <div className="electric-ambient__glow electric-ambient__glow--right"/>
     <div className="electric-ambient__mesh"/>
+    <div className="electric-ambient__cursor"/>
     <svg className="electric-ambient__wires" viewBox="0 0 1600 900"
       preserveAspectRatio="xMidYMid slice" focusable="false">
       <defs>
