@@ -11,6 +11,7 @@ export default function StudyContents({panelRef,projectId,readingMode}){
   const [active,setActive]=useState(0);
   const [open,setOpen]=useState(false);
   const entriesRef=useRef([]);
+  const navRef=useRef(null);
   useEffect(()=>{
     const panel=panelRef.current;
     if(!panel)return;
@@ -46,6 +47,26 @@ export default function StudyContents({panelRef,projectId,readingMode}){
     };
   },[panelRef,projectId,readingMode]);
 
+  useEffect(()=>{
+    if(!open)return;
+    const onPointerDown=e=>{
+      if(navRef.current&&!navRef.current.contains(e.target))setOpen(false);
+    };
+    const onEscape=e=>{
+      if(e.key==='Escape'){
+        e.stopPropagation();
+        setOpen(false);
+        navRef.current?.querySelector('.study-toc__trigger')?.focus({preventScroll:true});
+      }
+    };
+    document.addEventListener('pointerdown',onPointerDown);
+    document.addEventListener('keydown',onEscape);
+    return()=>{
+      document.removeEventListener('pointerdown',onPointerDown);
+      document.removeEventListener('keydown',onEscape);
+    };
+  },[open]);
+
   const goTo=index=>{
     const panel=panelRef.current;
     const target=entriesRef.current[index]?.node;
@@ -57,20 +78,18 @@ export default function StudyContents({panelRef,projectId,readingMode}){
     setOpen(false);
   };
   if(chapters.length<2)return null;
-  return <nav className={'study-toc'+(open?' study-toc--open':'')}
+  return <nav ref={navRef} className={'study-toc'+(open?' study-toc--open':'')}
     aria-label="Sommaire de l'étude"
-    onMouseEnter={()=>setOpen(true)}
-    onMouseLeave={()=>setOpen(false)}
-    onFocus={()=>setOpen(true)}
     onBlur={e=>{if(!e.currentTarget.contains(e.relatedTarget))setOpen(false)}}>
     <button type="button" className="study-toc__trigger"
       aria-label={open?'Réduire le sommaire':'Afficher le sommaire'}
       aria-expanded={open}
+      aria-controls="study-toc-chapters"
       onClick={()=>setOpen(x=>!x)}>
       <BookOpen size={18}/><span>SOMMAIRE</span>
       <ChevronRight size={15}/>
     </button>
-    <div className="study-toc__body" inert={!open}>
+    <div id="study-toc-chapters" className="study-toc__body" inert={!open}>
       <div className="study-toc__title">NAVIGATION DANS L’ÉTUDE</div>
       {chapters.map(ch=><button key={ch.id} className={'study-toc__chapter'+(ch.index===active?' study-toc__chapter--active':'')}
         type="button" onClick={()=>goTo(ch.index)}
