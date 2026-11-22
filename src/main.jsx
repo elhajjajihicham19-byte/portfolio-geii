@@ -17,6 +17,8 @@ import BetemCaseStudy from './BetemCaseStudy.jsx';
 import EdgeNavigation from './EdgeNavigation.jsx';
 import ElectricAmbient from './ElectricAmbient.jsx';
 import CircuitInteractions from './CircuitInteractions.jsx';
+import StudyContents from './StudyContents.jsx';
+import StudyHighlights from './StudyHighlights.jsx';
 import ancienPortfolio from './ancienPortfolio.json';
 import './style.css';
 import './documents-compact.css';
@@ -363,7 +365,7 @@ function DocumentLink({url,label,external=false}){return <a className="document-
 function EvidenceGrid({items,onZoom}){return <div className="evidence-grid">{items.map((ev,i)=><button key={i} className="evidence-item" type="button" onClick={()=>onZoom(ev)} title="Agrandir la preuve"><div className="evidence-image"><img src={ev.image} alt={ev.title} loading="lazy"/></div><div className="evidence-info"><span>{String(i+1).padStart(2,'0')} / PREUVE AUTHENTIQUE</span><b>{ev.title}</b><small>{ev.desc}</small></div><ArrowUpRight size={16}/></button>)}</div>}
 
 function ProjectCard({project:p,onOpen,featured=false}){
-  return <article className={'project reveal'+(featured?' project--featured':'')} key={p.id}>
+  return <article className={'project project--switching'+(featured?' project--featured':'')} key={p.id}>
     <div className="project-meta"><span>{p.no} / {String(academicProjects.length).padStart(2,'0')}</span><span>{p.field}</span></div>
     <ProjectVisual kind={p.icon} image={p.cover} alt={'Photographie ou schéma : '+p.name} rotation={p.coverRotation||0}/>
     <div className="project-info">
@@ -437,10 +439,16 @@ function ProjectSelector({selectedId,onSelect}){
             <div className="project-selector__choices">{entries.map(p=>
               <button key={p.id} type="button" className="project-selector__choice"
                 onClick={()=>{setOpen(false);onSelect(p)}}>
-                <span className="project-selector__choice-icon">{p.no}</span>
+                <span className="project-selector__thumbnail">
+                  {p.cover||['cem','dialux'].includes(p.icon)?
+                    <img src={p.cover||({cem:'/assets/cem-schema-reel.webp',dialux:'/assets/dialux-reel-1.webp'}[p.icon])}
+                      alt="" loading="lazy" style={p.coverRotation?{transform:`rotate(${p.coverRotation}deg)`}:undefined}/>:
+                    <span aria-hidden="true">{p.icon==='solar'?<Sun size={25}/>:<CircuitBoard size={24}/>}</span>}
+                </span>
                 <span className="project-selector__choice-text">
+                  <span className="project-selector__choice-meta">BUT{p.year} <span>·</span> {p.field}</span>
                   <strong>{p.name}</strong>
-                  <small>{p.short}</small>
+                  <small>{p.chips?.slice(0,2).join(' · ')||p.short}</small>
                 </span>
                 <ArrowUpRight size={17}/>
               </button>
@@ -485,9 +493,11 @@ function ProjectDetail({project:p,onClose,onZoom,isZoomOpen=false}){
      </div>
     </div>
     <div className="detail-reading-hint"><Mouse size={14}/> DÉFILEMENT À LA MOLETTE <span>·</span> CLIQUE SUR LES SCHÉMAS POUR LES AGRANDIR</div>
+    <StudyContents panelRef={dialogRef} projectId={p.id} readingMode={readingMode}/>
     <div className="detail-content">
     <div className="detail-hero"><div><p className="project-subtitle">{p.field} · {p.period}</p><h2 id="project-title">{p.name}</h2><p className="detail-lead">{p.description}</p><span className="status-line">{['bms','pv'].includes(p.id)?<AlertCircle size={15}/>:<CheckCircle2 size={15}/>} {p.status}</span></div><ProjectVisual kind={p.icon} image={p.cover} alt={'Photographie ou schéma : '+p.name} rotation={p.coverRotation||0} priority/></div>
     <div className="detail-metrics">{p.metrics.map(([value,label])=><div key={label}><b>{value}</b><span>{label}</span></div>)}</div>
+    <StudyHighlights project={p} onZoom={onZoom}/>
     {p.id==='bms'&&<BmsCaseStudy onZoom={onZoom}/>}
     {p.id==='pv'&&<PvCaseStudy/>}
     {p.legacyOnly&&<LegacyCaseStudy project={p} onZoom={onZoom}/>}
@@ -541,7 +551,13 @@ function App(){
   return <><div className="desktop-note">Cette expérience est conçue pour un écran d'ordinateur (largeur minimale : 950 px).</div><div className="site"><ElectricAmbient/><CircuitInteractions paused={Boolean(project||zoom)}/><div className="grain" aria-hidden="true"/>{!project&&!zoom&&<EdgeNavigation/>}
     <header className="topbar"><a className="brand" href="#accueil">H<span>.</span> EL HAJJAJI<small>PORTFOLIO DE COMPÉTENCES / 2026—27</small></a><nav aria-label="Navigation principale"><a href="#profil">PROFIL</a><a href="#formation">FORMATION</a><a href="#competences">COMPÉTENCES</a><a href="#projets">PROJETS</a><a href="#experience">EXPÉRIENCE</a><a href="#documents">DOCUMENTS</a><a href="#contact">CONTACT</a></nav></header>
     <main>
-      <section className="hero" id="accueil"><Scene paused={Boolean(project||zoom)}/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a></div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
+      <section className="hero" id="accueil"><Scene paused={Boolean(project||zoom)}/><div className="hero-copy"><div className="eyebrow"><span className="live-dot"/> BUT3 GEII · ÉLECTRICITÉ & MAÎTRISE DE L'ÉNERGIE</div><h1>CONCEVOIR<br/><em>L'ÉNERGIE</em><br/>DE DEMAIN<span className="period">.</span></h1><p>De la carte électronique aux réseaux électriques : projets, preuves, méthodes et compétences développées au fil de ma formation.</p><div className="hero-actions">
+      <a href="#projets" className="primary">DÉCOUVRIR MON TRAVAIL <ArrowUpRight size={17}/></a>
+      <a className="hero-quicklink" href="https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view" target="_blank" rel="noopener noreferrer"><FileText size={16}/> MON CV <ArrowUpRight size={14}/></a>
+      <a className="hero-quicklink" href="https://www.linkedin.com/in/hicham-el-hajjaji" target="_blank" rel="noopener noreferrer"><Link2 size={16}/> LINKEDIN <ArrowUpRight size={14}/></a>
+    </div>
+    <div className="hero-specialties">RÉSEAUX HTA/HTB <span>·</span> CONCEPTION BT <span>·</span> ÉLECTRONIQUE DE PUISSANCE</div>
+    </div><div className="hero-side">INGÉNIERIE ÉLECTRIQUE <span>—</span> PARCOURS EME</div><a className="scroll-hint" href="#profil"><ArrowDown size={17}/> EXPLORER</a><div className="hero-index">2026 / 2027</div></section>
 
       <section id="profil" className="section about"><SectionHeader number="01" title="INFORMATIONS PERSONNELLES"/><div className="about-grid"><div className="reveal"><h2>QUI<br/>SUIS<span>-JE ?</span></h2><div className="identity-block"><span>HICHAM EL HAJJAJI</span><strong>Étudiant en BUT3 GEII</strong><small>IUT Montpellier–Sète · Parcours EME</small></div></div><div className="about-text reveal"><p>Après un baccalauréat général avec les spécialités mathématiques et physique, puis une première année en informatique, j'ai choisi le <strong>BUT Génie Électrique et Informatique Industrielle</strong> pour approfondir les systèmes électriques et leur fonctionnement.</p><p>Ce qui m'intéresse particulièrement : le transport et la distribution de l'énergie, les réseaux HTA/HTB, les postes électriques, les installations basse tension et l'électronique de puissance.</p><p>J'aime relier les principes physiques aux situations réelles : dimensionner, simuler, chercher l'origine d'un défaut et justifier les décisions techniques.</p><div className="profile-facts"><div><MapPin size={16}/><span>Montpellier / Sète, France</span></div><div><GraduationCap size={16}/><span>BUT3 · GEII / EME</span></div><div><BriefcaseBusiness size={16}/><span>Permis B</span></div><div><FileText size={16}/><a href="https://drive.google.com/file/d/1xgupalQplB7q3yol92GSSMiKyJbB_sn1/view" target="_blank" rel="noopener noreferrer">CV original sur Google Drive ↗</a></div><div><Link2 size={16}/><a href="https://www.linkedin.com/in/hicham-el-hajjaji" target="_blank" rel="noopener noreferrer">Mon profil LinkedIn ↗</a></div></div><a href="#contact" className="inline-action">ME CONTACTER <ArrowUpRight size={16}/></a></div></div>
       </section>
