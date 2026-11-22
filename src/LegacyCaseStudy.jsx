@@ -20,7 +20,7 @@ function IndentedSources({docs}){
  const [active,setActive]=useState(null);
  if(!docs?.length)return null;
  const selected=active===null?null:docs[active];
- const fileId=selected?.url?.match(/drive\\.google\\.com\\/file\\/d\\/([^/]+)/)?.[1];
+ const fileId=selected?.url?.includes('drive.google.com/file/d/') ? selected.url.split('/file/d/')[1]?.split('/')[0] : null;
  return <div className="legacy-inline-sources">
   <span>PIÈCES JUSTIFICATIVES ET DOCUMENTS DE TRAVAIL</span>
   {docs.map((d,i)=><div key={d.url+i} className="legacy-source-item">
